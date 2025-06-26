@@ -1,0 +1,106 @@
+{
+  "2025-06-27": [
+    {
+      "type": "youtube_video",
+      "artist": "The Midnight",
+      "title": "Shadows (Official Music Video)",
+      "thumbnail_url": "https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "embed_url": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+    },
+    {
+      "type": "spotify_topic",
+      "artist": "Neon Dreams",
+      "title": "Electric Nights",
+      "thumbnail_url": "https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "embed_url": ""
+    },
+    {
+      "type": "youtube_video",
+      "artist": "Synthwave Society",
+      "title": "Retro Future (Official Video)",
+      "thumbnail_url": "https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "embed_url": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+    },
+    {
+      "type": "youtube_video",
+      "artist": "Crystal Castles",
+      "title": "Digital Dreams",
+      "thumbnail_url": "https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "embed_url": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+    },
+    {
+      "type": "spotify_topic",
+      "artist": "Vapor Trails",
+      "title": "Midnight Drive",
+      "thumbnail_url": "https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "embed_url": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+    },
+    {
+      "type": "youtube_video",
+      "artist": "Electric Youth",
+      "title": "Neon Lights (Music Video)",
+      "thumbnail_url": "https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "embed_url": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+    }
+  ],
+  "2025-06-26": [
+    {
+      "type": "youtube_video",
+      "artist": "Retrowave Radio",
+      "title": "City Lights (Official Video)",
+      "thumbnail_url": "https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "embed_url": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+    },
+    {
+      "type": "spotify_topic",
+      "artist": "Synthia",
+      "title": "Ocean Drive",
+      "thumbnail_url": "https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "embed_url": ""
+    },
+    {
+      "type": "youtube_video",
+      "artist": "Neon Nights",
+      "title": "Sunset Boulevard",
+      "thumbnail_url": "https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "embed_url": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+    },
+    {
+      "type": "youtube_video",
+      "artist": "Digital Dreams",
+      "title": "Cyber City",
+      "thumbnail_url": "https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "embed_url": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+    },
+    {
+      "type": "spotify_topic",
+      "artist": "Future Bass",
+      "title": "Starlight",
+      "thumbnail_url": "https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "embed_url": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+    }
+  ],
+  "2025-06-25": [
+    {
+      "type": "youtube_video",
+      "artist": "Cosmic Waves",
+      "title": "Galaxy Dreams (Official MV)",
+      "thumbnail_url": "https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "embed_url": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+    },
+    {
+      "type": "spotify_topic",
+      "artist": "Luna Sol",
+      "title": "Moonbeam",
+      "thumbnail_url": "https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "embed_url": ""
+    },
+    {
+      "type": "youtube_video",
+      "artist": "Solar Flare",
+      "title": "Cosmic Dance",
+      "thumbnail_url": "https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "embed_url": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+    }
+  ]
+}
