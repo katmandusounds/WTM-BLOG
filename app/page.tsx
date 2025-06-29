@@ -92,7 +92,7 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
+      <div className="min-h-screen bg-black flex items-center justify-center overflow-hidden">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
           <p className="text-gray-300">Loading music releases...</p>
@@ -102,20 +102,20 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white overflow-hidden">
       {/* Header */}
-      <header className="bg-black border-b border-gray-800 sticky top-0 z-40">
+      <header className="bg-black border-b border-gray-800 sticky top-0 z-40 w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <div className="flex-1">
+            <div className="flex-shrink-0">
               <h1 className="text-2xl sm:text-3xl font-bold text-white">
                 WTM
               </h1>
             </div>
             
             {/* Navigation */}
-            <nav className="flex items-center space-x-8">
+            <nav className="flex items-center space-x-4 sm:space-x-8">
               <button
                 onClick={() => handleSectionChange('home')}
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors duration-200 ${
@@ -125,7 +125,7 @@ export default function Home() {
                 }`}
               >
                 <Home className="w-4 h-4" />
-                <span className="font-medium">Home</span>
+                <span className="font-medium hidden sm:inline">Home</span>
               </button>
               <button
                 onClick={() => handleSectionChange('about')}
@@ -136,17 +136,17 @@ export default function Home() {
                 }`}
               >
                 <Info className="w-4 h-4" />
-                <span className="font-medium">About</span>
+                <span className="font-medium hidden sm:inline">About</span>
               </button>
             </nav>
             
-            <div className="flex-1"></div>
+            <div className="flex-shrink-0 w-16"></div>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {activeSection === 'about' ? (
           /* About Section */
           <div className="max-w-4xl mx-auto">
@@ -194,7 +194,7 @@ export default function Home() {
           </div>
         ) : (
           /* Home Section - Music Releases */
-          <>
+          <div className="w-full">
             {Object.keys(groupedItems).length === 0 ? (
               <div className="text-center py-12">
                 <Calendar className="w-12 h-12 text-gray-600 mx-auto mb-4" />
@@ -205,7 +205,7 @@ export default function Home() {
                 {Object.entries(groupedItems)
                   .sort(([a], [b]) => new Date(b).getTime() - new Date(a).getTime())
                   .map(([date, items]) => (
-                    <section key={date} className="space-y-6">
+                    <section key={date} className="space-y-6 w-full">
                       {/* Date Header */}
                       <div className="flex items-center space-x-3">
                         <Calendar className="w-5 h-5 text-gray-400" />
@@ -250,7 +250,7 @@ export default function Home() {
                 </button>
               </div>
             )}
-          </>
+          </div>
         )}
       </main>
 
