@@ -11,6 +11,7 @@ interface MusicItem {
   title: string;
   thumbnail_url: string;
   embed_url: string;
+  view_count?: string;
 }
 
 interface MusicData {
@@ -97,18 +98,10 @@ export default function Home() {
       {/* Header */}
       <header className="bg-black border-b border-gray-800 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex-1"></div>
-            <div className="flex items-center justify-center">
-              <h1 className="text-2xl sm:text-3xl font-bold text-white">
-                WTM
-              </h1>
-            </div>
-            <div className="flex-1 flex justify-end">
-              <div className="text-sm text-gray-400">
-                {allItems.length} releases
-              </div>
-            </div>
+          <div className="flex items-center justify-center h-16">
+            <h1 className="text-2xl sm:text-3xl font-bold text-white">
+              WTM
+            </h1>
           </div>
         </div>
       </header>

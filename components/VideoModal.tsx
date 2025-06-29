@@ -20,6 +20,11 @@ export default function VideoModal({
   embedUrl, 
   thumbnailUrl 
 }: VideoModalProps) {
+  const cleanTitle = (title: string) => {
+    // Remove leading dash and trim whitespace
+    return title.replace(/^-\s*/, '').trim();
+  };
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -64,7 +69,7 @@ export default function VideoModal({
         <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-700">
           <div>
             <h2 className="text-lg sm:text-xl font-semibold text-white">{artist}</h2>
-            <p className="text-sm sm:text-base text-gray-300">{title}</p>
+            <p className="text-sm sm:text-base text-gray-300">{cleanTitle(title)}</p>
           </div>
           <button
             onClick={onClose}
@@ -80,7 +85,7 @@ export default function VideoModal({
             <div className="relative aspect-video bg-black rounded-lg overflow-hidden">
               <iframe
                 src={embedUrl}
-                title={`${artist} - ${title}`}
+                title={`${artist} - ${cleanTitle(title)}`}
                 className="w-full h-full"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -92,7 +97,7 @@ export default function VideoModal({
               <div className="relative w-64 h-64 rounded-lg overflow-hidden shadow-lg">
                 <img
                   src={thumbnailUrl}
-                  alt={`${artist} - ${title}`}
+                  alt={`${artist} - ${cleanTitle(title)}`}
                   className="w-full h-full object-cover"
                 />
               </div>

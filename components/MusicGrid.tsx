@@ -6,6 +6,7 @@ interface MusicItem {
   title: string;
   thumbnail_url: string;
   embed_url: string;
+  view_count?: string;
 }
 
 interface MusicGridProps {
@@ -14,6 +15,11 @@ interface MusicGridProps {
 }
 
 export default function MusicGrid({ items, onItemClick }: MusicGridProps) {
+  const cleanTitle = (title: string) => {
+    // Remove leading dash and trim whitespace
+    return title.replace(/^-\s*/, '').trim();
+  };
+
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
       {items.map((item, index) => (
@@ -27,7 +33,7 @@ export default function MusicGrid({ items, onItemClick }: MusicGridProps) {
             <div className={`relative ${item.type === 'youtube_video' ? 'aspect-video' : 'aspect-square'} bg-gray-800`}>
               <img
                 src={item.thumbnail_url}
-                alt={`${item.artist} - ${item.title}`}
+                alt={`${item.artist} - ${cleanTitle(item.title)}`}
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
               
@@ -43,26 +49,28 @@ export default function MusicGrid({ items, onItemClick }: MusicGridProps) {
                 </div>
               </div>
 
-              {/* Type indicator */}
-              <div className="absolute top-2 right-2">
-                {item.type === 'youtube_video' ? (
+              {/* Type indicator - only show for YouTube videos */}
+              {item.type === 'youtube_video' && (
+                <div className="absolute top-2 right-2">
                   <div className="bg-red-600 text-white text-xs px-2 py-1 rounded-full font-medium">
                     Video
                   </div>
-                ) : (
-                  <div className="bg-green-600 text-white text-xs px-2 py-1 rounded-full font-medium">
-                    Audio
-                  </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
           
-          {/* Title */}
-          <div className="mt-3 px-1">
+          {/* Title and View Count */}
+          <div className="mt-3 px-1 space-y-1">
             <p className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors duration-200 line-clamp-2">
-              {item.artist} – {item.title}
+              {item.artist} – {cleanTitle(item.title)}
             </p>
+            {/* YouTube view count */}
+            {item.type === 'youtube_video' && item.view_count && (
+              <p className="text-xs text-yellow-400 font-normal">
+                {item.view_count} views
+              </p>
+            )}
           </div>
         </div>
       ))}
