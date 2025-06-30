@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Calendar, Home, Info } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar, Home as HomeIcon, Info } from 'lucide-react';
 import MusicGrid from '@/components/MusicGrid';
 import VideoModal from '@/components/VideoModal';
 
@@ -124,7 +124,7 @@ export default function Home() {
                     : 'text-gray-300 hover:text-white hover:bg-gray-800'
                 }`}
               >
-                <Home className="w-4 h-4" />
+                <HomeIcon className="w-4 h-4" />
                 <span className="font-medium hidden sm:inline">Home</span>
               </button>
               <button
