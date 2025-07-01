@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Calendar, Home as HomeIcon, Info } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar, Home as HomeIcon, Info, Play } from 'lucide-react';
 import MusicGrid from '@/components/MusicGrid';
 import VideoModal from '@/components/VideoModal';
 
@@ -18,7 +18,7 @@ interface MusicData {
   [date: string]: MusicItem[];
 }
 
-type Section = 'home' | 'about';
+type Section = 'released' | 'unreleased' | 'about';
 
 export default function Home() {
   const [musicData, setMusicData] = useState<MusicData>({});
@@ -26,7 +26,7 @@ export default function Home() {
   const [selectedItem, setSelectedItem] = useState<MusicItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [activeSection, setActiveSection] = useState<Section>('home');
+  const [activeSection, setActiveSection] = useState<Section>('released');
 
   const ITEMS_PER_PAGE = 32; // 4 per row, 8 rows
 
@@ -46,8 +46,69 @@ export default function Home() {
     fetchData();
   }, []);
 
+  // Mock data for unreleased content (short-form videos)
+  const unreleasedData: MusicData = {
+    '2024-01-15': [
+      {
+        type: 'youtube_video',
+        artist: 'Central Cee',
+        title: 'Studio Session Preview',
+        thumbnail_url: 'https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=800',
+        embed_url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+        view_count: '2.1M'
+      },
+      {
+        type: 'youtube_video',
+        artist: 'Dave',
+        title: 'Behind the Scenes',
+        thumbnail_url: 'https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&w=800',
+        embed_url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+        view_count: '890K'
+      },
+      {
+        type: 'youtube_video',
+        artist: 'AJ Tracey',
+        title: 'Quick Freestyle',
+        thumbnail_url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=800',
+        embed_url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+        view_count: '1.5M'
+      },
+      {
+        type: 'youtube_video',
+        artist: 'Stormzy',
+        title: 'Snippet Preview',
+        thumbnail_url: 'https://images.pexels.com/photos/1644888/pexels-photo-1644888.jpeg?auto=compress&cs=tinysrgb&w=800',
+        embed_url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+        view_count: '3.2M'
+      }
+    ],
+    '2024-01-14': [
+      {
+        type: 'youtube_video',
+        artist: 'Headie One',
+        title: 'TikTok Challenge',
+        thumbnail_url: 'https://images.pexels.com/photos/1699161/pexels-photo-1699161.jpeg?auto=compress&cs=tinysrgb&w=800',
+        embed_url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+        view_count: '750K'
+      },
+      {
+        type: 'youtube_video',
+        artist: 'Unknown T',
+        title: 'Instagram Reel',
+        thumbnail_url: 'https://images.pexels.com/photos/1540406/pexels-photo-1540406.jpeg?auto=compress&cs=tinysrgb&w=800',
+        embed_url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+        view_count: '420K'
+      }
+    ]
+  };
+
+  // Get current data based on active section
+  const getCurrentData = () => {
+    return activeSection === 'unreleased' ? unreleasedData : musicData;
+  };
+
   // Flatten all items with their dates for pagination
-  const allItems = Object.entries(musicData).flatMap(([date, items]) =>
+  const allItems = Object.entries(getCurrentData()).flatMap(([date, items]) =>
     items.map(item => ({ ...item, date }))
   );
 
@@ -88,6 +149,14 @@ export default function Home() {
   const handleSectionChange = (section: Section) => {
     setActiveSection(section);
     setCurrentPage(0); // Reset pagination when switching sections
+    // Scroll to top when changing sections
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    // Scroll to top when changing pages
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   if (loading) {
@@ -103,8 +172,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden">
-      {/* Header */}
-      <header className="bg-black border-b border-gray-800 sticky top-0 z-40 w-full">
+      {/* Sticky Header */}
+      <header className="bg-black/95 backdrop-blur-sm border-b border-gray-800 sticky top-0 z-40 w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
@@ -115,17 +184,28 @@ export default function Home() {
             </div>
             
             {/* Navigation */}
-            <nav className="flex items-center space-x-4 sm:space-x-8">
+            <nav className="flex items-center space-x-2 sm:space-x-4">
               <button
-                onClick={() => handleSectionChange('home')}
+                onClick={() => handleSectionChange('released')}
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors duration-200 ${
-                  activeSection === 'home'
+                  activeSection === 'released'
                     ? 'bg-white text-black'
                     : 'text-gray-300 hover:text-white hover:bg-gray-800'
                 }`}
               >
                 <HomeIcon className="w-4 h-4" />
-                <span className="font-medium hidden sm:inline">Home</span>
+                <span className="font-medium hidden sm:inline">Released</span>
+              </button>
+              <button
+                onClick={() => handleSectionChange('unreleased')}
+                className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors duration-200 ${
+                  activeSection === 'unreleased'
+                    ? 'bg-white text-black'
+                    : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                }`}
+              >
+                <Play className="w-4 h-4" />
+                <span className="font-medium hidden sm:inline">Unreleased</span>
               </button>
               <button
                 onClick={() => handleSectionChange('about')}
@@ -193,12 +273,27 @@ export default function Home() {
             </div>
           </div>
         ) : (
-          /* Home Section - Music Releases */
+          /* Released/Unreleased Section - Music Releases */
           <div className="w-full">
+            {/* Section Header */}
+            <div className="text-center mb-8">
+              <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+                {activeSection === 'released' ? 'Latest Releases' : 'Unreleased Content'}
+              </h2>
+              <p className="text-gray-400 text-lg">
+                {activeSection === 'released' 
+                  ? 'Discover the newest music videos and tracks from your favorite UK artists'
+                  : 'Exclusive snippets, behind-the-scenes content, and short-form videos'
+                }
+              </p>
+            </div>
+
             {Object.keys(groupedItems).length === 0 ? (
               <div className="text-center py-12">
                 <Calendar className="w-12 h-12 text-gray-600 mx-auto mb-4" />
-                <p className="text-gray-400">No music releases found.</p>
+                <p className="text-gray-400">
+                  {activeSection === 'released' ? 'No music releases found.' : 'No unreleased content found.'}
+                </p>
               </div>
             ) : (
               <div className="space-y-12">
@@ -209,9 +304,14 @@ export default function Home() {
                       {/* Date Header */}
                       <div className="flex items-center space-x-3">
                         <Calendar className="w-5 h-5 text-gray-400" />
-                        <h2 className="text-2xl sm:text-3xl font-bold text-white">
+                        <h3 className="text-2xl sm:text-3xl font-bold text-white">
                           {formatDate(date)}
-                        </h2>
+                        </h3>
+                        {activeSection === 'unreleased' && (
+                          <span className="bg-yellow-600 text-black text-xs px-2 py-1 rounded-full font-medium">
+                            Short Form
+                          </span>
+                        )}
                       </div>
 
                       {/* Music Grid */}
@@ -228,7 +328,7 @@ export default function Home() {
             {totalPages > 1 && (
               <div className="flex items-center justify-center space-x-4 mt-12">
                 <button
-                  onClick={() => setCurrentPage(prev => Math.max(0, prev - 1))}
+                  onClick={() => handlePageChange(Math.max(0, currentPage - 1))}
                   disabled={currentPage === 0}
                   className="flex items-center space-x-2 px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-gray-300 hover:bg-gray-800 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                 >
@@ -241,7 +341,7 @@ export default function Home() {
                 </span>
                 
                 <button
-                  onClick={() => setCurrentPage(prev => Math.min(totalPages - 1, prev + 1))}
+                  onClick={() => handlePageChange(Math.min(totalPages - 1, currentPage + 1))}
                   disabled={currentPage === totalPages - 1}
                   className="flex items-center space-x-2 px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-gray-300 hover:bg-gray-800 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                 >
