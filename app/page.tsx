@@ -240,7 +240,7 @@ export default function Home() {
                 <div className="w-24 h-1 bg-red-600 mx-auto mb-8"></div>
               </div>
               
-              <div className="bg-gray-800 rounded-2xl p-8 sm:p-12 border border-gray-700">
+              <div className="bg-black rounded-2xl p-8 sm:p-12 border border-gray-800">
                 <div className="prose prose-lg prose-invert max-w-none">
                   <p className="text-xl text-gray-300 leading-relaxed mb-8">
                     We are a music blog that helps you keep up with the latest releases from UK rap and urban music. 
