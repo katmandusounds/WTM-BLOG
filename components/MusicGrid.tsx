@@ -41,12 +41,14 @@ export default function MusicGrid({ items, onItemClick }: MusicGridProps) {
                 {/* Overlay */}
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300" />
                 
-                {/* Play button overlay */}
+                {/* Three dots overlay with loading animation */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <div className="bg-white/90 rounded-full p-3 shadow-lg">
-                    <svg className="w-6 h-6 text-gray-900" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z"/>
-                    </svg>
+                    <div className="flex space-x-1">
+                      <div className="w-2 h-2 bg-gray-900 rounded-full animate-pulse"></div>
+                      <div className="w-2 h-2 bg-gray-900 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                      <div className="w-2 h-2 bg-gray-900 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                    </div>
                   </div>
                 </div>
 
@@ -68,7 +70,7 @@ export default function MusicGrid({ items, onItemClick }: MusicGridProps) {
               </p>
               {/* YouTube view count */}
               {item.type === 'youtube_video' && item.view_count && (
-                <p className="text-xs text-yellow-400 font-normal">
+                <p className="text-xs text-red-400 font-normal">
                   {item.view_count} views
                 </p>
               )}
