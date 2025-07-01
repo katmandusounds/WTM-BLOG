@@ -172,68 +172,56 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-black text-white flex overflow-hidden">
-      {/* Vertical Sidebar */}
-      <aside className="fixed left-0 top-0 h-full w-64 bg-gray-900 border-r border-gray-800 flex flex-col z-40">
+      {/* Vertical Sidebar - Half Width */}
+      <aside className="fixed left-0 top-0 h-full w-32 bg-gray-900 border-r border-gray-800 flex flex-col z-40">
         {/* Logo Section */}
-        <div className="p-6 border-b border-gray-800">
-          <h1 className="text-3xl font-bold text-white mb-2">WTM</h1>
-          <p className="text-sm text-gray-400">Music Blog</p>
+        <div className="p-4 border-b border-gray-800 text-center">
+          <h1 className="text-2xl font-bold text-white">WTM</h1>
         </div>
         
         {/* Navigation */}
-        <nav className="flex-1 p-4 space-y-2">
+        <nav className="flex-1 p-3 space-y-2">
           <button
             onClick={() => handleSectionChange('released')}
-            className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+            className={`w-full flex flex-col items-center space-y-1 px-2 py-3 rounded-lg transition-all duration-200 ${
               activeSection === 'released'
                 ? 'bg-white text-black shadow-lg'
                 : 'text-gray-300 hover:text-white hover:bg-gray-800'
             }`}
           >
             <HomeIcon className="w-5 h-5" />
-            <span className="font-medium">Released</span>
+            <span className="text-xs font-medium">Released</span>
           </button>
           
           <button
             onClick={() => handleSectionChange('unreleased')}
-            className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+            className={`w-full flex flex-col items-center space-y-1 px-2 py-3 rounded-lg transition-all duration-200 ${
               activeSection === 'unreleased'
                 ? 'bg-white text-black shadow-lg'
                 : 'text-gray-300 hover:text-white hover:bg-gray-800'
             }`}
           >
             <Play className="w-5 h-5" />
-            <span className="font-medium">Unreleased</span>
+            <span className="text-xs font-medium">Unreleased</span>
           </button>
           
           <button
             onClick={() => handleSectionChange('about')}
-            className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+            className={`w-full flex flex-col items-center space-y-1 px-2 py-3 rounded-lg transition-all duration-200 ${
               activeSection === 'about'
                 ? 'bg-white text-black shadow-lg'
                 : 'text-gray-300 hover:text-white hover:bg-gray-800'
             }`}
           >
             <Info className="w-5 h-5" />
-            <span className="font-medium">About</span>
+            <span className="text-xs font-medium">About</span>
           </button>
         </nav>
-        
-        {/* Footer */}
-        <div className="p-4 border-t border-gray-800">
-          <div className="flex items-center space-x-2 text-gray-400 text-sm">
-            <MapPin className="w-4 h-4" />
-            <span>London, UK</span>
-          </div>
-          <p className="text-xs text-gray-500 mt-2">
-            By artists, for artists
-          </p>
-        </div>
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 ml-64 min-h-screen">
-        <div className="max-w-6xl mx-auto px-6 py-8">
+      <main className="flex-1 ml-32 min-h-screen flex flex-col">
+        <div className="flex-1 max-w-6xl mx-auto px-6 py-8">
           {activeSection === 'about' ? (
             /* About Section */
             <div className="max-w-4xl mx-auto">
@@ -282,7 +270,7 @@ export default function Home() {
           ) : (
             /* Released/Unreleased Section - Music Releases */
             <div className="w-full">
-              {/* Section Header */}
+              {/* Section Header - Centered */}
               <div className="text-center mb-8">
                 <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
                   {activeSection === 'released' ? 'Latest Releases' : 'Unreleased Content'}
@@ -308,15 +296,14 @@ export default function Home() {
                     .sort(([a], [b]) => new Date(b).getTime() - new Date(a).getTime())
                     .map(([date, items]) => (
                       <section key={date} className="space-y-6 w-full">
-                        {/* Date Header */}
-                        <div className="flex items-center space-x-3">
-                          <Calendar className="w-5 h-5 text-gray-400" />
-                          <h3 className="text-2xl sm:text-3xl font-bold text-white">
+                        {/* Date Header - Centered */}
+                        <div className="text-center">
+                          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">
                             {formatDate(date)}
                           </h3>
                           {activeSection === 'unreleased' && (
-                            <span className="bg-yellow-600 text-black text-xs px-2 py-1 rounded-full font-medium">
-                              Short Form
+                            <span className="inline-block bg-yellow-600 text-black text-xs px-3 py-1 rounded-full font-medium">
+                              Short Form Content
                             </span>
                           )}
                         </div>
@@ -360,6 +347,24 @@ export default function Home() {
             </div>
           )}
         </div>
+
+        {/* Footer */}
+        <footer className="border-t border-gray-800 bg-gray-900 py-6">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+              <div className="flex items-center space-x-2 text-gray-400">
+                <MapPin className="w-4 h-4" />
+                <span>London, UK</span>
+              </div>
+              <p className="text-gray-500 text-sm">
+                By artists, for artists
+              </p>
+              <p className="text-gray-600 text-xs">
+                © 2024 WTM. All rights reserved.
+              </p>
+            </div>
+          </div>
+        </footer>
       </main>
 
       {/* Video Modal */}
