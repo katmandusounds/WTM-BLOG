@@ -172,55 +172,55 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-black text-white flex overflow-hidden">
-      {/* Vertical Sidebar - Red Theme */}
-      <aside className="fixed left-0 top-0 h-full w-32 bg-red-600 border-r border-red-700 flex flex-col z-40">
+      {/* Vertical Sidebar - Red Theme with Responsive Width */}
+      <aside className="fixed left-0 top-0 h-full w-20 lg:w-36 bg-red-600 border-r border-red-700 flex flex-col z-40">
         {/* Logo Section */}
-        <div className="p-4 border-b border-red-700 text-center">
-          <h1 className="text-2xl font-bold text-white">WTM</h1>
+        <div className="p-3 lg:p-4 border-b border-red-700 text-center">
+          <h1 className="text-lg lg:text-2xl font-bold text-white">WTM</h1>
         </div>
         
         {/* Navigation */}
-        <nav className="flex-1 p-3 space-y-2">
+        <nav className="flex-1 p-2 lg:p-3 space-y-2">
           <button
             onClick={() => handleSectionChange('home')}
-            className={`w-full flex items-center space-x-2 px-3 py-3 rounded-lg transition-all duration-200 ${
+            className={`w-full flex items-center space-x-2 px-2 lg:px-3 py-2 lg:py-3 rounded-lg transition-all duration-200 ${
               activeSection === 'home'
                 ? 'bg-white text-red-600 shadow-lg'
                 : 'text-red-100 hover:text-white hover:bg-red-700'
             }`}
           >
-            <HomeIcon className="w-5 h-5 flex-shrink-0" />
-            <span className="text-sm font-medium hidden lg:inline">Home</span>
+            <HomeIcon className="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0" />
+            <span className="text-xs lg:text-sm font-medium hidden lg:inline">Home</span>
           </button>
           
           <button
             onClick={() => handleSectionChange('unreleased')}
-            className={`w-full flex items-center space-x-2 px-3 py-3 rounded-lg transition-all duration-200 ${
+            className={`w-full flex items-center space-x-2 px-2 lg:px-4 py-2 lg:py-3 rounded-lg transition-all duration-200 ${
               activeSection === 'unreleased'
                 ? 'bg-white text-red-600 shadow-lg'
                 : 'text-red-100 hover:text-white hover:bg-red-700'
             }`}
           >
-            <MoreHorizontal className="w-5 h-5 flex-shrink-0" />
-            <span className="text-sm font-medium hidden lg:inline">Unreleased</span>
+            <MoreHorizontal className="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0" />
+            <span className="text-xs lg:text-sm font-medium hidden lg:inline">Unreleased</span>
           </button>
           
           <button
             onClick={() => handleSectionChange('about')}
-            className={`w-full flex items-center space-x-2 px-3 py-3 rounded-lg transition-all duration-200 ${
+            className={`w-full flex items-center space-x-2 px-2 lg:px-3 py-2 lg:py-3 rounded-lg transition-all duration-200 ${
               activeSection === 'about'
                 ? 'bg-white text-red-600 shadow-lg'
                 : 'text-red-100 hover:text-white hover:bg-red-700'
             }`}
           >
-            <Info className="w-5 h-5 flex-shrink-0" />
-            <span className="text-sm font-medium hidden lg:inline">About</span>
+            <Info className="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0" />
+            <span className="text-xs lg:text-sm font-medium hidden lg:inline">About</span>
           </button>
         </nav>
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 ml-32 min-h-screen flex flex-col">
+      <main className="flex-1 ml-20 lg:ml-36 min-h-screen flex flex-col">
         <div className="flex-1 max-w-6xl mx-auto px-6 py-8">
           {activeSection === 'about' ? (
             /* About Section */
