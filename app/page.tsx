@@ -169,8 +169,20 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center overflow-hidden">
-        <div className="text-center">
+      <div className="min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Video Background */}
+        <video
+          className="video-background"
+          autoPlay
+          muted
+          loop
+          playsInline
+        >
+          <source src="https://ik.imagekit.io/vv1coyjgq/wadiz%20this%20snake%20anime2.mp4/ik-video.mp4?updatedAt=1751468769965" type="video/mp4" />
+        </video>
+        <div className="video-overlay"></div>
+        
+        <div className="text-center content-wrapper">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-4"></div>
           <p className="text-gray-300">Loading music releases...</p>
         </div>
@@ -179,9 +191,21 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white flex overflow-hidden">
+    <div className="min-h-screen text-white flex overflow-hidden">
+      {/* Video Background */}
+      <video
+        className="video-background"
+        autoPlay
+        muted
+        loop
+        playsInline
+      >
+        <source src="https://ik.imagekit.io/vv1coyjgq/wadiz%20this%20snake%20anime2.mp4/ik-video.mp4?updatedAt=1751468769965" type="video/mp4" />
+      </video>
+      <div className="video-overlay"></div>
+
       {/* Vertical Sidebar - Red Theme with Responsive Width */}
-      <aside className="fixed left-0 top-0 h-full w-20 lg:w-36 bg-red-600 border-r border-red-700 flex flex-col z-40">
+      <aside className="fixed left-0 top-0 h-full w-20 lg:w-36 bg-red-600 border-r border-red-700 flex flex-col z-40 content-wrapper">
         {/* Logo Section */}
         <div className="p-3 lg:p-4 border-b border-red-700 text-center">
           <h1 className="text-lg lg:text-2xl font-bold text-white">WTM</h1>
@@ -228,19 +252,21 @@ export default function Home() {
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 ml-20 lg:ml-36 min-h-screen flex flex-col">
+      <main className="flex-1 ml-20 lg:ml-36 min-h-screen flex flex-col content-wrapper">
         <div className="flex-1 max-w-6xl mx-auto px-6 py-8">
           {activeSection === 'about' ? (
             /* About Section */
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">
-                <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
-                  About WTM
-                </h2>
-                <div className="w-24 h-1 bg-red-600 mx-auto mb-8"></div>
+                <div className="bg-red-600 rounded-2xl p-8 mb-8">
+                  <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
+                    About WTM
+                  </h2>
+                  <div className="w-24 h-1 bg-white mx-auto"></div>
+                </div>
               </div>
               
-              <div className="bg-black rounded-2xl p-8 sm:p-12 border border-gray-800">
+              <div className="bg-gray-900 rounded-2xl p-8 sm:p-12 border border-gray-800">
                 <div className="prose prose-lg prose-invert max-w-none">
                   <p className="text-xl text-gray-300 leading-relaxed mb-8">
                     We are a music blog that helps you keep up with the latest releases from UK rap and urban music. 
@@ -280,15 +306,17 @@ export default function Home() {
             <div className="w-full">
               {/* Section Header - Centered */}
               <div className="text-center mb-8">
-                <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-                  {activeSection === 'home' ? 'Latest Releases' : 'Unreleased Content'}
-                </h2>
-                <p className="text-gray-400 text-lg">
-                  {activeSection === 'home' 
-                    ? 'Discover the newest music videos and tracks from your favorite UK artists'
-                    : 'Exclusive snippets, behind-the-scenes content, and short-form videos'
-                  }
-                </p>
+                <div className="bg-red-600 rounded-2xl p-8 mb-8">
+                  <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+                    {activeSection === 'home' ? 'Latest Releases' : 'Unreleased Content'}
+                  </h2>
+                  <p className="text-white text-lg">
+                    {activeSection === 'home' 
+                      ? 'Discover the newest music videos and tracks from your favorite UK artists'
+                      : 'Exclusive snippets, behind-the-scenes content, and short-form videos'
+                    }
+                  </p>
+                </div>
               </div>
 
               {Object.keys(groupedItems).length === 0 ? (
@@ -357,7 +385,7 @@ export default function Home() {
         </div>
 
         {/* Footer - Red Theme */}
-        <footer className="border-t border-red-800 bg-red-600 py-6">
+        <footer className="border-t border-red-800 bg-red-600 py-6 content-wrapper">
           <div className="max-w-6xl mx-auto px-6">
             <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
               <div className="flex items-center space-x-2 text-red-100">

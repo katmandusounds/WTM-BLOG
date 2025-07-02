@@ -91,3 +91,30 @@
     box-sizing: border-box;
   }
 }
+
+/* Video Background Styles */
+.video-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+  object-fit: cover;
+}
+
+.video-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: -1;
+}
+
+/* Ensure content is above the video background */
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+}
