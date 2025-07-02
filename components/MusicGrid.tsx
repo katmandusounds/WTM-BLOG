@@ -62,14 +62,14 @@ export default function MusicGrid({ items, onItemClick }: MusicGridProps) {
               </div>
             </div>
             
-            {/* Title and View Count */}
+            {/* Title and View Count with text stroke */}
             <div className="mt-3 px-1 space-y-1 w-full">
-              <p className="text-xs font-medium text-gray-300 group-hover:text-white transition-colors duration-200 line-clamp-2 break-words">
+              <p className="text-xs font-medium text-white group-hover:text-white transition-colors duration-200 line-clamp-2 break-words title-stroke">
                 {item.artist} – {cleanTitle(item.title)}
               </p>
               {/* YouTube view count */}
               {item.type === 'youtube_video' && item.view_count && (
-                <p className="text-xs text-burgundy-400 font-normal">
+                <p className="text-xs text-burgundy-400 font-normal title-stroke">
                   {item.view_count} views
                 </p>
               )}
