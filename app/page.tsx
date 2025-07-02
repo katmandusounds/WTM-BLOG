@@ -175,7 +175,7 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center overflow-hidden">
+      <div className="min-h-screen flex items-center justify-center overflow-hidden bg-black">
         <div className="text-center content-wrapper">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-burgundy-600 mx-auto mb-4"></div>
           <p className="text-gray-300">Loading music releases...</p>
@@ -185,74 +185,9 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen text-white flex overflow-hidden">
-      {/* Vertical Sidebar - Burgundy Theme with Responsive Width */}
-      <aside className="fixed left-0 top-0 h-full w-20 lg:w-36 bg-burgundy-600 border-r border-burgundy-700 flex flex-col z-40">
-        {/* Logo Section */}
-        <div className="p-3 lg:p-4 border-b border-burgundy-700 text-center">
-          <button 
-            onClick={handleLogoClick}
-            className="text-lg lg:text-2xl font-bold text-white hover:text-burgundy-100 transition-colors duration-200"
-          >
-            WTM
-          </button>
-        </div>
-        
-        {/* Navigation */}
-        <nav className="flex-1 p-2 lg:p-3 space-y-2">
-          <button
-            onClick={() => handleSectionChange('home')}
-            className={`w-full flex items-center space-x-2 px-2 lg:px-3 py-2 lg:py-3 rounded-lg transition-all duration-200 ${
-              activeSection === 'home'
-                ? 'bg-white text-burgundy-600 shadow-lg'
-                : 'text-burgundy-100 hover:text-white hover:bg-burgundy-700'
-            }`}
-          >
-            <HomeIcon className="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0" />
-            <span className="text-xs lg:text-sm font-medium hidden lg:inline">Home</span>
-          </button>
-          
-          <button
-            onClick={() => handleSectionChange('unreleased')}
-            className={`w-full flex items-center space-x-2 px-2 lg:px-4 py-2 lg:py-3 rounded-lg transition-all duration-200 ${
-              activeSection === 'unreleased'
-                ? 'bg-white text-burgundy-600 shadow-lg'
-                : 'text-burgundy-100 hover:text-white hover:bg-burgundy-700'
-            }`}
-          >
-            <TwoDots className="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0" />
-            <span className="text-xs lg:text-sm font-medium hidden lg:inline">Unreleased</span>
-          </button>
-          
-          <button
-            onClick={() => handleSectionChange('shop')}
-            className={`w-full flex items-center space-x-2 px-2 lg:px-3 py-2 lg:py-3 rounded-lg transition-all duration-200 ${
-              activeSection === 'shop'
-                ? 'bg-white text-burgundy-600 shadow-lg'
-                : 'text-burgundy-100 hover:text-white hover:bg-burgundy-700'
-            }`}
-          >
-            <ShoppingBag className="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0" />
-            <span className="text-xs lg:text-sm font-medium hidden lg:inline">Shop</span>
-          </button>
-          
-          <button
-            onClick={() => handleSectionChange('about')}
-            className={`w-full flex items-center space-x-2 px-2 lg:px-3 py-2 lg:py-3 rounded-lg transition-all duration-200 ${
-              activeSection === 'about'
-                ? 'bg-white text-burgundy-600 shadow-lg'
-                : 'text-burgundy-100 hover:text-white hover:bg-burgundy-700'
-            }`}
-          >
-            <Info className="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0" />
-            <span className="text-xs lg:text-sm font-medium hidden lg:inline">About</span>
-          </button>
-        </nav>
-      </aside>
-
-      {/* Main Content Area */}
-      <main className="flex-1 ml-20 lg:ml-36 min-h-screen flex flex-col content-wrapper">
-        {/* Video Background - positioned from navbar edge to right */}
+    <div className="min-h-screen text-white bg-black overflow-hidden">
+      {/* Video Background - Full Screen with Strong Black Tint */}
+      <div className="fixed inset-0 z-[-2]">
         <video
           className="video-background-main"
           autoPlay
@@ -262,14 +197,85 @@ export default function Home() {
         >
           <source src="https://ik.imagekit.io/vv1coyjgq/wadiz%20this%20snake%20anime2.mp4/ik-video.mp4?updatedAt=1751468769965" type="video/mp4" />
         </video>
+        {/* Strong black tint overlay */}
+        <div className="absolute inset-0 bg-black/70 z-[-1]"></div>
+      </div>
 
+      {/* Horizontal Navigation Bar */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-black border-b border-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <button 
+              onClick={handleLogoClick}
+              className="text-2xl font-bold text-white hover:text-burgundy-300 transition-colors duration-200"
+            >
+              WTM
+            </button>
+            
+            {/* Navigation Links */}
+            <div className="flex items-center space-x-8">
+              <button
+                onClick={() => handleSectionChange('home')}
+                className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
+                  activeSection === 'home'
+                    ? 'bg-burgundy-600 text-white'
+                    : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                }`}
+              >
+                <HomeIcon className="w-4 h-4" />
+                <span className="text-sm font-medium">Home</span>
+              </button>
+              
+              <button
+                onClick={() => handleSectionChange('unreleased')}
+                className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
+                  activeSection === 'unreleased'
+                    ? 'bg-burgundy-600 text-white'
+                    : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                }`}
+              >
+                <TwoDots className="w-4 h-4" />
+                <span className="text-sm font-medium">Unreleased</span>
+              </button>
+              
+              <button
+                onClick={() => handleSectionChange('shop')}
+                className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
+                  activeSection === 'shop'
+                    ? 'bg-burgundy-600 text-white'
+                    : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                }`}
+              >
+                <ShoppingBag className="w-4 h-4" />
+                <span className="text-sm font-medium">Shop</span>
+              </button>
+              
+              <button
+                onClick={() => handleSectionChange('about')}
+                className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
+                  activeSection === 'about'
+                    ? 'bg-burgundy-600 text-white'
+                    : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                }`}
+              >
+                <Info className="w-4 h-4" />
+                <span className="text-sm font-medium">About</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Main Content Area */}
+      <main className="pt-16 min-h-screen flex flex-col content-wrapper">
         <div className="flex-1 max-w-6xl mx-auto px-6 py-8 relative z-10">
           {activeSection === 'about' ? (
             /* About Section */
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">
                 <div className="bg-black rounded-2xl p-8 mb-8">
-                  <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 text-stroke">
+                  <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 title-stroke">
                     About WTM
                   </h2>
                   <div className="w-24 h-1 bg-burgundy-600 mx-auto"></div>
@@ -316,7 +322,7 @@ export default function Home() {
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-12">
                 <div className="bg-black rounded-2xl p-8 mb-8">
-                  <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 text-stroke">
+                  <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 title-stroke">
                     WTM Shop
                   </h2>
                   <p className="text-white text-lg">
@@ -383,7 +389,7 @@ export default function Home() {
               {/* Section Header - Centered */}
               <div className="text-center mb-8">
                 <div className="bg-black rounded-2xl p-8 mb-8">
-                  <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 text-stroke">
+                  <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 title-stroke">
                     {activeSection === 'home' ? 'Latest Releases' : 'Unreleased Content'}
                   </h2>
                   <p className="text-gray-400 text-lg">
@@ -410,7 +416,7 @@ export default function Home() {
                       <section key={date} className="space-y-6 w-full">
                         {/* Date Header - Centered with text stroke */}
                         <div className="text-center">
-                          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2 text-stroke">
+                          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2 title-stroke">
                             {formatDate(date)}
                           </h3>
                           {activeSection === 'unreleased' && (
@@ -460,18 +466,18 @@ export default function Home() {
           )}
         </div>
 
-        {/* Footer - Burgundy Theme */}
-        <footer className="border-t border-burgundy-800 bg-burgundy-600 py-6 relative z-10">
+        {/* Footer - Black Theme */}
+        <footer className="border-t border-gray-800 bg-black py-6 relative z-10">
           <div className="max-w-6xl mx-auto px-6">
             <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
-              <div className="flex items-center space-x-2 text-burgundy-100">
+              <div className="flex items-center space-x-2 text-gray-400">
                 <MapPin className="w-4 h-4" />
                 <span>London, UK</span>
               </div>
-              <p className="text-burgundy-200 text-sm">
+              <p className="text-gray-300 text-sm">
                 By artists, for artists
               </p>
-              <p className="text-burgundy-300 text-xs">
+              <p className="text-gray-500 text-xs">
                 © 2024 WTM. All rights reserved.
               </p>
             </div>

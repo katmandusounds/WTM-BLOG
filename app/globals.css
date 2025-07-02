@@ -77,13 +77,16 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-black text-foreground;
+    overflow-x: hidden;
+    max-width: 100vw;
   }
   
   /* Prevent horizontal overflow */
   html, body {
     overflow-x: hidden;
     max-width: 100vw;
+    background-color: black;
   }
   
   /* Ensure all containers respect viewport width */
@@ -92,25 +95,30 @@
   }
 }
 
-/* Video Background Styles - positioned to start from content area */
+/* Video Background Styles - positioned to start from top */
 .video-background-main {
   position: fixed;
-  top: 200px; /* Start below the section headers */
-  left: 5rem; /* 20 (w-20) */
-  width: calc(100vw - 5rem);
-  height: calc(100vh - 200px); /* Adjust height to fill remaining space */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: -2;
-  object-fit: cover; /* Use cover to fill space and eliminate white gaps */
+  object-fit: cover;
   object-position: center;
   min-width: 100%;
   min-height: 100%;
 }
 
-@media (min-width: 1024px) {
-  .video-background-main {
-    left: 9rem; /* 36 (lg:w-36) */
-    width: calc(100vw - 9rem);
-  }
+/* Strong black tint overlay */
+.video-background-main::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: -1;
 }
 
 /* Ensure content is above the video background */
