@@ -28,7 +28,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [activeSection, setActiveSection] = useState<Section>('home');
 
-  const ITEMS_PER_PAGE = 32; // 4 per row, 8 rows
+  const ITEMS_PER_PAGE = 48; // 6 per row, 8 rows
 
   useEffect(() => {
     const fetchData = async () => {

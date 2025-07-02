@@ -22,7 +22,7 @@ export default function MusicGrid({ items, onItemClick }: MusicGridProps) {
 
   return (
     <div className="w-full max-w-full overflow-hidden">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 w-full">
+      <div className="grid grid-cols-3 md:grid-cols-6 gap-4 sm:gap-6 w-full">
         {items.map((item, index) => (
           <div
             key={index}
@@ -64,7 +64,7 @@ export default function MusicGrid({ items, onItemClick }: MusicGridProps) {
             
             {/* Title and View Count */}
             <div className="mt-3 px-1 space-y-1 w-full">
-              <p className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors duration-200 line-clamp-2 break-words">
+              <p className="text-xs font-medium text-gray-300 group-hover:text-white transition-colors duration-200 line-clamp-2 break-words">
                 {item.artist} – {cleanTitle(item.title)}
               </p>
               {/* YouTube view count */}
