@@ -93,16 +93,6 @@
 }
 
 /* Video Background Styles */
-.video-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -2;
-  object-fit: cover;
-}
-
 .video-background-main {
   position: fixed;
   top: 0;
@@ -110,7 +100,8 @@
   width: calc(100vw - 5rem);
   height: 100vh;
   z-index: -2;
-  object-fit: cover;
+  object-fit: contain; /* Changed from cover to contain to fit full video */
+  object-position: center;
 }
 
 @media (min-width: 1024px) {
@@ -120,35 +111,62 @@
   }
 }
 
-.video-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.75);
-  z-index: -1;
-}
-
-.video-overlay-main {
-  position: fixed;
-  top: 0;
-  left: 5rem; /* 20 (w-20) */
-  width: calc(100vw - 5rem);
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.75);
-  z-index: -1;
-}
-
-@media (min-width: 1024px) {
-  .video-overlay-main {
-    left: 9rem; /* 36 (lg:w-36) */
-    width: calc(100vw - 9rem);
-  }
-}
-
 /* Ensure content is above the video background */
 .content-wrapper {
   position: relative;
   z-index: 1;
+}
+
+/* Text stroke effect */
+.text-stroke {
+  text-shadow: 
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000,
+    -2px 0 0 #000,
+    2px 0 0 #000,
+    0 -2px 0 #000,
+    0 2px 0 #000;
+}
+
+/* Burgundy color palette */
+.bg-burgundy-600 {
+  background-color: #7c2d12;
+}
+
+.bg-burgundy-700 {
+  background-color: #6b1f0f;
+}
+
+.bg-burgundy-800 {
+  background-color: #5a1a0c;
+}
+
+.text-burgundy-100 {
+  color: #fef2f2;
+}
+
+.text-burgundy-200 {
+  color: #fecaca;
+}
+
+.text-burgundy-300 {
+  color: #fca5a5;
+}
+
+.text-burgundy-600 {
+  color: #7c2d12;
+}
+
+.border-burgundy-700 {
+  border-color: #6b1f0f;
+}
+
+.border-burgundy-800 {
+  border-color: #5a1a0c;
+}
+
+.hover\:bg-burgundy-700:hover {
+  background-color: #6b1f0f;
 }

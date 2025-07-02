@@ -176,20 +176,8 @@ export default function Home() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Video Background */}
-        <video
-          className="video-background"
-          autoPlay
-          muted
-          loop
-          playsInline
-        >
-          <source src="https://ik.imagekit.io/vv1coyjgq/wadiz%20this%20snake%20anime2.mp4/ik-video.mp4?updatedAt=1751468769965" type="video/mp4" />
-        </video>
-        <div className="video-overlay"></div>
-        
         <div className="text-center content-wrapper">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-burgundy-600 mx-auto mb-4"></div>
           <p className="text-gray-300">Loading music releases...</p>
         </div>
       </div>
@@ -198,25 +186,13 @@ export default function Home() {
 
   return (
     <div className="min-h-screen text-white flex overflow-hidden">
-      {/* Video Background - positioned from navbar edge to right */}
-      <video
-        className="video-background-main"
-        autoPlay
-        muted
-        loop
-        playsInline
-      >
-        <source src="https://ik.imagekit.io/vv1coyjgq/wadiz%20this%20snake%20anime2.mp4/ik-video.mp4?updatedAt=1751468769965" type="video/mp4" />
-      </video>
-      <div className="video-overlay-main"></div>
-
-      {/* Vertical Sidebar - Red Theme with Responsive Width */}
-      <aside className="fixed left-0 top-0 h-full w-20 lg:w-36 bg-red-600 border-r border-red-700 flex flex-col z-40">
+      {/* Vertical Sidebar - Burgundy Theme with Responsive Width */}
+      <aside className="fixed left-0 top-0 h-full w-20 lg:w-36 bg-burgundy-600 border-r border-burgundy-700 flex flex-col z-40">
         {/* Logo Section */}
-        <div className="p-3 lg:p-4 border-b border-red-700 text-center">
+        <div className="p-3 lg:p-4 border-b border-burgundy-700 text-center">
           <button 
             onClick={handleLogoClick}
-            className="text-lg lg:text-2xl font-bold text-white hover:text-red-100 transition-colors duration-200"
+            className="text-lg lg:text-2xl font-bold text-white hover:text-burgundy-100 transition-colors duration-200"
           >
             WTM
           </button>
@@ -228,8 +204,8 @@ export default function Home() {
             onClick={() => handleSectionChange('home')}
             className={`w-full flex items-center space-x-2 px-2 lg:px-3 py-2 lg:py-3 rounded-lg transition-all duration-200 ${
               activeSection === 'home'
-                ? 'bg-white text-red-600 shadow-lg'
-                : 'text-red-100 hover:text-white hover:bg-red-700'
+                ? 'bg-white text-burgundy-600 shadow-lg'
+                : 'text-burgundy-100 hover:text-white hover:bg-burgundy-700'
             }`}
           >
             <HomeIcon className="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0" />
@@ -240,8 +216,8 @@ export default function Home() {
             onClick={() => handleSectionChange('unreleased')}
             className={`w-full flex items-center space-x-2 px-2 lg:px-4 py-2 lg:py-3 rounded-lg transition-all duration-200 ${
               activeSection === 'unreleased'
-                ? 'bg-white text-red-600 shadow-lg'
-                : 'text-red-100 hover:text-white hover:bg-red-700'
+                ? 'bg-white text-burgundy-600 shadow-lg'
+                : 'text-burgundy-100 hover:text-white hover:bg-burgundy-700'
             }`}
           >
             <TwoDots className="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0" />
@@ -252,8 +228,8 @@ export default function Home() {
             onClick={() => handleSectionChange('shop')}
             className={`w-full flex items-center space-x-2 px-2 lg:px-3 py-2 lg:py-3 rounded-lg transition-all duration-200 ${
               activeSection === 'shop'
-                ? 'bg-white text-red-600 shadow-lg'
-                : 'text-red-100 hover:text-white hover:bg-red-700'
+                ? 'bg-white text-burgundy-600 shadow-lg'
+                : 'text-burgundy-100 hover:text-white hover:bg-burgundy-700'
             }`}
           >
             <ShoppingBag className="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0" />
@@ -264,8 +240,8 @@ export default function Home() {
             onClick={() => handleSectionChange('about')}
             className={`w-full flex items-center space-x-2 px-2 lg:px-3 py-2 lg:py-3 rounded-lg transition-all duration-200 ${
               activeSection === 'about'
-                ? 'bg-white text-red-600 shadow-lg'
-                : 'text-red-100 hover:text-white hover:bg-red-700'
+                ? 'bg-white text-burgundy-600 shadow-lg'
+                : 'text-burgundy-100 hover:text-white hover:bg-burgundy-700'
             }`}
           >
             <Info className="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0" />
@@ -276,16 +252,27 @@ export default function Home() {
 
       {/* Main Content Area */}
       <main className="flex-1 ml-20 lg:ml-36 min-h-screen flex flex-col content-wrapper">
-        <div className="flex-1 max-w-6xl mx-auto px-6 py-8">
+        {/* Video Background - positioned from navbar edge to right */}
+        <video
+          className="video-background-main"
+          autoPlay
+          muted
+          loop
+          playsInline
+        >
+          <source src="https://ik.imagekit.io/vv1coyjgq/wadiz%20this%20snake%20anime2.mp4/ik-video.mp4?updatedAt=1751468769965" type="video/mp4" />
+        </video>
+
+        <div className="flex-1 max-w-6xl mx-auto px-6 py-8 relative z-10">
           {activeSection === 'about' ? (
             /* About Section */
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">
-                <div className="bg-red-600 rounded-2xl p-8 mb-8">
-                  <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
+                <div className="bg-black rounded-2xl p-8 mb-8">
+                  <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 text-stroke">
                     About WTM
                   </h2>
-                  <div className="w-24 h-1 bg-white mx-auto"></div>
+                  <div className="w-24 h-1 bg-burgundy-600 mx-auto"></div>
                 </div>
               </div>
               
@@ -328,21 +315,21 @@ export default function Home() {
             /* Shop Section */
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-12">
-                <div className="bg-red-600 rounded-2xl p-8 mb-8">
-                  <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
+                <div className="bg-black rounded-2xl p-8 mb-8">
+                  <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 text-stroke">
                     WTM Shop
                   </h2>
                   <p className="text-white text-lg">
                     Official merchandise and exclusive drops from your favorite UK artists
                   </p>
-                  <div className="w-24 h-1 bg-white mx-auto mt-6"></div>
+                  <div className="w-24 h-1 bg-burgundy-600 mx-auto mt-6"></div>
                 </div>
               </div>
               
               <div className="bg-black rounded-2xl p-8 sm:p-12 border border-gray-800">
                 <div className="text-center space-y-8">
                   <div className="space-y-4">
-                    <ShoppingBag className="w-16 h-16 text-red-600 mx-auto" />
+                    <ShoppingBag className="w-16 h-16 text-burgundy-600 mx-auto" />
                     <h3 className="text-3xl font-bold text-white">Coming Soon</h3>
                     <p className="text-xl text-gray-300 max-w-2xl mx-auto">
                       We're working on bringing you exclusive merchandise, limited edition drops, 
@@ -352,7 +339,7 @@ export default function Home() {
                   
                   <div className="grid md:grid-cols-3 gap-8 mt-12">
                     <div className="space-y-4 text-center">
-                      <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center mx-auto">
+                      <div className="w-12 h-12 bg-burgundy-600 rounded-full flex items-center justify-center mx-auto">
                         <span className="text-white font-bold">1</span>
                       </div>
                       <h4 className="text-xl font-bold text-white">Exclusive Drops</h4>
@@ -362,7 +349,7 @@ export default function Home() {
                     </div>
                     
                     <div className="space-y-4 text-center">
-                      <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center mx-auto">
+                      <div className="w-12 h-12 bg-burgundy-600 rounded-full flex items-center justify-center mx-auto">
                         <span className="text-white font-bold">2</span>
                       </div>
                       <h4 className="text-xl font-bold text-white">Artist Collaborations</h4>
@@ -372,7 +359,7 @@ export default function Home() {
                     </div>
                     
                     <div className="space-y-4 text-center">
-                      <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center mx-auto">
+                      <div className="w-12 h-12 bg-burgundy-600 rounded-full flex items-center justify-center mx-auto">
                         <span className="text-white font-bold">3</span>
                       </div>
                       <h4 className="text-xl font-bold text-white">Community First</h4>
@@ -396,7 +383,7 @@ export default function Home() {
               {/* Section Header - Centered */}
               <div className="text-center mb-8">
                 <div className="bg-black rounded-2xl p-8 mb-8">
-                  <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+                  <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 text-stroke">
                     {activeSection === 'home' ? 'Latest Releases' : 'Unreleased Content'}
                   </h2>
                   <p className="text-gray-400 text-lg">
@@ -421,18 +408,16 @@ export default function Home() {
                     .sort(([a], [b]) => new Date(b).getTime() - new Date(a).getTime())
                     .map(([date, items]) => (
                       <section key={date} className="space-y-6 w-full">
-                        {/* Date Header - Centered */}
+                        {/* Date Header - Centered with text stroke */}
                         <div className="text-center">
-                          <div className="bg-black rounded-xl p-6">
-                            <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-                              {formatDate(date)}
-                            </h3>
-                            {activeSection === 'unreleased' && (
-                              <span className="inline-block bg-red-600 text-white text-xs px-3 py-1 rounded-full font-medium">
-                                Short Form Content
-                              </span>
-                            )}
-                          </div>
+                          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2 text-stroke">
+                            {formatDate(date)}
+                          </h3>
+                          {activeSection === 'unreleased' && (
+                            <span className="inline-block bg-burgundy-600 text-white text-xs px-3 py-1 rounded-full font-medium">
+                              Short Form Content
+                            </span>
+                          )}
                         </div>
 
                         {/* Music Grid */}
@@ -451,7 +436,7 @@ export default function Home() {
                   <button
                     onClick={() => handlePageChange(Math.max(0, currentPage - 1))}
                     disabled={currentPage === 0}
-                    className="flex items-center space-x-2 px-4 py-2 bg-red-600 border border-red-700 rounded-lg text-white hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                    className="flex items-center space-x-2 px-4 py-2 bg-burgundy-600 border border-burgundy-700 rounded-lg text-white hover:bg-burgundy-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                   >
                     <ChevronLeft className="w-4 h-4" />
                     <span>Previous</span>
@@ -464,7 +449,7 @@ export default function Home() {
                   <button
                     onClick={() => handlePageChange(Math.min(totalPages - 1, currentPage + 1))}
                     disabled={currentPage === totalPages - 1}
-                    className="flex items-center space-x-2 px-4 py-2 bg-red-600 border border-red-700 rounded-lg text-white hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                    className="flex items-center space-x-2 px-4 py-2 bg-burgundy-600 border border-burgundy-700 rounded-lg text-white hover:bg-burgundy-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                   >
                     <span>Next</span>
                     <ChevronRight className="w-4 h-4" />
@@ -475,18 +460,18 @@ export default function Home() {
           )}
         </div>
 
-        {/* Footer - Red Theme */}
-        <footer className="border-t border-red-800 bg-red-600 py-6">
+        {/* Footer - Burgundy Theme */}
+        <footer className="border-t border-burgundy-800 bg-burgundy-600 py-6 relative z-10">
           <div className="max-w-6xl mx-auto px-6">
             <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
-              <div className="flex items-center space-x-2 text-red-100">
+              <div className="flex items-center space-x-2 text-burgundy-100">
                 <MapPin className="w-4 h-4" />
                 <span>London, UK</span>
               </div>
-              <p className="text-red-200 text-sm">
+              <p className="text-burgundy-200 text-sm">
                 By artists, for artists
               </p>
-              <p className="text-red-300 text-xs">
+              <p className="text-burgundy-300 text-xs">
                 © 2024 WTM. All rights reserved.
               </p>
             </div>
