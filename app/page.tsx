@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Calendar, Home as HomeIcon, Info, MoreHorizontal, MapPin } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar, Home as HomeIcon, Info, MoreHorizontal, MapPin, ShoppingBag } from 'lucide-react';
 import MusicGrid from '@/components/MusicGrid';
 import VideoModal from '@/components/VideoModal';
 
@@ -18,7 +18,7 @@ interface MusicData {
   [date: string]: MusicItem[];
 }
 
-type Section = 'home' | 'unreleased' | 'about';
+type Section = 'home' | 'unreleased' | 'about' | 'shop';
 
 export default function Home() {
   const [musicData, setMusicData] = useState<MusicData>({});
@@ -167,6 +167,12 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleLogoClick = () => {
+    setActiveSection('home');
+    setCurrentPage(0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center overflow-hidden">
@@ -192,9 +198,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen text-white flex overflow-hidden">
-      {/* Video Background */}
+      {/* Video Background - positioned from navbar edge to right */}
       <video
-        className="video-background"
+        className="video-background-main"
         autoPlay
         muted
         loop
@@ -202,13 +208,18 @@ export default function Home() {
       >
         <source src="https://ik.imagekit.io/vv1coyjgq/wadiz%20this%20snake%20anime2.mp4/ik-video.mp4?updatedAt=1751468769965" type="video/mp4" />
       </video>
-      <div className="video-overlay"></div>
+      <div className="video-overlay-main"></div>
 
       {/* Vertical Sidebar - Red Theme with Responsive Width */}
-      <aside className="fixed left-0 top-0 h-full w-20 lg:w-36 bg-red-600 border-r border-red-700 flex flex-col z-40 content-wrapper">
+      <aside className="fixed left-0 top-0 h-full w-20 lg:w-36 bg-red-600 border-r border-red-700 flex flex-col z-40">
         {/* Logo Section */}
         <div className="p-3 lg:p-4 border-b border-red-700 text-center">
-          <h1 className="text-lg lg:text-2xl font-bold text-white">WTM</h1>
+          <button 
+            onClick={handleLogoClick}
+            className="text-lg lg:text-2xl font-bold text-white hover:text-red-100 transition-colors duration-200"
+          >
+            WTM
+          </button>
         </div>
         
         {/* Navigation */}
@@ -235,6 +246,18 @@ export default function Home() {
           >
             <TwoDots className="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0" />
             <span className="text-xs lg:text-sm font-medium hidden lg:inline">Unreleased</span>
+          </button>
+          
+          <button
+            onClick={() => handleSectionChange('shop')}
+            className={`w-full flex items-center space-x-2 px-2 lg:px-3 py-2 lg:py-3 rounded-lg transition-all duration-200 ${
+              activeSection === 'shop'
+                ? 'bg-white text-red-600 shadow-lg'
+                : 'text-red-100 hover:text-white hover:bg-red-700'
+            }`}
+          >
+            <ShoppingBag className="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0" />
+            <span className="text-xs lg:text-sm font-medium hidden lg:inline">Shop</span>
           </button>
           
           <button
@@ -266,7 +289,7 @@ export default function Home() {
                 </div>
               </div>
               
-              <div className="bg-gray-900 rounded-2xl p-8 sm:p-12 border border-gray-800">
+              <div className="bg-black rounded-2xl p-8 sm:p-12 border border-gray-800">
                 <div className="prose prose-lg prose-invert max-w-none">
                   <p className="text-xl text-gray-300 leading-relaxed mb-8">
                     We are a music blog that helps you keep up with the latest releases from UK rap and urban music. 
@@ -301,16 +324,82 @@ export default function Home() {
                 </div>
               </div>
             </div>
+          ) : activeSection === 'shop' ? (
+            /* Shop Section */
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-12">
+                <div className="bg-red-600 rounded-2xl p-8 mb-8">
+                  <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
+                    WTM Shop
+                  </h2>
+                  <p className="text-white text-lg">
+                    Official merchandise and exclusive drops from your favorite UK artists
+                  </p>
+                  <div className="w-24 h-1 bg-white mx-auto mt-6"></div>
+                </div>
+              </div>
+              
+              <div className="bg-black rounded-2xl p-8 sm:p-12 border border-gray-800">
+                <div className="text-center space-y-8">
+                  <div className="space-y-4">
+                    <ShoppingBag className="w-16 h-16 text-red-600 mx-auto" />
+                    <h3 className="text-3xl font-bold text-white">Coming Soon</h3>
+                    <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+                      We're working on bringing you exclusive merchandise, limited edition drops, 
+                      and official gear from the hottest UK rap and urban artists.
+                    </p>
+                  </div>
+                  
+                  <div className="grid md:grid-cols-3 gap-8 mt-12">
+                    <div className="space-y-4 text-center">
+                      <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center mx-auto">
+                        <span className="text-white font-bold">1</span>
+                      </div>
+                      <h4 className="text-xl font-bold text-white">Exclusive Drops</h4>
+                      <p className="text-gray-300">
+                        Limited edition merchandise from your favorite artists, available only through WTM.
+                      </p>
+                    </div>
+                    
+                    <div className="space-y-4 text-center">
+                      <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center mx-auto">
+                        <span className="text-white font-bold">2</span>
+                      </div>
+                      <h4 className="text-xl font-bold text-white">Artist Collaborations</h4>
+                      <p className="text-gray-300">
+                        Official merchandise designed in collaboration with UK rap and urban artists.
+                      </p>
+                    </div>
+                    
+                    <div className="space-y-4 text-center">
+                      <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center mx-auto">
+                        <span className="text-white font-bold">3</span>
+                      </div>
+                      <h4 className="text-xl font-bold text-white">Community First</h4>
+                      <p className="text-gray-300">
+                        Supporting the UK music scene with every purchase, by artists for artists.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-12 pt-8 border-t border-gray-700">
+                    <p className="text-gray-400">
+                      Want to be notified when we launch? Follow us on social media for updates.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           ) : (
             /* Home/Unreleased Section - Music Releases */
             <div className="w-full">
               {/* Section Header - Centered */}
               <div className="text-center mb-8">
-                <div className="bg-red-600 rounded-2xl p-8 mb-8">
+                <div className="bg-black rounded-2xl p-8 mb-8">
                   <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
                     {activeSection === 'home' ? 'Latest Releases' : 'Unreleased Content'}
                   </h2>
-                  <p className="text-white text-lg">
+                  <p className="text-gray-400 text-lg">
                     {activeSection === 'home' 
                       ? 'Discover the newest music videos and tracks from your favorite UK artists'
                       : 'Exclusive snippets, behind-the-scenes content, and short-form videos'
@@ -334,14 +423,16 @@ export default function Home() {
                       <section key={date} className="space-y-6 w-full">
                         {/* Date Header - Centered */}
                         <div className="text-center">
-                          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-                            {formatDate(date)}
-                          </h3>
-                          {activeSection === 'unreleased' && (
-                            <span className="inline-block bg-red-600 text-white text-xs px-3 py-1 rounded-full font-medium">
-                              Short Form Content
-                            </span>
-                          )}
+                          <div className="bg-black rounded-xl p-6">
+                            <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+                              {formatDate(date)}
+                            </h3>
+                            {activeSection === 'unreleased' && (
+                              <span className="inline-block bg-red-600 text-white text-xs px-3 py-1 rounded-full font-medium">
+                                Short Form Content
+                              </span>
+                            )}
+                          </div>
                         </div>
 
                         {/* Music Grid */}
@@ -385,7 +476,7 @@ export default function Home() {
         </div>
 
         {/* Footer - Red Theme */}
-        <footer className="border-t border-red-800 bg-red-600 py-6 content-wrapper">
+        <footer className="border-t border-red-800 bg-red-600 py-6">
           <div className="max-w-6xl mx-auto px-6">
             <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
               <div className="flex items-center space-x-2 text-red-100">
