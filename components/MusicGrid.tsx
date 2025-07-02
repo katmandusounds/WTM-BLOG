@@ -62,8 +62,8 @@ export default function MusicGrid({ items, onItemClick }: MusicGridProps) {
               </div>
             </div>
             
-            {/* Title and View Count with text stroke */}
-            <div className="mt-3 px-1 space-y-1 w-full">
+            {/* Title and View Count with text stroke - CENTERED */}
+            <div className="mt-3 px-1 space-y-1 w-full text-center">
               <p className="text-xs font-medium text-white group-hover:text-white transition-colors duration-200 line-clamp-2 break-words title-stroke">
                 {item.artist} – {cleanTitle(item.title)}
               </p>

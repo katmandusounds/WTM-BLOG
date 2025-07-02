@@ -193,20 +193,12 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/50 z-[-1]"></div>
       </div>
 
-      {/* Horizontal Navigation Bar */}
+      {/* Horizontal Navigation Bar - Reorganized Layout */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <button 
-              onClick={handleLogoClick}
-              className="text-2xl font-bold text-white hover:text-burgundy-300 transition-colors duration-200"
-            >
-              WTM
-            </button>
-            
-            {/* Navigation Links */}
-            <div className="flex items-center space-x-8">
+            {/* Left Side - New and Unreleased */}
+            <div className="flex items-center space-x-6">
               <button
                 onClick={() => handleSectionChange('home')}
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
@@ -230,7 +222,18 @@ export default function Home() {
                 <HelpCircle className="w-4 h-4" />
                 <span className="text-sm font-medium">Unreleased</span>
               </button>
-              
+            </div>
+            
+            {/* Center - Logo */}
+            <button 
+              onClick={handleLogoClick}
+              className="text-2xl font-bold text-white hover:text-burgundy-300 transition-colors duration-200"
+            >
+              WTM
+            </button>
+            
+            {/* Right Side - Shop and About */}
+            <div className="flex items-center space-x-6">
               <button
                 onClick={() => handleSectionChange('shop')}
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
