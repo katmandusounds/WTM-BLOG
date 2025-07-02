@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Calendar, Home as HomeIcon, Info, MoreHorizontal, MapPin, ShoppingBag } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar, Home as HomeIcon, Info, MoreHorizontal, MapPin, ShoppingBag, HelpCircle } from 'lucide-react';
 import MusicGrid from '@/components/MusicGrid';
 import VideoModal from '@/components/VideoModal';
 
@@ -102,14 +102,6 @@ export default function Home() {
     ]
   };
 
-  // Custom Two Dots Component
-  const TwoDots = ({ className }: { className?: string }) => (
-    <div className={`flex space-x-1 ${className}`}>
-      <div className="w-1 h-1 bg-current rounded-full animate-pulse"></div>
-      <div className="w-1 h-1 bg-current rounded-full animate-pulse" style={{ animationDelay: '0.3s' }}></div>
-    </div>
-  );
-
   // Get current data based on active section
   const getCurrentData = () => {
     return activeSection === 'unreleased' ? unreleasedData : musicData;
@@ -186,7 +178,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen text-white bg-black overflow-hidden">
-      {/* Video Background - Full Screen with Strong Black Tint */}
+      {/* Video Background - Full Screen with Reduced Black Tint */}
       <div className="fixed inset-0 z-[-2]">
         <video
           className="video-background-main"
@@ -197,8 +189,8 @@ export default function Home() {
         >
           <source src="https://ik.imagekit.io/vv1coyjgq/wadiz%20this%20snake%20anime2.mp4/ik-video.mp4?updatedAt=1751468769965" type="video/mp4" />
         </video>
-        {/* Strong black tint overlay */}
-        <div className="absolute inset-0 bg-black/70 z-[-1]"></div>
+        {/* Reduced black tint overlay - 50% */}
+        <div className="absolute inset-0 bg-black/50 z-[-1]"></div>
       </div>
 
       {/* Horizontal Navigation Bar */}
@@ -224,7 +216,7 @@ export default function Home() {
                 }`}
               >
                 <HomeIcon className="w-4 h-4" />
-                <span className="text-sm font-medium">Home</span>
+                <span className="text-sm font-medium">New</span>
               </button>
               
               <button
@@ -235,7 +227,7 @@ export default function Home() {
                     : 'text-gray-300 hover:text-white hover:bg-gray-800'
                 }`}
               >
-                <TwoDots className="w-4 h-4" />
+                <HelpCircle className="w-4 h-4" />
                 <span className="text-sm font-medium">Unreleased</span>
               </button>
               
