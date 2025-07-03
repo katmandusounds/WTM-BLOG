@@ -232,7 +232,7 @@ export default function Home() {
               <img 
                 src="https://ik.imagekit.io/vv1coyjgq/IFUKNO%20large%20gap%202025.png?updatedAt=1751549577754" 
                 alt="IFUKNO Logo" 
-                className="h-8 w-auto object-contain"
+                className="h-12 w-auto object-contain"
               />
             </button>
             
