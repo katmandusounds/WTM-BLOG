@@ -165,17 +165,50 @@
     2px 2px 0 #000;
 }
 
-/* Burgundy color palette */
+/* IFUKNO color palette - Green and Pink */
+.bg-ifukno-green {
+  background-color: #25f23f;
+}
+
+.bg-ifukno-pink {
+  background-color: #cf008a;
+}
+
+.text-ifukno-green {
+  color: #25f23f;
+}
+
+.text-ifukno-pink {
+  color: #cf008a;
+}
+
+.border-ifukno-green {
+  border-color: #25f23f;
+}
+
+.border-ifukno-pink {
+  border-color: #cf008a;
+}
+
+.hover\:bg-ifukno-green:hover {
+  background-color: #25f23f;
+}
+
+.hover\:bg-ifukno-pink:hover {
+  background-color: #cf008a;
+}
+
+/* Legacy burgundy classes updated to use new colors */
 .bg-burgundy-600 {
-  background-color: #7c2d12;
+  background-color: #25f23f;
 }
 
 .bg-burgundy-700 {
-  background-color: #6b1f0f;
+  background-color: #cf008a;
 }
 
 .bg-burgundy-800 {
-  background-color: #5a1a0c;
+  background-color: #cf008a;
 }
 
 .text-burgundy-100 {
@@ -191,21 +224,21 @@
 }
 
 .text-burgundy-400 {
-  color: #f87171;
+  color: #25f23f;
 }
 
 .text-burgundy-600 {
-  color: #7c2d12;
+  color: #25f23f;
 }
 
 .border-burgundy-700 {
-  border-color: #6b1f0f;
+  border-color: #cf008a;
 }
 
 .border-burgundy-800 {
-  border-color: #5a1a0c;
+  border-color: #cf008a;
 }
 
 .hover\:bg-burgundy-700:hover {
-  background-color: #6b1f0f;
+  background-color: #cf008a;
 }

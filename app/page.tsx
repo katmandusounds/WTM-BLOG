@@ -169,7 +169,7 @@ export default function Home() {
     return (
       <div className="min-h-screen flex items-center justify-center overflow-hidden bg-black">
         <div className="text-center content-wrapper">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-burgundy-600 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-ifukno-green mx-auto mb-4"></div>
           <p className="text-gray-300">Loading music releases...</p>
         </div>
       </div>
@@ -194,7 +194,7 @@ export default function Home() {
       </div>
 
       {/* Horizontal Navigation Bar - Reorganized Layout */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black border-b border-gray-800">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-black border-b border-ifukno-green">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Left Side - New and Unreleased */}
@@ -203,7 +203,7 @@ export default function Home() {
                 onClick={() => handleSectionChange('home')}
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                   activeSection === 'home'
-                    ? 'bg-burgundy-600 text-white'
+                    ? 'bg-ifukno-green text-black'
                     : 'text-gray-300 hover:text-white hover:bg-gray-800'
                 }`}
               >
@@ -215,7 +215,7 @@ export default function Home() {
                 onClick={() => handleSectionChange('unreleased')}
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                   activeSection === 'unreleased'
-                    ? 'bg-burgundy-600 text-white'
+                    ? 'bg-ifukno-green text-black'
                     : 'text-gray-300 hover:text-white hover:bg-gray-800'
                 }`}
               >
@@ -242,7 +242,7 @@ export default function Home() {
                 onClick={() => handleSectionChange('shop')}
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                   activeSection === 'shop'
-                    ? 'bg-burgundy-600 text-white'
+                    ? 'bg-ifukno-green text-black'
                     : 'text-gray-300 hover:text-white hover:bg-gray-800'
                 }`}
               >
@@ -254,7 +254,7 @@ export default function Home() {
                 onClick={() => handleSectionChange('about')}
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                   activeSection === 'about'
-                    ? 'bg-burgundy-600 text-white'
+                    ? 'bg-ifukno-green text-black'
                     : 'text-gray-300 hover:text-white hover:bg-gray-800'
                 }`}
               >
@@ -277,39 +277,45 @@ export default function Home() {
                   <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 title-stroke">
                     About IFUKNO
                   </h2>
-                  <div className="w-24 h-1 bg-burgundy-600 mx-auto"></div>
+                  <div className="w-24 h-1 bg-ifukno-green mx-auto"></div>
                 </div>
               </div>
               
-              <div className="bg-black rounded-2xl p-8 sm:p-12 border border-gray-800">
+              <div className="bg-black rounded-2xl p-8 sm:p-12 border border-ifukno-pink">
                 <div className="prose prose-lg prose-invert max-w-none">
                   <p className="text-xl text-gray-300 leading-relaxed mb-8">
-                    We are a music blog that helps you keep up with the latest releases from UK rap and urban music. 
-                    Based in London, created by artists for the artists.
+                    IFUKNO is all about showcasing music that isn't the most popular in the mainstream, 
+                    but if you know, you know. We spotlight artists on their way to mass popularity 
+                    and small artists with cult-like followings.
                   </p>
                   
                   <div className="grid md:grid-cols-2 gap-8 mt-12">
                     <div className="space-y-4">
                       <h3 className="text-2xl font-bold text-white">Our Mission</h3>
                       <p className="text-gray-300">
-                        To showcase the vibrant UK rap and urban music scene, giving artists the platform they deserve 
-                        and keeping fans connected to the freshest sounds from the streets of London and beyond.
+                        To discover and showcase the underground gems and rising stars before they hit the mainstream. 
+                        We're here for the artists building devoted fanbases and creating authentic connections 
+                        through their music.
                       </p>
                     </div>
                     
                     <div className="space-y-4">
-                      <h3 className="text-2xl font-bold text-white">By Artists, For Artists</h3>
+                      <h3 className="text-2xl font-bold text-white">If You Know, You Know</h3>
                       <p className="text-gray-300">
-                        Founded and run by artists who understand the scene, we're committed to authentic representation 
-                        of UK urban culture and supporting the next generation of talent.
+                        From bedroom producers to street rappers, from indie darlings to experimental artists - 
+                        we celebrate the music that moves culture from the ground up. The artists who matter 
+                        to those who really listen.
                       </p>
                     </div>
                   </div>
                   
-                  <div className="mt-12 pt-8 border-t border-gray-700">
+                  <div className="mt-12 pt-8 border-t border-ifukno-pink">
                     <div className="text-center">
-                      <p className="text-gray-400 text-sm">
-                        Based in London • Established by the community, for the community
+                      <p className="text-ifukno-green text-sm font-medium">
+                        Discover • Support • Celebrate
+                      </p>
+                      <p className="text-gray-400 text-sm mt-2">
+                        For the culture, by the culture
                       </p>
                     </div>
                   </div>
@@ -325,58 +331,58 @@ export default function Home() {
                     IFUKNO Shop
                   </h2>
                   <p className="text-white text-lg">
-                    Official merchandise and exclusive drops from your favorite UK artists
+                    Official merchandise and exclusive drops from artists you should know
                   </p>
-                  <div className="w-24 h-1 bg-burgundy-600 mx-auto mt-6"></div>
+                  <div className="w-24 h-1 bg-ifukno-green mx-auto mt-6"></div>
                 </div>
               </div>
               
-              <div className="bg-black rounded-2xl p-8 sm:p-12 border border-gray-800">
+              <div className="bg-black rounded-2xl p-8 sm:p-12 border border-ifukno-pink">
                 <div className="text-center space-y-8">
                   <div className="space-y-4">
-                    <ShoppingBag className="w-16 h-16 text-burgundy-600 mx-auto" />
+                    <ShoppingBag className="w-16 h-16 text-ifukno-green mx-auto" />
                     <h3 className="text-3xl font-bold text-white">Coming Soon</h3>
                     <p className="text-xl text-gray-300 max-w-2xl mx-auto">
                       We're working on bringing you exclusive merchandise, limited edition drops, 
-                      and official gear from the hottest UK rap and urban artists.
+                      and official gear from the underground artists and rising stars you need to know about.
                     </p>
                   </div>
                   
                   <div className="grid md:grid-cols-3 gap-8 mt-12">
                     <div className="space-y-4 text-center">
-                      <div className="w-12 h-12 bg-burgundy-600 rounded-full flex items-center justify-center mx-auto">
-                        <span className="text-white font-bold">1</span>
+                      <div className="w-12 h-12 bg-ifukno-green rounded-full flex items-center justify-center mx-auto">
+                        <span className="text-black font-bold">1</span>
                       </div>
                       <h4 className="text-xl font-bold text-white">Exclusive Drops</h4>
                       <p className="text-gray-300">
-                        Limited edition merchandise from your favorite artists, available only through IFUKNO.
+                        Limited edition merchandise from underground artists and rising stars, available only through IFUKNO.
                       </p>
                     </div>
                     
                     <div className="space-y-4 text-center">
-                      <div className="w-12 h-12 bg-burgundy-600 rounded-full flex items-center justify-center mx-auto">
+                      <div className="w-12 h-12 bg-ifukno-pink rounded-full flex items-center justify-center mx-auto">
                         <span className="text-white font-bold">2</span>
                       </div>
                       <h4 className="text-xl font-bold text-white">Artist Collaborations</h4>
                       <p className="text-gray-300">
-                        Official merchandise designed in collaboration with UK rap and urban artists.
+                        Official merchandise designed in collaboration with the artists building cult followings.
                       </p>
                     </div>
                     
                     <div className="space-y-4 text-center">
-                      <div className="w-12 h-12 bg-burgundy-600 rounded-full flex items-center justify-center mx-auto">
-                        <span className="text-white font-bold">3</span>
+                      <div className="w-12 h-12 bg-ifukno-green rounded-full flex items-center justify-center mx-auto">
+                        <span className="text-black font-bold">3</span>
                       </div>
-                      <h4 className="text-xl font-bold text-white">Community First</h4>
+                      <h4 className="text-xl font-bold text-white">Culture First</h4>
                       <p className="text-gray-300">
-                        Supporting the UK music scene with every purchase, by artists for artists.
+                        Supporting underground music culture with every purchase. If you know, you know.
                       </p>
                     </div>
                   </div>
                   
-                  <div className="mt-12 pt-8 border-t border-gray-700">
+                  <div className="mt-12 pt-8 border-t border-ifukno-pink">
                     <p className="text-gray-400">
-                      Want to be notified when we launch? Follow us on social media for updates.
+                      Want to be notified when we launch? Follow us for updates on the latest drops.
                     </p>
                   </div>
                 </div>
@@ -393,7 +399,7 @@ export default function Home() {
                   </h2>
                   <p className="text-gray-400 text-lg">
                     {activeSection === 'home' 
-                      ? 'Discover the newest music videos and tracks from your favorite UK artists'
+                      ? 'Discover the newest music from artists you should know about'
                       : 'Exclusive snippets, behind-the-scenes content, and short-form videos'
                     }
                   </p>
@@ -419,7 +425,7 @@ export default function Home() {
                             {formatDate(date)}
                           </h3>
                           {activeSection === 'unreleased' && (
-                            <span className="inline-block bg-burgundy-600 text-white text-xs px-3 py-1 rounded-full font-medium">
+                            <span className="inline-block bg-ifukno-pink text-white text-xs px-3 py-1 rounded-full font-medium">
                               Short Form Content
                             </span>
                           )}
@@ -441,7 +447,7 @@ export default function Home() {
                   <button
                     onClick={() => handlePageChange(Math.max(0, currentPage - 1))}
                     disabled={currentPage === 0}
-                    className="flex items-center space-x-2 px-4 py-2 bg-burgundy-600 border border-burgundy-700 rounded-lg text-white hover:bg-burgundy-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                    className="flex items-center space-x-2 px-4 py-2 bg-ifukno-green border border-ifukno-green rounded-lg text-black hover:bg-ifukno-pink hover:border-ifukno-pink hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                   >
                     <ChevronLeft className="w-4 h-4" />
                     <span>Previous</span>
@@ -454,7 +460,7 @@ export default function Home() {
                   <button
                     onClick={() => handlePageChange(Math.min(totalPages - 1, currentPage + 1))}
                     disabled={currentPage === totalPages - 1}
-                    className="flex items-center space-x-2 px-4 py-2 bg-burgundy-600 border border-burgundy-700 rounded-lg text-white hover:bg-burgundy-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                    className="flex items-center space-x-2 px-4 py-2 bg-ifukno-green border border-ifukno-green rounded-lg text-black hover:bg-ifukno-pink hover:border-ifukno-pink hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                   >
                     <span>Next</span>
                     <ChevronRight className="w-4 h-4" />
@@ -466,15 +472,15 @@ export default function Home() {
         </div>
 
         {/* Footer - Black Theme */}
-        <footer className="border-t border-gray-800 bg-black py-6 relative z-10">
+        <footer className="border-t border-ifukno-pink bg-black py-6 relative z-10">
           <div className="max-w-6xl mx-auto px-6">
             <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
-              <div className="flex items-center space-x-2 text-gray-400">
+              <div className="flex items-center space-x-2 text-ifukno-green">
                 <MapPin className="w-4 h-4" />
-                <span>London, UK</span>
+                <span>Worldwide</span>
               </div>
-              <p className="text-gray-300 text-sm">
-                By artists, for artists
+              <p className="text-ifukno-pink text-sm font-medium">
+                If you know, you know
               </p>
               <p className="text-gray-500 text-xs">
                 © 2024 IFUKNO. All rights reserved.

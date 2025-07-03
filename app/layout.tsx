@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'IFUKNO - Latest Releases',
-  description: 'Discover the latest music videos and releases from your favorite artists',
+  description: 'Discover music that isn\'t mainstream but if you know, you know - from rising stars to cult favorites',
 };
 
 export default function RootLayout({

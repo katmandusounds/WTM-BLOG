@@ -54,7 +54,7 @@ export default function MusicGrid({ items, onItemClick }: MusicGridProps) {
                 {/* Type indicator - only show for YouTube videos */}
                 {item.type === 'youtube_video' && (
                   <div className="absolute top-2 right-2">
-                    <div className="bg-burgundy-600 text-white text-xs px-2 py-1 rounded-full font-medium">
+                    <div className="bg-ifukno-green text-black text-xs px-2 py-1 rounded-full font-medium">
                       Video
                     </div>
                   </div>
@@ -69,7 +69,7 @@ export default function MusicGrid({ items, onItemClick }: MusicGridProps) {
               </p>
               {/* YouTube view count */}
               {item.type === 'youtube_video' && item.view_count && (
-                <p className="text-xs text-burgundy-400 font-normal title-stroke">
+                <p className="text-xs text-ifukno-pink font-normal title-stroke">
                   {item.view_count} views
                 </p>
               )}
