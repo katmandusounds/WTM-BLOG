@@ -28,7 +28,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [activeSection, setActiveSection] = useState<Section>('home');
 
-  const ITEMS_PER_PAGE = 48; // 6 per row, 8 rows
+  const ITEMS_PER_PAGE = 40; // 5 per row, 8 rows
 
   useEffect(() => {
     const fetchData = async () => {
@@ -227,9 +227,13 @@ export default function Home() {
             {/* Center - Logo */}
             <button 
               onClick={handleLogoClick}
-              className="text-2xl font-bold text-white hover:text-burgundy-300 transition-colors duration-200"
+              className="flex items-center justify-center hover:opacity-80 transition-opacity duration-200"
             >
-              WTM
+              <img 
+                src="https://ik.imagekit.io/vv1coyjgq/IFUKNO%20large%20gap%202025.png?updatedAt=1751549577754" 
+                alt="IFUKNO Logo" 
+                className="h-8 w-auto object-contain"
+              />
             </button>
             
             {/* Right Side - Shop and About */}
@@ -271,7 +275,7 @@ export default function Home() {
               <div className="text-center mb-12">
                 <div className="bg-black rounded-2xl p-8 mb-8">
                   <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 title-stroke">
-                    About WTM
+                    About IFUKNO
                   </h2>
                   <div className="w-24 h-1 bg-burgundy-600 mx-auto"></div>
                 </div>
@@ -318,7 +322,7 @@ export default function Home() {
               <div className="text-center mb-12">
                 <div className="bg-black rounded-2xl p-8 mb-8">
                   <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 title-stroke">
-                    WTM Shop
+                    IFUKNO Shop
                   </h2>
                   <p className="text-white text-lg">
                     Official merchandise and exclusive drops from your favorite UK artists
@@ -345,7 +349,7 @@ export default function Home() {
                       </div>
                       <h4 className="text-xl font-bold text-white">Exclusive Drops</h4>
                       <p className="text-gray-300">
-                        Limited edition merchandise from your favorite artists, available only through WTM.
+                        Limited edition merchandise from your favorite artists, available only through IFUKNO.
                       </p>
                     </div>
                     
@@ -473,7 +477,7 @@ export default function Home() {
                 By artists, for artists
               </p>
               <p className="text-gray-500 text-xs">
-                © 2024 WTM. All rights reserved.
+                © 2024 IFUKNO. All rights reserved.
               </p>
             </div>
           </div>

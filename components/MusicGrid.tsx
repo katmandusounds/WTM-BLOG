@@ -22,11 +22,11 @@ export default function MusicGrid({ items, onItemClick }: MusicGridProps) {
 
   return (
     <div className="w-full max-w-full overflow-hidden">
-      <div className="grid grid-cols-3 md:grid-cols-6 gap-4 sm:gap-6 w-full">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-6 w-full justify-items-center">
         {items.map((item, index) => (
           <div
             key={index}
-            className="group cursor-pointer w-full"
+            className="group cursor-pointer w-full max-w-[200px]"
             onClick={() => onItemClick(item)}
           >
             <div className="relative bg-gray-900 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform group-hover:-translate-y-1 w-full">

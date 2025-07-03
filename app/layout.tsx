@@ -5,7 +5,7 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'WTM - Latest Releases',
+  title: 'IFUKNO - Latest Releases',
   description: 'Discover the latest music videos and releases from your favorite artists',
 };
 
