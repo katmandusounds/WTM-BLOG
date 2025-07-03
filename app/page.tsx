@@ -51,7 +51,7 @@ export default function Home() {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
-      setIsScrolled(scrollPosition > 100); // Show navbar logo after scrolling 100px
+      setIsScrolled(scrollPosition > 150); // Show navbar logo after scrolling 150px
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -208,12 +208,30 @@ export default function Home() {
       {/* Black overlay for content readability */}
       <div className="fixed inset-0 z-[-1] bg-black/60"></div>
 
-      {/* Horizontal Navigation Bar - Modified Layout */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-sm border-b border-gray-800">
+      {/* Large Logo - Starts from very top, disappears on scroll */}
+      {(activeSection === 'home' || activeSection === 'unreleased') && (
+        <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-500 ${
+          isScrolled ? 'opacity-0 translate-y-[-30px] pointer-events-none' : 'opacity-100 translate-y-0'
+        }`}>
+          <button 
+            onClick={handleLogoClick}
+            className="hover:opacity-80 transition-opacity duration-200"
+          >
+            <img 
+              src="https://ik.imagekit.io/vv1coyjgq/IFUKNO%20large%20gap%202025.png?updatedAt=1751549577754" 
+              alt="IFUKNO Logo" 
+              className="h-40 sm:h-48 md:h-56 w-auto object-contain"
+            />
+          </button>
+        </div>
+      )}
+
+      {/* Horizontal Navigation Bar - Split Layout with Center Gap */}
+      <nav className="fixed top-0 left-0 right-0 z-40 bg-black/90 backdrop-blur-sm border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+          <div className="grid grid-cols-3 items-center h-16">
             {/* Left Side - New and Unreleased */}
-            <div className="flex items-center space-x-6">
+            <div className="flex items-center space-x-6 justify-start">
               <button
                 onClick={() => handleSectionChange('home')}
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
@@ -240,21 +258,23 @@ export default function Home() {
             </div>
             
             {/* Center - Logo (only visible when scrolled) */}
-            <div className={`transition-all duration-300 ${isScrolled ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
-              <button 
-                onClick={handleLogoClick}
-                className="flex items-center justify-center hover:opacity-80 transition-opacity duration-200"
-              >
-                <img 
-                  src="https://ik.imagekit.io/vv1coyjgq/IFUKNO%20large%20gap%202025.png?updatedAt=1751549577754" 
-                  alt="IFUKNO Logo" 
-                  className="h-10 w-auto object-contain"
-                />
-              </button>
+            <div className="flex justify-center">
+              <div className={`transition-all duration-300 ${isScrolled ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+                <button 
+                  onClick={handleLogoClick}
+                  className="flex items-center justify-center hover:opacity-80 transition-opacity duration-200"
+                >
+                  <img 
+                    src="https://ik.imagekit.io/vv1coyjgq/IFUKNO%20large%20gap%202025.png?updatedAt=1751549577754" 
+                    alt="IFUKNO Logo" 
+                    className="h-10 w-auto object-contain"
+                  />
+                </button>
+              </div>
             </div>
             
             {/* Right Side - Shop and About */}
-            <div className="flex items-center space-x-6">
+            <div className="flex items-center space-x-6 justify-end">
               <button
                 onClick={() => handleSectionChange('shop')}
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
@@ -283,28 +303,10 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Large Logo - Visible at top, disappears on scroll */}
-      {(activeSection === 'home' || activeSection === 'unreleased') && (
-        <div className={`fixed top-20 left-1/2 transform -translate-x-1/2 z-40 transition-all duration-500 ${
-          isScrolled ? 'opacity-0 translate-y-[-20px] pointer-events-none' : 'opacity-100 translate-y-0'
-        }`}>
-          <button 
-            onClick={handleLogoClick}
-            className="hover:opacity-80 transition-opacity duration-200"
-          >
-            <img 
-              src="https://ik.imagekit.io/vv1coyjgq/IFUKNO%20large%20gap%202025.png?updatedAt=1751549577754" 
-              alt="IFUKNO Logo" 
-              className="h-32 sm:h-40 md:h-48 w-auto object-contain"
-            />
-          </button>
-        </div>
-      )}
-
       {/* Main Content Area */}
       <main className={`min-h-screen flex flex-col content-wrapper transition-all duration-500 ${
         (activeSection === 'home' || activeSection === 'unreleased') && !isScrolled 
-          ? 'pt-72 sm:pt-80 md:pt-96' 
+          ? 'pt-64 sm:pt-72 md:pt-80' 
           : 'pt-16'
       }`}>
         <div className="flex-1 max-w-6xl mx-auto px-6 py-8 relative z-10">
@@ -312,12 +314,10 @@ export default function Home() {
             /* About Section */
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">
-                <div className="bg-black/80 backdrop-blur-sm rounded-2xl p-8 mb-8 border border-ifukno-green">
-                  <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 title-stroke">
-                    About IFUKNO
-                  </h2>
-                  <div className="w-24 h-1 bg-ifukno-green mx-auto"></div>
-                </div>
+                <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 title-stroke">
+                  About IFUKNO
+                </h2>
+                <div className="w-24 h-1 bg-ifukno-green mx-auto"></div>
               </div>
               
               <div className="bg-black/80 backdrop-blur-sm rounded-2xl p-8 sm:p-12 border border-ifukno-pink">
@@ -365,15 +365,13 @@ export default function Home() {
             /* Shop Section */
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-12">
-                <div className="bg-black/80 backdrop-blur-sm rounded-2xl p-8 mb-8 border border-ifukno-green">
-                  <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 title-stroke">
-                    IFUKNO Shop
-                  </h2>
-                  <p className="text-white text-lg">
-                    Official merchandise and exclusive drops from artists you should know
-                  </p>
-                  <div className="w-24 h-1 bg-ifukno-green mx-auto mt-6"></div>
-                </div>
+                <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 title-stroke">
+                  IFUKNO Shop
+                </h2>
+                <p className="text-white text-lg">
+                  Official merchandise and exclusive drops from artists you should know
+                </p>
+                <div className="w-24 h-1 bg-ifukno-green mx-auto mt-6"></div>
               </div>
               
               <div className="bg-black/80 backdrop-blur-sm rounded-2xl p-8 sm:p-12 border border-ifukno-pink">
@@ -432,12 +430,10 @@ export default function Home() {
             <div className="w-full">
               {/* Section Header - Centered */}
               <div className="text-center mb-8">
-                <div className="bg-black/80 backdrop-blur-sm rounded-2xl p-8 mb-8 border border-ifukno-green">
-                  <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 title-stroke">
-                    {activeSection === 'home' ? 'Latest Releases' : 'Unreleased Content'}
-                  </h2>
-                  <div className="w-24 h-1 bg-ifukno-green mx-auto"></div>
-                </div>
+                <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 title-stroke">
+                  {activeSection === 'home' ? 'Latest Releases' : 'Unreleased Content'}
+                </h2>
+                <div className="w-24 h-1 bg-ifukno-green mx-auto"></div>
               </div>
 
               {Object.keys(groupedItems).length === 0 ? (
