@@ -27,6 +27,7 @@ export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [activeSection, setActiveSection] = useState<Section>('home');
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const ITEMS_PER_PAGE = 40; // 5 per row, 8 rows
 
@@ -44,6 +45,17 @@ export default function Home() {
     };
 
     fetchData();
+  }, []);
+
+  // Scroll detection for navbar logo
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setIsScrolled(scrollPosition > 100); // Show navbar logo after scrolling 100px
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Mock data for unreleased content (short-form videos)
@@ -177,24 +189,27 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen text-white bg-black overflow-hidden">
-      {/* Video Background - Full Screen with Reduced Black Tint */}
-      <div className="fixed inset-0 z-[-2]">
-        <video
-          className="video-background-main"
-          autoPlay
-          muted
-          loop
-          playsInline
-        >
-          <source src="https://ik.imagekit.io/vv1coyjgq/wadiz%20this%20snake%20anime2.mp4/ik-video.mp4?updatedAt=1751468769965" type="video/mp4" />
-        </video>
-        {/* Reduced black tint overlay - 50% */}
-        <div className="absolute inset-0 bg-black/50 z-[-1]"></div>
+    <div className="min-h-screen text-white bg-black overflow-hidden relative">
+      {/* Screen Border - Shows video background */}
+      <div className="fixed inset-0 z-[-1] p-4">
+        <div className="w-full h-full border-4 border-ifukno-green rounded-lg overflow-hidden">
+          <video
+            className="w-full h-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+          >
+            <source src="https://ik.imagekit.io/vv1coyjgq/wadiz%20this%20snake%20anime2.mp4/ik-video.mp4?updatedAt=1751468769965" type="video/mp4" />
+          </video>
+        </div>
       </div>
 
-      {/* Horizontal Navigation Bar - Reorganized Layout */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black border-b border-gray-800">
+      {/* Black overlay for content readability */}
+      <div className="fixed inset-0 z-[-1] bg-black/60"></div>
+
+      {/* Horizontal Navigation Bar - Modified Layout */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-sm border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Left Side - New and Unreleased */}
@@ -224,17 +239,19 @@ export default function Home() {
               </button>
             </div>
             
-            {/* Center - Logo */}
-            <button 
-              onClick={handleLogoClick}
-              className="flex items-center justify-center hover:opacity-80 transition-opacity duration-200"
-            >
-              <img 
-                src="https://ik.imagekit.io/vv1coyjgq/IFUKNO%20large%20gap%202025.png?updatedAt=1751549577754" 
-                alt="IFUKNO Logo" 
-                className="h-14 w-auto object-contain"
-              />
-            </button>
+            {/* Center - Logo (only visible when scrolled) */}
+            <div className={`transition-all duration-300 ${isScrolled ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+              <button 
+                onClick={handleLogoClick}
+                className="flex items-center justify-center hover:opacity-80 transition-opacity duration-200"
+              >
+                <img 
+                  src="https://ik.imagekit.io/vv1coyjgq/IFUKNO%20large%20gap%202025.png?updatedAt=1751549577754" 
+                  alt="IFUKNO Logo" 
+                  className="h-10 w-auto object-contain"
+                />
+              </button>
+            </div>
             
             {/* Right Side - Shop and About */}
             <div className="flex items-center space-x-6">
@@ -266,14 +283,36 @@ export default function Home() {
         </div>
       </nav>
 
+      {/* Large Logo - Visible at top, disappears on scroll */}
+      {(activeSection === 'home' || activeSection === 'unreleased') && (
+        <div className={`fixed top-20 left-1/2 transform -translate-x-1/2 z-40 transition-all duration-500 ${
+          isScrolled ? 'opacity-0 translate-y-[-20px] pointer-events-none' : 'opacity-100 translate-y-0'
+        }`}>
+          <button 
+            onClick={handleLogoClick}
+            className="hover:opacity-80 transition-opacity duration-200"
+          >
+            <img 
+              src="https://ik.imagekit.io/vv1coyjgq/IFUKNO%20large%20gap%202025.png?updatedAt=1751549577754" 
+              alt="IFUKNO Logo" 
+              className="h-32 sm:h-40 md:h-48 w-auto object-contain"
+            />
+          </button>
+        </div>
+      )}
+
       {/* Main Content Area */}
-      <main className="pt-16 min-h-screen flex flex-col content-wrapper">
+      <main className={`min-h-screen flex flex-col content-wrapper transition-all duration-500 ${
+        (activeSection === 'home' || activeSection === 'unreleased') && !isScrolled 
+          ? 'pt-72 sm:pt-80 md:pt-96' 
+          : 'pt-16'
+      }`}>
         <div className="flex-1 max-w-6xl mx-auto px-6 py-8 relative z-10">
           {activeSection === 'about' ? (
             /* About Section */
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">
-                <div className="bg-black rounded-2xl p-8 mb-8">
+                <div className="bg-black/80 backdrop-blur-sm rounded-2xl p-8 mb-8 border border-ifukno-green">
                   <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 title-stroke">
                     About IFUKNO
                   </h2>
@@ -281,7 +320,7 @@ export default function Home() {
                 </div>
               </div>
               
-              <div className="bg-black rounded-2xl p-8 sm:p-12 border border-ifukno-pink">
+              <div className="bg-black/80 backdrop-blur-sm rounded-2xl p-8 sm:p-12 border border-ifukno-pink">
                 <div className="prose prose-lg prose-invert max-w-none">
                   <p className="text-xl text-gray-300 leading-relaxed mb-8">
                     IFUKNO is all about showcasing music that isn't the most popular in the mainstream, 
@@ -326,7 +365,7 @@ export default function Home() {
             /* Shop Section */
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-12">
-                <div className="bg-black rounded-2xl p-8 mb-8">
+                <div className="bg-black/80 backdrop-blur-sm rounded-2xl p-8 mb-8 border border-ifukno-green">
                   <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 title-stroke">
                     IFUKNO Shop
                   </h2>
@@ -337,7 +376,7 @@ export default function Home() {
                 </div>
               </div>
               
-              <div className="bg-black rounded-2xl p-8 sm:p-12 border border-ifukno-pink">
+              <div className="bg-black/80 backdrop-blur-sm rounded-2xl p-8 sm:p-12 border border-ifukno-pink">
                 <div className="text-center space-y-8">
                   <div className="space-y-4">
                     <ShoppingBag className="w-16 h-16 text-ifukno-green mx-auto" />
@@ -393,7 +432,7 @@ export default function Home() {
             <div className="w-full">
               {/* Section Header - Centered */}
               <div className="text-center mb-8">
-                <div className="bg-black rounded-2xl p-8 mb-8">
+                <div className="bg-black/80 backdrop-blur-sm rounded-2xl p-8 mb-8 border border-ifukno-green">
                   <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 title-stroke">
                     {activeSection === 'home' ? 'Latest Releases' : 'Unreleased Content'}
                   </h2>
@@ -422,7 +461,7 @@ export default function Home() {
                         </div>
 
                         {/* Music Grid with border */}
-                        <div className="bg-black rounded-2xl p-8 border border-ifukno-pink">
+                        <div className="bg-black/80 backdrop-blur-sm rounded-2xl p-8 border border-ifukno-pink">
                           <MusicGrid 
                             items={items} 
                             onItemClick={handleItemClick}
@@ -465,7 +504,7 @@ export default function Home() {
         </div>
 
         {/* Footer - Black Theme */}
-        <footer className="border-t border-ifukno-pink bg-black py-6 relative z-10">
+        <footer className="border-t border-ifukno-pink bg-black/80 backdrop-blur-sm py-6 relative z-10">
           <div className="max-w-6xl mx-auto px-6">
             <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
               <div className="flex items-center space-x-2 text-ifukno-green">
