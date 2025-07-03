@@ -194,7 +194,7 @@ export default function Home() {
       </div>
 
       {/* Horizontal Navigation Bar - Reorganized Layout */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black border-b border-ifukno-green">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-black border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Left Side - New and Unreleased */}
@@ -232,7 +232,7 @@ export default function Home() {
               <img 
                 src="https://ik.imagekit.io/vv1coyjgq/IFUKNO%20large%20gap%202025.png?updatedAt=1751549577754" 
                 alt="IFUKNO Logo" 
-                className="h-12 w-auto object-contain"
+                className="h-14 w-auto object-contain"
               />
             </button>
             
@@ -472,8 +472,8 @@ export default function Home() {
                 <MapPin className="w-4 h-4" />
                 <span>Worldwide</span>
               </div>
-              <p className="text-ifukno-pink text-sm font-medium">
-                If you know, you know
+              <p className="text-ifukno-pink text-sm font-medium text-center uppercase">
+                IF YOU KNOW, YOU KNOW
               </p>
               <p className="text-gray-500 text-xs">
                 © 2024 IFUKNO. All rights reserved.
