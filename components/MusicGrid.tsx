@@ -12,9 +12,10 @@ interface MusicItem {
 interface MusicGridProps {
   items: MusicItem[];
   onItemClick: (item: MusicItem) => void;
+  isUnreleased?: boolean;
 }
 
-export default function MusicGrid({ items, onItemClick }: MusicGridProps) {
+export default function MusicGrid({ items, onItemClick, isUnreleased = false }: MusicGridProps) {
   const cleanTitle = (title: string) => {
     // Remove leading dash and trim whitespace
     return title.replace(/^-\s*/, '').trim();
@@ -51,8 +52,8 @@ export default function MusicGrid({ items, onItemClick }: MusicGridProps) {
                   </div>
                 </div>
 
-                {/* Type indicator - only show for YouTube videos */}
-                {item.type === 'youtube_video' && (
+                {/* Type indicator - only show for YouTube videos and not for unreleased */}
+                {item.type === 'youtube_video' && !isUnreleased && (
                   <div className="absolute top-2 right-2">
                     <div className="bg-ifukno-green text-black text-xs px-2 py-1 rounded-full font-medium">
                       Video

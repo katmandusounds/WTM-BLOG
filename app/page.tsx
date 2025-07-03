@@ -204,7 +204,7 @@ export default function Home() {
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                   activeSection === 'home'
                     ? 'bg-ifukno-green text-black'
-                    : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                    : 'text-gray-300 hover:text-white hover:bg-ifukno-pink'
                 }`}
               >
                 <HomeIcon className="w-4 h-4" />
@@ -216,7 +216,7 @@ export default function Home() {
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                   activeSection === 'unreleased'
                     ? 'bg-ifukno-green text-black'
-                    : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                    : 'text-gray-300 hover:text-white hover:bg-ifukno-pink'
                 }`}
               >
                 <HelpCircle className="w-4 h-4" />
@@ -243,7 +243,7 @@ export default function Home() {
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                   activeSection === 'shop'
                     ? 'bg-ifukno-green text-black'
-                    : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                    : 'text-gray-300 hover:text-white hover:bg-ifukno-pink'
                 }`}
               >
                 <ShoppingBag className="w-4 h-4" />
@@ -255,7 +255,7 @@ export default function Home() {
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                   activeSection === 'about'
                     ? 'bg-ifukno-green text-black'
-                    : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                    : 'text-gray-300 hover:text-white hover:bg-ifukno-pink'
                 }`}
               >
                 <Info className="w-4 h-4" />
@@ -397,12 +397,7 @@ export default function Home() {
                   <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 title-stroke">
                     {activeSection === 'home' ? 'Latest Releases' : 'Unreleased Content'}
                   </h2>
-                  <p className="text-gray-400 text-lg">
-                    {activeSection === 'home' 
-                      ? 'Discover the newest music from artists you should know about'
-                      : 'Exclusive snippets, behind-the-scenes content, and short-form videos'
-                    }
-                  </p>
+                  <div className="w-24 h-1 bg-ifukno-green mx-auto"></div>
                 </div>
               </div>
 
@@ -424,18 +419,16 @@ export default function Home() {
                           <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2 title-stroke">
                             {formatDate(date)}
                           </h3>
-                          {activeSection === 'unreleased' && (
-                            <span className="inline-block bg-ifukno-pink text-white text-xs px-3 py-1 rounded-full font-medium">
-                              Short Form Content
-                            </span>
-                          )}
                         </div>
 
-                        {/* Music Grid */}
-                        <MusicGrid 
-                          items={items} 
-                          onItemClick={handleItemClick}
-                        />
+                        {/* Music Grid with border */}
+                        <div className="bg-black rounded-2xl p-8 border border-ifukno-pink">
+                          <MusicGrid 
+                            items={items} 
+                            onItemClick={handleItemClick}
+                            isUnreleased={activeSection === 'unreleased'}
+                          />
+                        </div>
                       </section>
                     ))}
                 </div>
