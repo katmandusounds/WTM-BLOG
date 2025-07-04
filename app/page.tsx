@@ -503,9 +503,10 @@ export default function Home() {
               <div className="bg-black/50 backdrop-blur-sm rounded-2xl p-8 sm:p-12 border border-ifuno-pink">
                 <div className="prose prose-lg prose-invert max-w-none">
                   <p className="text-xl text-gray-300 leading-relaxed mb-8">
-                    IFUNO is all about showcasing music that isn't the most popular in the mainstream, 
-                    but if you know, you know. We spotlight artists on their way to mass popularity 
-                    and small artists with cult-like followings.
+                    IFUNO is a place for UK music, spotlighting everything from underground talent to established legacy artists. 
+                    We champion artists on their way to mass popularity, small acts with cult-like followings, 
+                    and those who have shaped the scene. If you’re searching for what’s next or honoring those who paved the way, 
+                    you’re in the right place.
                   </p>
                   
                   <div className="grid md:grid-cols-2 gap-8 mt-12">
