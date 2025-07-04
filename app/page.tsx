@@ -62,10 +62,10 @@ export default function Home() {
   // Update page title based on active section
   useEffect(() => {
     const titles = {
-      home: 'IFUKNO - Latest Releases',
-      unreleased: 'IFUKNO - Unreleased',
-      about: 'IFUKNO - About',
-      shop: 'IFUKNO - Shop'
+      home: 'IFUNO - Latest Releases',
+      unreleased: 'IFUNO - Unreleased',
+      about: 'IFUNO - About',
+      shop: 'IFUNO - Shop'
     };
     document.title = titles[activeSection];
   }, [activeSection]);
@@ -195,7 +195,7 @@ export default function Home() {
     return (
       <div className="min-h-screen flex items-center justify-center overflow-hidden bg-black">
         <div className="text-center content-wrapper">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-ifukno-green mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-ifuno-green mx-auto mb-4"></div>
           <p className="text-gray-300">Loading music releases...</p>
         </div>
       </div>
@@ -206,7 +206,7 @@ export default function Home() {
     <div className="min-h-screen text-white bg-black overflow-hidden relative">
       {/* Screen Border - Shows video background */}
       <div className="fixed inset-0 z-[-1] p-4">
-        <div className="w-full h-full border-4 border-ifukno-green rounded-lg overflow-hidden">
+        <div className="w-full h-full border-4 border-ifuno-green rounded-lg overflow-hidden">
           <video
             className="w-full h-full object-cover"
             autoPlay
@@ -233,15 +233,15 @@ export default function Home() {
           >
             <img 
               src="https://ik.imagekit.io/vv1coyjgq/IFUKNO%20large%20gap%202025.png?updatedAt=1751549577754" 
-              alt="IFUKNO Logo" 
-              className="h-40 sm:h-48 md:h-56 w-auto object-contain"
+              alt="IFUNO Logo" 
+              className="h-20 w-auto object-contain"
             />
           </button>
         </div>
       )}
 
       {/* Horizontal Navigation Bar - Split Layout with Center Gap */}
-      <nav className="fixed top-0 left-0 right-0 z-40 bg-black/90 backdrop-blur-sm border-b border-gray-800">
+      <nav className="fixed top-0 left-0 right-0 z-40 bg-black/90 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-3 items-center h-16">
             {/* Left Side - Mobile Menu Button (visible on mobile) and Desktop Navigation */}
@@ -249,7 +249,7 @@ export default function Home() {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden flex items-center justify-center p-2 rounded-lg text-gray-300 hover:text-white hover:bg-ifukno-pink transition-colors duration-200"
+                className="md:hidden flex items-center justify-center p-2 rounded-lg text-gray-300 hover:text-white hover:bg-ifuno-pink transition-colors duration-200"
               >
                 {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
@@ -260,8 +260,8 @@ export default function Home() {
                   onClick={() => handleSectionChange('home')}
                   className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                     activeSection === 'home'
-                      ? 'bg-ifukno-green text-black'
-                      : 'text-gray-300 hover:text-white hover:bg-ifukno-pink'
+                      ? 'bg-ifuno-green text-black'
+                      : 'text-gray-300 hover:text-white hover:bg-ifuno-pink'
                   }`}
                 >
                   <HomeIcon className="w-4 h-4" />
@@ -272,8 +272,8 @@ export default function Home() {
                   onClick={() => handleSectionChange('unreleased')}
                   className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                     activeSection === 'unreleased'
-                      ? 'bg-ifukno-green text-black'
-                      : 'text-gray-300 hover:text-white hover:bg-ifukno-pink'
+                      ? 'bg-ifuno-green text-black'
+                      : 'text-gray-300 hover:text-white hover:bg-ifuno-pink'
                   }`}
                 >
                   <HelpCircle className="w-4 h-4" />
@@ -291,7 +291,7 @@ export default function Home() {
                 >
                   <img 
                     src="https://ik.imagekit.io/vv1coyjgq/IFUKNO%20large%20gap%202025.png?updatedAt=1751549577754" 
-                    alt="IFUKNO Logo" 
+                    alt="IFUNO Logo" 
                     className="h-10 w-auto object-contain"
                   />
                 </button>
@@ -304,8 +304,8 @@ export default function Home() {
                 onClick={() => handleSectionChange('shop')}
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                   activeSection === 'shop'
-                    ? 'bg-ifukno-green text-black'
-                    : 'text-gray-300 hover:text-white hover:bg-ifukno-pink'
+                    ? 'bg-ifuno-green text-black'
+                    : 'text-gray-300 hover:text-white hover:bg-ifuno-pink'
                 }`}
               >
                 <ShoppingBag className="w-4 h-4" />
@@ -316,8 +316,8 @@ export default function Home() {
                 onClick={() => handleSectionChange('about')}
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                   activeSection === 'about'
-                    ? 'bg-ifukno-green text-black'
-                    : 'text-gray-300 hover:text-white hover:bg-ifukno-pink'
+                    ? 'bg-ifuno-green text-black'
+                    : 'text-gray-300 hover:text-white hover:bg-ifuno-pink'
                 }`}
               >
                 <Info className="w-4 h-4" />
@@ -329,14 +329,14 @@ export default function Home() {
 
         {/* Mobile Menu Dropdown */}
         {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-sm border-b border-gray-800">
+          <div className="md:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-sm">
             <div className="px-4 py-4 space-y-2">
               <button
                 onClick={() => handleSectionChange('home')}
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                   activeSection === 'home'
-                    ? 'bg-ifukno-green text-black'
-                    : 'text-gray-300 hover:text-white hover:bg-ifukno-pink'
+                    ? 'bg-ifuno-green text-black'
+                    : 'text-gray-300 hover:text-white hover:bg-ifuno-pink'
                 }`}
               >
                 <HomeIcon className="w-5 h-5" />
@@ -347,8 +347,8 @@ export default function Home() {
                 onClick={() => handleSectionChange('unreleased')}
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                   activeSection === 'unreleased'
-                    ? 'bg-ifukno-green text-black'
-                    : 'text-gray-300 hover:text-white hover:bg-ifukno-pink'
+                    ? 'bg-ifuno-green text-black'
+                    : 'text-gray-300 hover:text-white hover:bg-ifuno-pink'
                 }`}
               >
                 <HelpCircle className="w-5 h-5" />
@@ -359,8 +359,8 @@ export default function Home() {
                 onClick={() => handleSectionChange('shop')}
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                   activeSection === 'shop'
-                    ? 'bg-ifukno-green text-black'
-                    : 'text-gray-300 hover:text-white hover:bg-ifukno-pink'
+                    ? 'bg-ifuno-green text-black'
+                    : 'text-gray-300 hover:text-white hover:bg-ifuno-pink'
                 }`}
               >
                 <ShoppingBag className="w-5 h-5" />
@@ -371,8 +371,8 @@ export default function Home() {
                 onClick={() => handleSectionChange('about')}
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                   activeSection === 'about'
-                    ? 'bg-ifukno-green text-black'
-                    : 'text-gray-300 hover:text-white hover:bg-ifukno-pink'
+                    ? 'bg-ifuno-green text-black'
+                    : 'text-gray-300 hover:text-white hover:bg-ifuno-pink'
                 }`}
               >
                 <Info className="w-5 h-5" />
@@ -386,7 +386,7 @@ export default function Home() {
       {/* Main Content Area */}
       <main className={`min-h-screen flex flex-col content-wrapper transition-all duration-500 ${
         (activeSection === 'home' || activeSection === 'unreleased') && !isScrolled 
-          ? 'pt-56 sm:pt-64 md:pt-72' 
+          ? 'pt-28' 
           : 'pt-16'
       }`}>
         <div className="flex-1 max-w-6xl mx-auto px-6 py-8 relative z-10">
@@ -397,20 +397,20 @@ export default function Home() {
                 <div className="flex items-center justify-center mb-6">
                   <img 
                     src="https://ik.imagekit.io/vv1coyjgq/IFUKNO%20large%20gap%202025.png?updatedAt=1751549577754" 
-                    alt="IFUKNO Logo" 
+                    alt="IFUNO Logo" 
                     className="h-20 w-auto object-contain"
                   />
                 </div>
                 <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 title-stroke">
                   About
                 </h2>
-                <div className="w-24 h-1 bg-ifukno-green mx-auto"></div>
+                <div className="w-24 h-1 bg-ifuno-green mx-auto"></div>
               </div>
               
-              <div className="bg-black/80 backdrop-blur-sm rounded-2xl p-8 sm:p-12 border border-ifukno-pink">
+              <div className="bg-black/80 backdrop-blur-sm rounded-2xl p-8 sm:p-12 border border-ifuno-pink">
                 <div className="prose prose-lg prose-invert max-w-none">
                   <p className="text-xl text-gray-300 leading-relaxed mb-8">
-                    IFUKNO is all about showcasing music that isn't the most popular in the mainstream, 
+                    IFUNO is all about showcasing music that isn't the most popular in the mainstream, 
                     but if you know, you know. We spotlight artists on their way to mass popularity 
                     and small artists with cult-like followings.
                   </p>
@@ -435,9 +435,9 @@ export default function Home() {
                     </div>
                   </div>
                   
-                  <div className="mt-12 pt-8 border-t border-ifukno-pink">
+                  <div className="mt-12 pt-8 border-t border-ifuno-pink">
                     <div className="text-center">
-                      <p className="text-ifukno-green text-sm font-medium">
+                      <p className="text-ifuno-green text-sm font-medium">
                         Discover • Support • Celebrate
                       </p>
                       <p className="text-gray-400 text-sm mt-2">
@@ -455,7 +455,7 @@ export default function Home() {
                 <div className="flex items-center justify-center mb-6">
                   <img 
                     src="https://ik.imagekit.io/vv1coyjgq/IFUKNO%20large%20gap%202025.png?updatedAt=1751549577754" 
-                    alt="IFUKNO Logo" 
+                    alt="IFUNO Logo" 
                     className="h-20 w-auto object-contain"
                   />
                 </div>
@@ -465,13 +465,13 @@ export default function Home() {
                 <p className="text-white text-lg">
                   Official merchandise and exclusive drops from artists you should know
                 </p>
-                <div className="w-24 h-1 bg-ifukno-green mx-auto mt-6"></div>
+                <div className="w-24 h-1 bg-ifuno-green mx-auto mt-6"></div>
               </div>
               
-              <div className="bg-black/80 backdrop-blur-sm rounded-2xl p-8 sm:p-12 border border-ifukno-pink">
+              <div className="bg-black/80 backdrop-blur-sm rounded-2xl p-8 sm:p-12 border border-ifuno-pink">
                 <div className="text-center space-y-8">
                   <div className="space-y-4">
-                    <ShoppingBag className="w-16 h-16 text-ifukno-green mx-auto" />
+                    <ShoppingBag className="w-16 h-16 text-ifuno-green mx-auto" />
                     <h3 className="text-3xl font-bold text-white">Coming Soon</h3>
                     <p className="text-xl text-gray-300 max-w-2xl mx-auto">
                       We're working on bringing you exclusive merchandise, limited edition drops, 
@@ -481,17 +481,17 @@ export default function Home() {
                   
                   <div className="grid md:grid-cols-3 gap-8 mt-12">
                     <div className="space-y-4 text-center">
-                      <div className="w-12 h-12 bg-ifukno-green rounded-full flex items-center justify-center mx-auto">
+                      <div className="w-12 h-12 bg-ifuno-green rounded-full flex items-center justify-center mx-auto">
                         <span className="text-black font-bold">1</span>
                       </div>
                       <h4 className="text-xl font-bold text-white">Exclusive Drops</h4>
                       <p className="text-gray-300">
-                        Limited edition merchandise from underground artists and rising stars, available only through IFUKNO.
+                        Limited edition merchandise from underground artists and rising stars, available only through IFUNO.
                       </p>
                     </div>
                     
                     <div className="space-y-4 text-center">
-                      <div className="w-12 h-12 bg-ifukno-pink rounded-full flex items-center justify-center mx-auto">
+                      <div className="w-12 h-12 bg-ifuno-pink rounded-full flex items-center justify-center mx-auto">
                         <span className="text-white font-bold">2</span>
                       </div>
                       <h4 className="text-xl font-bold text-white">Artist Collaborations</h4>
@@ -501,7 +501,7 @@ export default function Home() {
                     </div>
                     
                     <div className="space-y-4 text-center">
-                      <div className="w-12 h-12 bg-ifukno-green rounded-full flex items-center justify-center mx-auto">
+                      <div className="w-12 h-12 bg-ifuno-green rounded-full flex items-center justify-center mx-auto">
                         <span className="text-black font-bold">3</span>
                       </div>
                       <h4 className="text-xl font-bold text-white">Culture First</h4>
@@ -511,7 +511,7 @@ export default function Home() {
                     </div>
                   </div>
                   
-                  <div className="mt-12 pt-8 border-t border-ifukno-pink">
+                  <div className="mt-12 pt-8 border-t border-ifuno-pink">
                     <p className="text-gray-400">
                       Want to be notified when we launch? Follow us for updates on the latest drops.
                     </p>
@@ -522,12 +522,19 @@ export default function Home() {
           ) : (
             /* Home/Unreleased Section - Music Releases */
             <div className="w-full">
-              {/* Section Header - Centered */}
-              <div className="text-center mb-6">
+              {/* Section Header - Centered with Logo */}
+              <div className="text-center mb-8">
+                <div className="flex items-center justify-center mb-6">
+                  <img 
+                    src="https://ik.imagekit.io/vv1coyjgq/IFUKNO%20large%20gap%202025.png?updatedAt=1751549577754" 
+                    alt="IFUNO Logo" 
+                    className="h-20 w-auto object-contain"
+                  />
+                </div>
                 <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 title-stroke">
                   {activeSection === 'home' ? 'Latest Releases' : 'Unreleased Content'}
                 </h2>
-                <div className="w-24 h-1 bg-ifukno-green mx-auto"></div>
+                <div className="w-24 h-1 bg-ifuno-green mx-auto"></div>
               </div>
 
               {Object.keys(groupedItems).length === 0 ? (
@@ -551,7 +558,7 @@ export default function Home() {
                         </div>
 
                         {/* Music Grid with border */}
-                        <div className="bg-black/80 backdrop-blur-sm rounded-2xl p-8 border border-ifukno-pink">
+                        <div className="bg-black/80 backdrop-blur-sm rounded-2xl p-8 border border-ifuno-pink">
                           <MusicGrid 
                             items={items} 
                             onItemClick={handleItemClick}
@@ -569,7 +576,7 @@ export default function Home() {
                   <button
                     onClick={() => handlePageChange(Math.max(0, currentPage - 1))}
                     disabled={currentPage === 0}
-                    className="flex items-center space-x-2 px-4 py-2 bg-ifukno-green border border-ifukno-green rounded-lg text-black hover:bg-ifukno-pink hover:border-ifukno-pink hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                    className="flex items-center space-x-2 px-4 py-2 bg-ifuno-green border border-ifuno-green rounded-lg text-black hover:bg-ifuno-pink hover:border-ifuno-pink hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                   >
                     <ChevronLeft className="w-4 h-4" />
                     <span>Previous</span>
@@ -582,7 +589,7 @@ export default function Home() {
                   <button
                     onClick={() => handlePageChange(Math.min(totalPages - 1, currentPage + 1))}
                     disabled={currentPage === totalPages - 1}
-                    className="flex items-center space-x-2 px-4 py-2 bg-ifukno-green border border-ifukno-green rounded-lg text-black hover:bg-ifukno-pink hover:border-ifukno-pink hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                    className="flex items-center space-x-2 px-4 py-2 bg-ifuno-green border border-ifuno-green rounded-lg text-black hover:bg-ifuno-pink hover:border-ifuno-pink hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                   >
                     <span>Next</span>
                     <ChevronRight className="w-4 h-4" />
@@ -594,18 +601,18 @@ export default function Home() {
         </div>
 
         {/* Footer - Black Theme */}
-        <footer className="border-t border-ifukno-pink bg-black/80 backdrop-blur-sm py-6 relative z-10">
+        <footer className="border-t border-ifuno-pink bg-black/80 backdrop-blur-sm py-6 relative z-10">
           <div className="max-w-6xl mx-auto px-6">
             <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
-              <div className="flex items-center space-x-2 text-ifukno-green">
+              <div className="flex items-center space-x-2 text-ifuno-green">
                 <MapPin className="w-4 h-4" />
                 <span>Worldwide</span>
               </div>
-              <p className="text-ifukno-pink text-sm font-medium text-center uppercase">
+              <p className="text-ifuno-pink text-sm font-medium text-center uppercase">
                 IF YOU KNOW, YOU KNOW
               </p>
               <p className="text-gray-500 text-xs">
-                © 2024 IFUKNO. All rights reserved.
+                © 2024 IFUNO. All rights reserved.
               </p>
             </div>
           </div>
