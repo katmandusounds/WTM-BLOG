@@ -30,6 +30,7 @@ export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLeakUnlocked, setIsLeakUnlocked] = useState(false);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
   const [passwordError, setPasswordError] = useState(false);
 
@@ -175,8 +176,9 @@ export default function Home() {
   };
 
   const handleSectionChange = (section: Section) => {
-    // If trying to access leak section and not unlocked, don't change section
+    // If trying to access leak section and not unlocked, show password modal
     if (section === 'leak' && !isLeakUnlocked) {
+      setShowPasswordModal(true);
       return;
     }
     
@@ -193,6 +195,7 @@ export default function Home() {
       setActiveSection('leak');
       setPasswordError(false);
       setPasswordInput('');
+      setShowPasswordModal(false);
       setCurrentPage(0);
       setIsMobileMenuOpen(false);
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -206,6 +209,12 @@ export default function Home() {
     if (e.key === 'Enter') {
       handleLeakAccess();
     }
+  };
+
+  const handleClosePasswordModal = () => {
+    setShowPasswordModal(false);
+    setPasswordInput('');
+    setPasswordError(false);
   };
 
   const handlePageChange = (newPage: number) => {
@@ -297,13 +306,11 @@ export default function Home() {
                 </button>
                 
                 <button
-                  onClick={() => isLeakUnlocked ? handleSectionChange('leak') : null}
+                  onClick={() => handleSectionChange('leak')}
                   className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                     activeSection === 'leak'
                       ? 'bg-ifuno-green text-black'
-                      : isLeakUnlocked 
-                        ? 'text-gray-300 hover:text-white hover:bg-ifuno-pink'
-                        : 'text-gray-500 cursor-not-allowed'
+                      : 'text-gray-300 hover:text-white hover:bg-ifuno-pink'
                   }`}
                 >
                   <Lock className="w-4 h-4" />
@@ -374,13 +381,11 @@ export default function Home() {
               </button>
               
               <button
-                onClick={() => isLeakUnlocked ? handleSectionChange('leak') : null}
+                onClick={() => handleSectionChange('leak')}
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                   activeSection === 'leak'
                     ? 'bg-ifuno-green text-black'
-                    : isLeakUnlocked 
-                      ? 'text-gray-300 hover:text-white hover:bg-ifuno-pink'
-                      : 'text-gray-500 cursor-not-allowed'
+                    : 'text-gray-300 hover:text-white hover:bg-ifuno-pink'
                 }`}
               >
                 <Lock className="w-5 h-5" />
@@ -414,6 +419,71 @@ export default function Home() {
           </div>
         )}
       </nav>
+
+      {/* Password Protection Modal */}
+      {showPasswordModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Blurred Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/80 backdrop-blur-md"
+            onClick={handleClosePasswordModal}
+          />
+          
+          {/* Modal Content */}
+          <div className="relative bg-black/90 rounded-2xl shadow-2xl max-w-md w-full mx-4 border border-ifuno-pink">
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 border-b border-ifuno-pink">
+              <div>
+                <h2 className="text-xl font-bold text-white uppercase">LEAK ACCESS</h2>
+                <p className="text-sm text-gray-300">Protected Content</p>
+              </div>
+              <button
+                onClick={handleClosePasswordModal}
+                className="p-2 hover:bg-gray-800 rounded-full transition-colors duration-200"
+              >
+                <X className="w-5 h-5 text-gray-400 hover:text-white" />
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="p-6">
+              <div className="text-center space-y-6">
+                <Lock className="w-16 h-16 text-ifuno-pink mx-auto" />
+                <p className="text-gray-300">
+                  Enter the password to access exclusive leaked content
+                </p>
+                
+                <div className="space-y-4">
+                  <input
+                    type="password"
+                    value={passwordInput}
+                    onChange={(e) => setPasswordInput(e.target.value)}
+                    onKeyPress={handlePasswordKeyPress}
+                    placeholder="Enter password"
+                    className={`w-full px-4 py-3 bg-black/70 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-colors ${
+                      passwordError 
+                        ? 'border-red-500 focus:ring-red-500' 
+                        : 'border-gray-600 focus:ring-ifuno-green'
+                    }`}
+                    autoFocus
+                  />
+                  
+                  {passwordError && (
+                    <p className="text-red-400 text-sm">Incorrect password. Try again.</p>
+                  )}
+                  
+                  <button
+                    onClick={handleLeakAccess}
+                    className="w-full px-6 py-3 bg-ifuno-green text-black font-medium rounded-lg hover:bg-ifuno-pink hover:text-white transition-colors duration-200 uppercase"
+                  >
+                    ACCESS LEAK
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Main Content Area */}
       <main className={`min-h-screen flex flex-col content-wrapper transition-all duration-500 ${
@@ -528,52 +598,6 @@ export default function Home() {
                     <p className="text-gray-400">
                       Want to be notified when we launch? Follow us for updates on the latest drops.
                     </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ) : activeSection === 'leak' && !isLeakUnlocked ? (
-            /* Password Protection for Leak Section */
-            <div className="max-w-md mx-auto">
-              <div className="text-center mb-8">
-                <h2 className="text-4xl sm:text-5xl font-black text-white mb-6 title-stroke uppercase">
-                  LEAK
-                </h2>
-                <div className="w-24 h-1 bg-ifuno-green mx-auto"></div>
-              </div>
-              
-              <div className="bg-black/50 backdrop-blur-sm rounded-2xl p-8 border border-ifuno-pink">
-                <div className="text-center space-y-6">
-                  <Lock className="w-16 h-16 text-ifuno-pink mx-auto" />
-                  <h3 className="text-2xl font-bold text-white">Protected Content</h3>
-                  <p className="text-gray-300">
-                    Enter the password to access exclusive leaked content
-                  </p>
-                  
-                  <div className="space-y-4">
-                    <input
-                      type="password"
-                      value={passwordInput}
-                      onChange={(e) => setPasswordInput(e.target.value)}
-                      onKeyPress={handlePasswordKeyPress}
-                      placeholder="Enter password"
-                      className={`w-full px-4 py-3 bg-black/70 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-colors ${
-                        passwordError 
-                          ? 'border-red-500 focus:ring-red-500' 
-                          : 'border-gray-600 focus:ring-ifuno-green'
-                      }`}
-                    />
-                    
-                    {passwordError && (
-                      <p className="text-red-400 text-sm">Incorrect password. Try again.</p>
-                    )}
-                    
-                    <button
-                      onClick={handleLeakAccess}
-                      className="w-full px-6 py-3 bg-ifuno-green text-black font-medium rounded-lg hover:bg-ifuno-pink hover:text-white transition-colors duration-200"
-                    >
-                      ACCESS LEAK
-                    </button>
                   </div>
                 </div>
               </div>
