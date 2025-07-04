@@ -390,7 +390,7 @@ export default function Home() {
             /* About Section */
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">
-                <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 title-stroke">
+                <h2 className="text-4xl sm:text-5xl font-black text-white mb-6 title-stroke">
                   About
                 </h2>
                 <div className="w-24 h-1 bg-ifuno-green mx-auto"></div>
@@ -441,7 +441,7 @@ export default function Home() {
             /* Shop Section */
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-12">
-                <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 title-stroke">
+                <h2 className="text-4xl sm:text-5xl font-black text-white mb-6 title-stroke">
                   Shop
                 </h2>
                 <div className="w-24 h-1 bg-ifuno-green mx-auto"></div>
@@ -503,7 +503,7 @@ export default function Home() {
             <div className="w-full">
               {/* Section Header - Centered */}
               <div className="text-center mb-8">
-                <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 title-stroke">
+                <h2 className="text-3xl sm:text-4xl font-black text-white mb-4 title-stroke">
                   {activeSection === 'home' ? 'Latest Releases' : 'Unreleased Content'}
                 </h2>
                 <div className="w-24 h-1 bg-ifuno-green mx-auto"></div>
@@ -522,9 +522,9 @@ export default function Home() {
                     .sort(([a], [b]) => new Date(b).getTime() - new Date(a).getTime())
                     .map(([date, items]) => (
                       <section key={date} className="space-y-6 w-full">
-                        {/* Date Header - Centered with text stroke */}
+                        {/* Date Header - Centered with text stroke and much smaller text */}
                         <div className="text-center">
-                          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2 title-stroke">
+                          <h3 className="text-xs sm:text-sm font-bold text-white mb-2 title-stroke">
                             {formatDate(date)}
                           </h3>
                         </div>
