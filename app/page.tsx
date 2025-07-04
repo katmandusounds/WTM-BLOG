@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Calendar, Home as HomeIcon, Info, MoreHorizontal, MapPin, ShoppingBag, HelpCircle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar, Home as HomeIcon, Info, MoreHorizontal, MapPin, ShoppingBag, HelpCircle, Menu, X } from 'lucide-react';
 import MusicGrid from '@/components/MusicGrid';
 import VideoModal from '@/components/VideoModal';
 
@@ -28,6 +28,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [activeSection, setActiveSection] = useState<Section>('home');
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const ITEMS_PER_PAGE = 40; // 5 per row, 8 rows
 
@@ -57,6 +58,17 @@ export default function Home() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Update page title based on active section
+  useEffect(() => {
+    const titles = {
+      home: 'IFUKNO - Latest Releases',
+      unreleased: 'IFUKNO - Unreleased',
+      about: 'IFUKNO - About',
+      shop: 'IFUKNO - Shop'
+    };
+    document.title = titles[activeSection];
+  }, [activeSection]);
 
   // Mock data for unreleased content (short-form videos)
   const unreleasedData: MusicData = {
@@ -161,6 +173,7 @@ export default function Home() {
   const handleSectionChange = (section: Section) => {
     setActiveSection(section);
     setCurrentPage(0); // Reset pagination when switching sections
+    setIsMobileMenuOpen(false); // Close mobile menu
     // Scroll to top when changing sections
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -174,6 +187,7 @@ export default function Home() {
   const handleLogoClick = () => {
     setActiveSection('home');
     setCurrentPage(0);
+    setIsMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -230,31 +244,42 @@ export default function Home() {
       <nav className="fixed top-0 left-0 right-0 z-40 bg-black/90 backdrop-blur-sm border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-3 items-center h-16">
-            {/* Left Side - New and Unreleased */}
+            {/* Left Side - Mobile Menu Button (visible on mobile) and Desktop Navigation */}
             <div className="flex items-center space-x-6 justify-start">
+              {/* Mobile Menu Button */}
               <button
-                onClick={() => handleSectionChange('home')}
-                className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
-                  activeSection === 'home'
-                    ? 'bg-ifukno-green text-black'
-                    : 'text-gray-300 hover:text-white hover:bg-ifukno-pink'
-                }`}
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="md:hidden flex items-center justify-center p-2 rounded-lg text-gray-300 hover:text-white hover:bg-ifukno-pink transition-colors duration-200"
               >
-                <HomeIcon className="w-4 h-4" />
-                <span className="text-sm font-medium">New</span>
+                {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
-              
-              <button
-                onClick={() => handleSectionChange('unreleased')}
-                className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
-                  activeSection === 'unreleased'
-                    ? 'bg-ifukno-green text-black'
-                    : 'text-gray-300 hover:text-white hover:bg-ifukno-pink'
-                }`}
-              >
-                <HelpCircle className="w-4 h-4" />
-                <span className="text-sm font-medium">Unreleased</span>
-              </button>
+
+              {/* Desktop Navigation */}
+              <div className="hidden md:flex items-center space-x-6">
+                <button
+                  onClick={() => handleSectionChange('home')}
+                  className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
+                    activeSection === 'home'
+                      ? 'bg-ifukno-green text-black'
+                      : 'text-gray-300 hover:text-white hover:bg-ifukno-pink'
+                  }`}
+                >
+                  <HomeIcon className="w-4 h-4" />
+                  <span className="text-sm font-medium">New</span>
+                </button>
+                
+                <button
+                  onClick={() => handleSectionChange('unreleased')}
+                  className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
+                    activeSection === 'unreleased'
+                      ? 'bg-ifukno-green text-black'
+                      : 'text-gray-300 hover:text-white hover:bg-ifukno-pink'
+                  }`}
+                >
+                  <HelpCircle className="w-4 h-4" />
+                  <span className="text-sm font-medium">Unreleased</span>
+                </button>
+              </div>
             </div>
             
             {/* Center - Logo (only visible when scrolled) */}
@@ -273,8 +298,8 @@ export default function Home() {
               </div>
             </div>
             
-            {/* Right Side - Shop and About */}
-            <div className="flex items-center space-x-6 justify-end">
+            {/* Right Side - Shop and About (Desktop only) */}
+            <div className="hidden md:flex items-center space-x-6 justify-end">
               <button
                 onClick={() => handleSectionChange('shop')}
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
@@ -301,12 +326,67 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* Mobile Menu Dropdown */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-sm border-b border-gray-800">
+            <div className="px-4 py-4 space-y-2">
+              <button
+                onClick={() => handleSectionChange('home')}
+                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                  activeSection === 'home'
+                    ? 'bg-ifukno-green text-black'
+                    : 'text-gray-300 hover:text-white hover:bg-ifukno-pink'
+                }`}
+              >
+                <HomeIcon className="w-5 h-5" />
+                <span className="font-medium">New</span>
+              </button>
+              
+              <button
+                onClick={() => handleSectionChange('unreleased')}
+                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                  activeSection === 'unreleased'
+                    ? 'bg-ifukno-green text-black'
+                    : 'text-gray-300 hover:text-white hover:bg-ifukno-pink'
+                }`}
+              >
+                <HelpCircle className="w-5 h-5" />
+                <span className="font-medium">Unreleased</span>
+              </button>
+              
+              <button
+                onClick={() => handleSectionChange('shop')}
+                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                  activeSection === 'shop'
+                    ? 'bg-ifukno-green text-black'
+                    : 'text-gray-300 hover:text-white hover:bg-ifukno-pink'
+                }`}
+              >
+                <ShoppingBag className="w-5 h-5" />
+                <span className="font-medium">Shop</span>
+              </button>
+              
+              <button
+                onClick={() => handleSectionChange('about')}
+                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                  activeSection === 'about'
+                    ? 'bg-ifukno-green text-black'
+                    : 'text-gray-300 hover:text-white hover:bg-ifukno-pink'
+                }`}
+              >
+                <Info className="w-5 h-5" />
+                <span className="font-medium">About</span>
+              </button>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Main Content Area */}
       <main className={`min-h-screen flex flex-col content-wrapper transition-all duration-500 ${
         (activeSection === 'home' || activeSection === 'unreleased') && !isScrolled 
-          ? 'pt-64 sm:pt-72 md:pt-80' 
+          ? 'pt-56 sm:pt-64 md:pt-72' 
           : 'pt-16'
       }`}>
         <div className="flex-1 max-w-6xl mx-auto px-6 py-8 relative z-10">
@@ -314,8 +394,15 @@ export default function Home() {
             /* About Section */
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">
+                <div className="flex items-center justify-center mb-6">
+                  <img 
+                    src="https://ik.imagekit.io/vv1coyjgq/IFUKNO%20large%20gap%202025.png?updatedAt=1751549577754" 
+                    alt="IFUKNO Logo" 
+                    className="h-20 w-auto object-contain"
+                  />
+                </div>
                 <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 title-stroke">
-                  About IFUKNO
+                  About
                 </h2>
                 <div className="w-24 h-1 bg-ifukno-green mx-auto"></div>
               </div>
@@ -365,8 +452,15 @@ export default function Home() {
             /* Shop Section */
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-12">
+                <div className="flex items-center justify-center mb-6">
+                  <img 
+                    src="https://ik.imagekit.io/vv1coyjgq/IFUKNO%20large%20gap%202025.png?updatedAt=1751549577754" 
+                    alt="IFUKNO Logo" 
+                    className="h-20 w-auto object-contain"
+                  />
+                </div>
                 <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 title-stroke">
-                  IFUKNO Shop
+                  Shop
                 </h2>
                 <p className="text-white text-lg">
                   Official merchandise and exclusive drops from artists you should know
@@ -429,7 +523,7 @@ export default function Home() {
             /* Home/Unreleased Section - Music Releases */
             <div className="w-full">
               {/* Section Header - Centered */}
-              <div className="text-center mb-8">
+              <div className="text-center mb-6">
                 <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 title-stroke">
                   {activeSection === 'home' ? 'Latest Releases' : 'Unreleased Content'}
                 </h2>
