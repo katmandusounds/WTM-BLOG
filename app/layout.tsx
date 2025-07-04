@@ -5,7 +5,7 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'IFUNO - Latest Releases',
+  title: 'IFUNO - LATEST RELEASES',
   description: 'Discover music that isn\'t mainstream but if you know, you know - from rising stars to cult favorites',
   icons: {
     icon: 'https://ik.imagekit.io/vv1coyjgq/ifuno%20favicon%20162.png?updatedAt=1751624873967',

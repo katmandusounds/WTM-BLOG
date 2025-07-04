@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Calendar, Home as HomeIcon, Info, MoreHorizontal, MapPin, ShoppingBag, HelpCircle, Menu, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar, Home as HomeIcon, Info, MoreHorizontal, MapPin, ShoppingBag, HelpCircle, Menu, X, Lock } from 'lucide-react';
 import MusicGrid from '@/components/MusicGrid';
 import VideoModal from '@/components/VideoModal';
 
@@ -18,7 +18,7 @@ interface MusicData {
   [date: string]: MusicItem[];
 }
 
-type Section = 'home' | 'unreleased' | 'about' | 'shop';
+type Section = 'home' | 'leak' | 'about' | 'shop';
 
 export default function Home() {
   const [musicData, setMusicData] = useState<MusicData>({});
@@ -29,8 +29,12 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState<Section>('home');
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLeakUnlocked, setIsLeakUnlocked] = useState(false);
+  const [passwordInput, setPasswordInput] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
 
   const ITEMS_PER_PAGE = 40; // 5 per row, 8 rows
+  const LEAK_PASSWORD = '123456';
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,16 +66,16 @@ export default function Home() {
   // Update page title based on active section
   useEffect(() => {
     const titles = {
-      home: 'IFUNO - Latest Releases',
-      unreleased: 'IFUNO - Unreleased',
-      about: 'IFUNO - About',
-      shop: 'IFUNO - Shop'
+      home: 'IFUNO - LATEST RELEASES',
+      leak: 'IFUNO - LEAK',
+      about: 'IFUNO - ABOUT',
+      shop: 'IFUNO - SHOP'
     };
     document.title = titles[activeSection];
   }, [activeSection]);
 
-  // Mock data for unreleased content (short-form videos)
-  const unreleasedData: MusicData = {
+  // Mock data for leak content (short-form videos)
+  const leakData: MusicData = {
     '2024-01-15': [
       {
         type: 'youtube_video',
@@ -128,7 +132,7 @@ export default function Home() {
 
   // Get current data based on active section
   const getCurrentData = () => {
-    return activeSection === 'unreleased' ? unreleasedData : musicData;
+    return activeSection === 'leak' ? leakData : musicData;
   };
 
   // Flatten all items with their dates for pagination
@@ -171,11 +175,37 @@ export default function Home() {
   };
 
   const handleSectionChange = (section: Section) => {
+    // If trying to access leak section and not unlocked, don't change section
+    if (section === 'leak' && !isLeakUnlocked) {
+      return;
+    }
+    
     setActiveSection(section);
     setCurrentPage(0); // Reset pagination when switching sections
     setIsMobileMenuOpen(false); // Close mobile menu
     // Scroll to top when changing sections
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleLeakAccess = () => {
+    if (passwordInput === LEAK_PASSWORD) {
+      setIsLeakUnlocked(true);
+      setActiveSection('leak');
+      setPasswordError(false);
+      setPasswordInput('');
+      setCurrentPage(0);
+      setIsMobileMenuOpen(false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      setPasswordError(true);
+      setTimeout(() => setPasswordError(false), 2000);
+    }
+  };
+
+  const handlePasswordKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleLeakAccess();
+    }
   };
 
   const handlePageChange = (newPage: number) => {
@@ -224,7 +254,7 @@ export default function Home() {
 
       {/* Large Logo - Starts from very top, disappears on scroll - ALL SECTIONS */}
       <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-500 ${
-        isScrolled ? 'opacity-0 translate-y-[-30px] pointer-events-none' : 'opacity-100 translate-y-0'
+        isScrolled || isMobileMenuOpen ? 'opacity-0 translate-y-[-30px] pointer-events-none' : 'opacity-100 translate-y-0'
       }`}>
         <button 
           onClick={handleLogoClick}
@@ -263,26 +293,28 @@ export default function Home() {
                   }`}
                 >
                   <HomeIcon className="w-4 h-4" />
-                  <span className="text-sm font-medium">New</span>
+                  <span className="text-sm font-medium uppercase">NEW</span>
                 </button>
                 
                 <button
-                  onClick={() => handleSectionChange('unreleased')}
+                  onClick={() => isLeakUnlocked ? handleSectionChange('leak') : null}
                   className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
-                    activeSection === 'unreleased'
+                    activeSection === 'leak'
                       ? 'bg-ifuno-green text-black'
-                      : 'text-gray-300 hover:text-white hover:bg-ifuno-pink'
+                      : isLeakUnlocked 
+                        ? 'text-gray-300 hover:text-white hover:bg-ifuno-pink'
+                        : 'text-gray-500 cursor-not-allowed'
                   }`}
                 >
-                  <HelpCircle className="w-4 h-4" />
-                  <span className="text-sm font-medium">Unreleased</span>
+                  <Lock className="w-4 h-4" />
+                  <span className="text-sm font-medium uppercase">LEAK</span>
                 </button>
               </div>
             </div>
             
-            {/* Center - Logo (only visible when scrolled) */}
+            {/* Center - Logo (only visible when scrolled or mobile menu open) */}
             <div className="flex justify-center">
-              <div className={`transition-all duration-300 ${isScrolled ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+              <div className={`transition-all duration-300 ${isScrolled || isMobileMenuOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
                 <button 
                   onClick={handleLogoClick}
                   className="flex items-center justify-center hover:opacity-80 transition-opacity duration-200"
@@ -307,7 +339,7 @@ export default function Home() {
                 }`}
               >
                 <ShoppingBag className="w-4 h-4" />
-                <span className="text-sm font-medium">Shop</span>
+                <span className="text-sm font-medium uppercase">SHOP</span>
               </button>
               
               <button
@@ -319,7 +351,7 @@ export default function Home() {
                 }`}
               >
                 <Info className="w-4 h-4" />
-                <span className="text-sm font-medium">About</span>
+                <span className="text-sm font-medium uppercase">ABOUT</span>
               </button>
             </div>
           </div>
@@ -338,19 +370,21 @@ export default function Home() {
                 }`}
               >
                 <HomeIcon className="w-5 h-5" />
-                <span className="font-medium">New</span>
+                <span className="font-medium uppercase">NEW</span>
               </button>
               
               <button
-                onClick={() => handleSectionChange('unreleased')}
+                onClick={() => isLeakUnlocked ? handleSectionChange('leak') : null}
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
-                  activeSection === 'unreleased'
+                  activeSection === 'leak'
                     ? 'bg-ifuno-green text-black'
-                    : 'text-gray-300 hover:text-white hover:bg-ifuno-pink'
+                    : isLeakUnlocked 
+                      ? 'text-gray-300 hover:text-white hover:bg-ifuno-pink'
+                      : 'text-gray-500 cursor-not-allowed'
                 }`}
               >
-                <HelpCircle className="w-5 h-5" />
-                <span className="font-medium">Unreleased</span>
+                <Lock className="w-5 h-5" />
+                <span className="font-medium uppercase">LEAK</span>
               </button>
               
               <button
@@ -362,7 +396,7 @@ export default function Home() {
                 }`}
               >
                 <ShoppingBag className="w-5 h-5" />
-                <span className="font-medium">Shop</span>
+                <span className="font-medium uppercase">SHOP</span>
               </button>
               
               <button
@@ -374,7 +408,7 @@ export default function Home() {
                 }`}
               >
                 <Info className="w-5 h-5" />
-                <span className="font-medium">About</span>
+                <span className="font-medium uppercase">ABOUT</span>
               </button>
             </div>
           </div>
@@ -383,15 +417,15 @@ export default function Home() {
 
       {/* Main Content Area */}
       <main className={`min-h-screen flex flex-col content-wrapper transition-all duration-500 ${
-        !isScrolled ? 'pt-28' : 'pt-16'
+        !isScrolled && !isMobileMenuOpen ? 'pt-28' : 'pt-16'
       }`}>
         <div className="flex-1 max-w-6xl mx-auto px-6 py-8 relative z-10">
           {activeSection === 'about' ? (
             /* About Section */
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">
-                <h2 className="text-4xl sm:text-5xl font-black text-white mb-6 title-stroke">
-                  About
+                <h2 className="text-4xl sm:text-5xl font-black text-white mb-6 title-stroke uppercase">
+                  ABOUT
                 </h2>
                 <div className="w-24 h-1 bg-ifuno-green mx-auto"></div>
               </div>
@@ -441,8 +475,8 @@ export default function Home() {
             /* Shop Section */
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-12">
-                <h2 className="text-4xl sm:text-5xl font-black text-white mb-6 title-stroke">
-                  Shop
+                <h2 className="text-4xl sm:text-5xl font-black text-white mb-6 title-stroke uppercase">
+                  SHOP
                 </h2>
                 <div className="w-24 h-1 bg-ifuno-green mx-auto"></div>
               </div>
@@ -498,13 +532,59 @@ export default function Home() {
                 </div>
               </div>
             </div>
+          ) : activeSection === 'leak' && !isLeakUnlocked ? (
+            /* Password Protection for Leak Section */
+            <div className="max-w-md mx-auto">
+              <div className="text-center mb-8">
+                <h2 className="text-4xl sm:text-5xl font-black text-white mb-6 title-stroke uppercase">
+                  LEAK
+                </h2>
+                <div className="w-24 h-1 bg-ifuno-green mx-auto"></div>
+              </div>
+              
+              <div className="bg-black/50 backdrop-blur-sm rounded-2xl p-8 border border-ifuno-pink">
+                <div className="text-center space-y-6">
+                  <Lock className="w-16 h-16 text-ifuno-pink mx-auto" />
+                  <h3 className="text-2xl font-bold text-white">Protected Content</h3>
+                  <p className="text-gray-300">
+                    Enter the password to access exclusive leaked content
+                  </p>
+                  
+                  <div className="space-y-4">
+                    <input
+                      type="password"
+                      value={passwordInput}
+                      onChange={(e) => setPasswordInput(e.target.value)}
+                      onKeyPress={handlePasswordKeyPress}
+                      placeholder="Enter password"
+                      className={`w-full px-4 py-3 bg-black/70 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-colors ${
+                        passwordError 
+                          ? 'border-red-500 focus:ring-red-500' 
+                          : 'border-gray-600 focus:ring-ifuno-green'
+                      }`}
+                    />
+                    
+                    {passwordError && (
+                      <p className="text-red-400 text-sm">Incorrect password. Try again.</p>
+                    )}
+                    
+                    <button
+                      onClick={handleLeakAccess}
+                      className="w-full px-6 py-3 bg-ifuno-green text-black font-medium rounded-lg hover:bg-ifuno-pink hover:text-white transition-colors duration-200"
+                    >
+                      ACCESS LEAK
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           ) : (
-            /* Home/Unreleased Section - Music Releases */
+            /* Home/Leak Section - Music Releases */
             <div className="w-full">
               {/* Section Header - Centered */}
               <div className="text-center mb-8">
-                <h2 className="text-3xl sm:text-4xl font-black text-white mb-4 title-stroke">
-                  {activeSection === 'home' ? 'Latest Releases' : 'Unreleased Content'}
+                <h2 className="text-3xl sm:text-4xl font-black text-white mb-4 title-stroke uppercase">
+                  {activeSection === 'home' ? 'LATEST RELEASES' : 'LEAK'}
                 </h2>
                 <div className="w-24 h-1 bg-ifuno-green mx-auto"></div>
               </div>
@@ -513,7 +593,7 @@ export default function Home() {
                 <div className="text-center py-12">
                   <Calendar className="w-12 h-12 text-gray-600 mx-auto mb-4" />
                   <p className="text-gray-400">
-                    {activeSection === 'home' ? 'No music releases found.' : 'No unreleased content found.'}
+                    {activeSection === 'home' ? 'No music releases found.' : 'No leaked content found.'}
                   </p>
                 </div>
               ) : (
@@ -534,7 +614,7 @@ export default function Home() {
                           <MusicGrid 
                             items={items} 
                             onItemClick={handleItemClick}
-                            isUnreleased={activeSection === 'unreleased'}
+                            isUnreleased={activeSection === 'leak'}
                           />
                         </div>
                       </section>
