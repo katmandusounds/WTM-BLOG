@@ -522,15 +522,8 @@ export default function Home() {
           ) : (
             /* Home/Unreleased Section - Music Releases */
             <div className="w-full">
-              {/* Section Header - Centered with Logo */}
+              {/* Section Header - Centered */}
               <div className="text-center mb-8">
-                <div className="flex items-center justify-center mb-6">
-                  <img 
-                    src="https://ik.imagekit.io/vv1coyjgq/IFUKNO%20large%20gap%202025.png?updatedAt=1751549577754" 
-                    alt="IFUNO Logo" 
-                    className="h-20 w-auto object-contain"
-                  />
-                </div>
                 <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 title-stroke">
                   {activeSection === 'home' ? 'Latest Releases' : 'Unreleased Content'}
                 </h2>
@@ -570,29 +563,27 @@ export default function Home() {
                 </div>
               )}
 
-              {/* Pagination */}
+              {/* Pagination - Simplified with just arrows */}
               {totalPages > 1 && (
                 <div className="flex items-center justify-center space-x-4 mt-12">
                   <button
                     onClick={() => handlePageChange(Math.max(0, currentPage - 1))}
                     disabled={currentPage === 0}
-                    className="flex items-center space-x-2 px-4 py-2 bg-ifuno-green border border-ifuno-green rounded-lg text-black hover:bg-ifuno-pink hover:border-ifuno-pink hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                    className="flex items-center justify-center w-12 h-12 bg-ifuno-green border border-ifuno-green rounded-lg text-black hover:bg-ifuno-pink hover:border-ifuno-pink hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                   >
-                    <ChevronLeft className="w-4 h-4" />
-                    <span>Previous</span>
+                    <ChevronLeft className="w-5 h-5" />
                   </button>
                   
-                  <span className="text-sm text-gray-400">
+                  <span className="text-sm text-gray-400 px-4">
                     Page {currentPage + 1} of {totalPages}
                   </span>
                   
                   <button
                     onClick={() => handlePageChange(Math.min(totalPages - 1, currentPage + 1))}
                     disabled={currentPage === totalPages - 1}
-                    className="flex items-center space-x-2 px-4 py-2 bg-ifuno-green border border-ifuno-green rounded-lg text-black hover:bg-ifuno-pink hover:border-ifuno-pink hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                    className="flex items-center justify-center w-12 h-12 bg-ifuno-green border border-ifuno-green rounded-lg text-black hover:bg-ifuno-pink hover:border-ifuno-pink hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                   >
-                    <span>Next</span>
-                    <ChevronRight className="w-4 h-4" />
+                    <ChevronRight className="w-5 h-5" />
                   </button>
                 </div>
               )}
@@ -600,7 +591,7 @@ export default function Home() {
           )}
         </div>
 
-        {/* Footer - Black Theme */}
+        {/* Footer - Black Theme with centered text */}
         <footer className="border-t border-ifuno-pink bg-black/80 backdrop-blur-sm py-6 relative z-10">
           <div className="max-w-6xl mx-auto px-6">
             <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">

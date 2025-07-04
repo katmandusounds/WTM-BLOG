@@ -64,7 +64,7 @@ export default function VideoModal({
       />
       
       {/* Modal Content */}
-      <div className="relative bg-gray-900 rounded-lg shadow-2xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-hidden border border-gray-700">
+      <div className="relative bg-black rounded-lg shadow-2xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-hidden border border-gray-700">
         {/* Header */}
         <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-700">
           <div>
