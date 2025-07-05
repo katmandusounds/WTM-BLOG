@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import { generateStaticParams as generateVideoParams } from '@/lib/generate-video-params';
 
 interface VideoLayoutProps {
   children: React.ReactNode;
@@ -7,9 +6,6 @@ interface VideoLayoutProps {
     slug: string;
   };
 }
-
-// Re-export the generateStaticParams function
-export const generateStaticParams = generateVideoParams;
 
 // This will be called for each video page to generate metadata
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
