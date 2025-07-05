@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { Calendar, Play, Eye, Clock, Tag, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import VideoModal from '@/components/VideoModal';
+import { generateSlug } from '@/lib/slug';
 
 interface MusicItem {
   type: 'youtube_video' | 'spotify_topic';
@@ -35,44 +36,6 @@ const SEO_MODIFIERS = [
   'behind the scenes', 'uk rap', 'uk drill', 'grime', 'underground',
   'new music', 'latest', 'visualizer', 'lyric video'
 ];
-
-// Generate static params for all video pages
-export async function generateStaticParams() {
-  try {
-    // Read the data.json file from the public directory
-    const fs = require('fs');
-    const path = require('path');
-    const dataPath = path.join(process.cwd(), 'public', 'data.json');
-    const jsonData = fs.readFileSync(dataPath, 'utf8');
-    const musicData: MusicData = JSON.parse(jsonData);
-    
-    const slugs: { slug: string }[] = [];
-    
-    // Generate slugs for all music items
-    for (const [date, items] of Object.entries(musicData)) {
-      for (const item of items) {
-        const publishedAt = item.published_at || date;
-        const slug = generateSlug(item.artist, item.title, publishedAt);
-        slugs.push({ slug });
-      }
-    }
-    
-    return slugs;
-  } catch (error) {
-    console.error('Error generating static params:', error);
-    return [];
-  }
-}
-
-// Helper function to generate slug (same as in component)
-function generateSlug(artist: string, title: string, publishedAt: string): string {
-  const year = new Date(publishedAt).getFullYear();
-  const cleanTitle = title.replace(/^-\s*/, '').trim();
-  return `${artist}-${cleanTitle}-${year}`
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
 
 export default function VideoPage({ params }: VideoPageProps) {
   const [musicData, setMusicData] = useState<MusicData>({});
