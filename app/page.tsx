@@ -36,7 +36,7 @@ export default function Home() {
   const [passwordInput, setPasswordInput] = useState('');
   const [passwordError, setPasswordError] = useState(false);
 
-  const ITEMS_PER_PAGE = 40; // 5 per row, 8 rows
+  const ITEMS_PER_PAGE = 5; // Show 5 dates per page
   const LEAK_PASSWORD = '123456';
 
   useEffect(() => {
@@ -76,16 +76,6 @@ export default function Home() {
     };
     document.title = titles[activeSection];
   }, [activeSection]);
-
-  // Generate slug for video pages
-  const generateSlug = (artist: string, title: string, publishedAt: string): string => {
-    const year = new Date(publishedAt).getFullYear();
-    const cleanTitle = title.replace(/^-\s*/, '').trim();
-    return `${artist}-${cleanTitle}-${year}`
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-+|-+$/g, '');
-  };
 
   // Mock data for leak content (short-form videos)
   const leakData: MusicData = {
@@ -154,24 +144,21 @@ export default function Home() {
     return activeSection === 'leak' ? leakData : musicData;
   };
 
-  // Flatten all items with their dates for pagination
-  const allItems = Object.entries(getCurrentData()).flatMap(([date, items]) =>
-    items.map(item => ({ ...item, date: item.published_at || date }))
-  );
-
-  const totalPages = Math.ceil(allItems.length / ITEMS_PER_PAGE);
+  // Get dates for pagination (instead of individual items)
+  const allDates = Object.keys(getCurrentData()).sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
+  const totalPages = Math.ceil(allDates.length / ITEMS_PER_PAGE);
   const startIndex = currentPage * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
-  const currentItems = allItems.slice(startIndex, endIndex);
+  const currentDates = allDates.slice(startIndex, endIndex);
 
-  // Group current items by date
-  const groupedItems = currentItems.reduce((acc, item) => {
-    if (!acc[item.date]) {
-      acc[item.date] = [];
+  // Get data for current page dates
+  const currentData = getCurrentData();
+  const currentPageData = currentDates.reduce((acc, date) => {
+    if (currentData[date]) {
+      acc[date] = currentData[date];
     }
-    acc[item.date].push(item);
     return acc;
-  }, {} as { [date: string]: (MusicItem & { date: string })[] });
+  }, {} as MusicData);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -184,9 +171,9 @@ export default function Home() {
   };
 
   const handleItemClick = (item: MusicItem) => {
-    // Navigate to individual video page instead of opening modal
-    const slug = generateSlug(item.artist, item.title, item.published_at || item.date);
-    window.location.href = `/video/${slug}`;
+    // Show modal popup instead of navigating to individual page
+    setSelectedItem(item);
+    setIsModalOpen(true);
   };
 
   const handleModalClose = () => {
@@ -639,7 +626,7 @@ export default function Home() {
                 )}
               </div>
 
-              {Object.keys(groupedItems).length === 0 ? (
+              {Object.keys(currentPageData).length === 0 ? (
                 <div className="text-center py-12">
                   <Calendar className="w-12 h-12 text-gray-600 mx-auto mb-4" />
                   <p className="text-gray-400">
@@ -648,7 +635,7 @@ export default function Home() {
                 </div>
               ) : (
                 <div className="space-y-12">
-                  {Object.entries(groupedItems)
+                  {Object.entries(currentPageData)
                     .sort(([a], [b]) => new Date(b).getTime() - new Date(a).getTime())
                     .map(([date, items]) => (
                       <section key={date} className="space-y-6 w-full">
