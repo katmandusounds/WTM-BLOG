@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Calendar, Home as HomeIcon, Info, MoreHorizontal, MapPin, ShoppingBag, HelpCircle, Menu, X, Lock } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar, Home as HomeIcon, Info, MoreHorizontal, MapPin, ShoppingBag, HelpCircle, Menu, X, Lock, ExternalLink } from 'lucide-react';
 import MusicGrid from '@/components/MusicGrid';
 import VideoModal from '@/components/VideoModal';
+import Link from 'next/link';
 
 interface MusicItem {
   type: 'youtube_video' | 'spotify_topic';
@@ -12,6 +13,7 @@ interface MusicItem {
   thumbnail_url: string;
   embed_url: string;
   view_count?: string;
+  published_at?: string;
 }
 
 interface MusicData {
@@ -67,13 +69,23 @@ export default function Home() {
   // Update page title based on active section
   useEffect(() => {
     const titles = {
-      home: 'IFUNO - LATEST RELEASES',
-      leak: 'IFUNO - LEAK',
-      about: 'IFUNO - ABOUT',
-      shop: 'IFUNO - SHOP'
+      home: 'IFUNO - Latest UK Music Releases | UK Rap, Drill, Grime, Underground [2024]',
+      leak: 'IFUNO - LEAK | Exclusive UK Music Content',
+      about: 'IFUNO - About | UK Music Database',
+      shop: 'IFUNO - Shop | UK Music Merchandise'
     };
     document.title = titles[activeSection];
   }, [activeSection]);
+
+  // Generate slug for video pages
+  const generateSlug = (artist: string, title: string, publishedAt: string): string => {
+    const year = new Date(publishedAt).getFullYear();
+    const cleanTitle = title.replace(/^-\s*/, '').trim();
+    return `${artist}-${cleanTitle}-${year}`
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  };
 
   // Mock data for leak content (short-form videos)
   const leakData: MusicData = {
@@ -84,7 +96,8 @@ export default function Home() {
         title: 'Studio Session Preview',
         thumbnail_url: 'https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=800',
         embed_url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-        view_count: '2.1M'
+        view_count: '2.1M',
+        published_at: '2024-01-15'
       },
       {
         type: 'youtube_video',
@@ -92,7 +105,8 @@ export default function Home() {
         title: 'Behind the Scenes',
         thumbnail_url: 'https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&w=800',
         embed_url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-        view_count: '890K'
+        view_count: '890K',
+        published_at: '2024-01-15'
       },
       {
         type: 'youtube_video',
@@ -100,7 +114,8 @@ export default function Home() {
         title: 'Quick Freestyle',
         thumbnail_url: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=800',
         embed_url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-        view_count: '1.5M'
+        view_count: '1.5M',
+        published_at: '2024-01-15'
       },
       {
         type: 'youtube_video',
@@ -108,7 +123,8 @@ export default function Home() {
         title: 'Snippet Preview',
         thumbnail_url: 'https://images.pexels.com/photos/1644888/pexels-photo-1644888.jpeg?auto=compress&cs=tinysrgb&w=800',
         embed_url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-        view_count: '3.2M'
+        view_count: '3.2M',
+        published_at: '2024-01-15'
       }
     ],
     '2024-01-14': [
@@ -118,7 +134,8 @@ export default function Home() {
         title: 'TikTok Challenge',
         thumbnail_url: 'https://images.pexels.com/photos/1699161/pexels-photo-1699161.jpeg?auto=compress&cs=tinysrgb&w=800',
         embed_url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-        view_count: '750K'
+        view_count: '750K',
+        published_at: '2024-01-14'
       },
       {
         type: 'youtube_video',
@@ -126,7 +143,8 @@ export default function Home() {
         title: 'Instagram Reel',
         thumbnail_url: 'https://images.pexels.com/photos/1540406/pexels-photo-1540406.jpeg?auto=compress&cs=tinysrgb&w=800',
         embed_url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-        view_count: '420K'
+        view_count: '420K',
+        published_at: '2024-01-14'
       }
     ]
   };
@@ -138,7 +156,7 @@ export default function Home() {
 
   // Flatten all items with their dates for pagination
   const allItems = Object.entries(getCurrentData()).flatMap(([date, items]) =>
-    items.map(item => ({ ...item, date }))
+    items.map(item => ({ ...item, date: item.published_at || date }))
   );
 
   const totalPages = Math.ceil(allItems.length / ITEMS_PER_PAGE);
@@ -166,8 +184,9 @@ export default function Home() {
   };
 
   const handleItemClick = (item: MusicItem) => {
-    setSelectedItem(item);
-    setIsModalOpen(true);
+    // Navigate to individual video page instead of opening modal
+    const slug = generateSlug(item.artist, item.title, item.published_at || item.date);
+    window.location.href = `/video/${slug}`;
   };
 
   const handleModalClose = () => {
@@ -494,37 +513,37 @@ export default function Home() {
             /* About Section */
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">
-                <h2 className="text-4xl sm:text-5xl font-black text-white mb-6 title-stroke uppercase">
-                  ABOUT
-                </h2>
+                <h1 className="text-4xl sm:text-5xl font-black text-white mb-6 title-stroke uppercase">
+                  About IFUNO - UK Music Database
+                </h1>
                 <div className="w-24 h-1 bg-ifuno-green mx-auto"></div>
               </div>
               
               <div className="bg-black/50 backdrop-blur-sm rounded-2xl p-8 sm:p-12 border border-ifuno-pink">
                 <div className="prose prose-lg prose-invert max-w-none">
                   <p className="text-xl text-gray-300 leading-relaxed mb-8">
-                    IFUNO is a place for UK music, spotlighting everything from underground talent to established legacy artists. 
+                    IFUNO is the UK's premier music discovery platform, spotlighting everything from underground talent to established legacy artists. 
                     We champion artists on their way to mass popularity, small acts with cult-like followings, 
-                    and those who have shaped the scene. If you’re searching for what’s next or honoring those who paved the way, 
-                    you’re in the right place.
+                    and those who have shaped the UK music scene. If you're searching for what's next or honoring those who paved the way, 
+                    you're in the right place.
                   </p>
                   
                   <div className="grid md:grid-cols-2 gap-8 mt-12">
                     <div className="space-y-4">
-                      <h3 className="text-2xl font-bold text-white">Our Mission</h3>
+                      <h2 className="text-2xl font-bold text-white">Our Mission</h2>
                       <p className="text-gray-300">
                         To discover and showcase the underground gems and rising stars before they hit the mainstream. 
                         We're here for the artists building devoted fanbases and creating authentic connections 
-                        through their music.
+                        through their music. From UK rap to UK drill, grime to underground - we cover it all.
                       </p>
                     </div>
                     
                     <div className="space-y-4">
-                      <h3 className="text-2xl font-bold text-white">If You Know, You Know</h3>
+                      <h2 className="text-2xl font-bold text-white">If You Know, You Know</h2>
                       <p className="text-gray-300">
                         From bedroom producers to street rappers, from indie darlings to experimental artists - 
                         we celebrate the music that moves culture from the ground up. The artists who matter 
-                        to those who really listen.
+                        to those who really listen. Updated daily with the latest releases, music videos, and exclusive content.
                       </p>
                     </div>
                   </div>
@@ -535,7 +554,7 @@ export default function Home() {
                         Discover • Support • Celebrate
                       </p>
                       <p className="text-gray-400 text-sm mt-2">
-                        For the culture, by the culture
+                        For the culture, by the culture - The biggest UK urban music database
                       </p>
                     </div>
                   </div>
@@ -546,9 +565,9 @@ export default function Home() {
             /* Shop Section */
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-12">
-                <h2 className="text-4xl sm:text-5xl font-black text-white mb-6 title-stroke uppercase">
-                  SHOP
-                </h2>
+                <h1 className="text-4xl sm:text-5xl font-black text-white mb-6 title-stroke uppercase">
+                  IFUNO Shop - UK Music Merchandise
+                </h1>
                 <div className="w-24 h-1 bg-ifuno-green mx-auto"></div>
               </div>
               
@@ -556,7 +575,7 @@ export default function Home() {
                 <div className="text-center space-y-8">
                   <div className="space-y-4">
                     <ShoppingBag className="w-16 h-16 text-ifuno-green mx-auto" />
-                    <h3 className="text-3xl font-bold text-white">Coming Soon</h3>
+                    <h2 className="text-3xl font-bold text-white">Coming Soon</h2>
                     <p className="text-xl text-gray-300 max-w-2xl mx-auto">
                       We're working on bringing you exclusive merchandise, limited edition drops, 
                       and official gear from the underground artists and rising stars you need to know about.
@@ -568,7 +587,7 @@ export default function Home() {
                       <div className="w-12 h-12 bg-ifuno-green rounded-full flex items-center justify-center mx-auto">
                         <span className="text-black font-bold">1</span>
                       </div>
-                      <h4 className="text-xl font-bold text-white">Exclusive Drops</h4>
+                      <h3 className="text-xl font-bold text-white">Exclusive Drops</h3>
                       <p className="text-gray-300">
                         Limited edition merchandise from underground artists and rising stars, available only through IFUNO.
                       </p>
@@ -578,7 +597,7 @@ export default function Home() {
                       <div className="w-12 h-12 bg-ifuno-pink rounded-full flex items-center justify-center mx-auto">
                         <span className="text-white font-bold">2</span>
                       </div>
-                      <h4 className="text-xl font-bold text-white">Artist Collaborations</h4>
+                      <h3 className="text-xl font-bold text-white">Artist Collaborations</h3>
                       <p className="text-gray-300">
                         Official merchandise designed in collaboration with the artists building cult followings.
                       </p>
@@ -588,7 +607,7 @@ export default function Home() {
                       <div className="w-12 h-12 bg-ifuno-green rounded-full flex items-center justify-center mx-auto">
                         <span className="text-black font-bold">3</span>
                       </div>
-                      <h4 className="text-xl font-bold text-white">Culture First</h4>
+                      <h3 className="text-xl font-bold text-white">Culture First</h3>
                       <p className="text-gray-300">
                         Supporting underground music culture with every purchase. If you know, you know.
                       </p>
@@ -608,10 +627,16 @@ export default function Home() {
             <div className="w-full">
               {/* Section Header - Centered */}
               <div className="text-center mb-8">
-                <h2 className="text-3xl sm:text-4xl font-black text-white mb-4 title-stroke uppercase">
-                  {activeSection === 'home' ? 'LATEST RELEASES' : 'LEAK'}
-                </h2>
+                <h1 className="text-3xl sm:text-4xl font-black text-white mb-4 title-stroke uppercase">
+                  {activeSection === 'home' ? 'Latest UK Music Releases [2024]' : 'Exclusive Leaked Content'}
+                </h1>
                 <div className="w-24 h-1 bg-ifuno-green mx-auto"></div>
+                {activeSection === 'home' && (
+                  <p className="text-gray-300 mt-4 max-w-2xl mx-auto">
+                    Discover the newest UK rap, drill, grime, and underground music. Daily updates with official videos, 
+                    lyrics, instrumentals, and exclusive content from rising stars and established artists.
+                  </p>
+                )}
               </div>
 
               {Object.keys(groupedItems).length === 0 ? (
@@ -629,9 +654,9 @@ export default function Home() {
                       <section key={date} className="space-y-6 w-full">
                         {/* Date Header - Centered with text stroke and much smaller text */}
                         <div className="text-center">
-                          <h3 className="text-xs sm:text-sm font-bold text-white mb-2 title-stroke">
+                          <h2 className="text-xs sm:text-sm font-bold text-white mb-2 title-stroke">
                             {formatDate(date)}
-                          </h3>
+                          </h2>
                         </div>
 
                         {/* Music Grid with border */}
@@ -671,17 +696,66 @@ export default function Home() {
                   </button>
                 </div>
               )}
+
+              {/* SEO Content Section - Hidden but crawlable */}
+              <div className="sr-only">
+                <h2>UK Music Database - Latest Releases 2024</h2>
+                <p>
+                  Discover more new UK rap, UK drill, grime, and underground songs released in 2024. 
+                  This page is part of the biggest UK urban music database. Updated daily with the latest tracks, 
+                  official videos, lyrics, instrumentals, clean versions, acapellas, and behind-the-scenes content.
+                </p>
+                
+                <h3>Featured Content</h3>
+                <p>
+                  Official music videos, lyric videos, visualizers, audio tracks, instrumentals, clean versions,
+                  acapellas, type beats, remixes, behind the scenes content, studio sessions, freestyles,
+                  UK rap 2024, UK drill 2024, grime 2024, underground music 2024, new music, latest releases,
+                  British hip hop, London music scene, Birmingham music, Manchester music, streaming, download
+                </p>
+              </div>
             </div>
           )}
         </div>
 
-        {/* Footer - Black Theme with centered text */}
-        <footer className="border-t border-ifuno-pink bg-black/80 backdrop-blur-sm py-6 relative z-10">
+        {/* Footer - Enhanced with SEO content */}
+        <footer className="border-t border-ifuno-pink bg-black/80 backdrop-blur-sm py-8 relative z-10">
           <div className="max-w-6xl mx-auto px-6">
-            <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+            <div className="grid md:grid-cols-3 gap-8 mb-6">
+              <div>
+                <h3 className="text-white font-bold mb-3">IFUNO</h3>
+                <p className="text-gray-400 text-sm">
+                  The UK's premier music discovery platform. Daily updates of UK rap, drill, grime, and underground releases.
+                </p>
+              </div>
+              
+              <div>
+                <h3 className="text-white font-bold mb-3">Music Categories</h3>
+                <ul className="text-gray-400 text-sm space-y-1">
+                  <li>UK Rap</li>
+                  <li>UK Drill</li>
+                  <li>Grime</li>
+                  <li>Underground Music</li>
+                  <li>New Releases 2024</li>
+                </ul>
+              </div>
+              
+              <div>
+                <h3 className="text-white font-bold mb-3">Content Types</h3>
+                <ul className="text-gray-400 text-sm space-y-1">
+                  <li>Official Videos</li>
+                  <li>Lyrics & Instrumentals</li>
+                  <li>Clean & Acapella</li>
+                  <li>Behind the Scenes</li>
+                  <li>Exclusive Content</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 pt-6 border-t border-ifuno-pink/30">
               <div className="flex items-center space-x-2 text-ifuno-green">
                 <MapPin className="w-4 h-4" />
-                <span>Worldwide</span>
+                <span>United Kingdom</span>
               </div>
               <p className="text-ifuno-pink text-sm font-medium text-center uppercase">
                 IF YOU KNOW, YOU KNOW
