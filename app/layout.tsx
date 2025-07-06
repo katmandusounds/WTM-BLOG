@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     'Manchester music', 'streaming', 'download', 'new releases'
   ],
   icons: {
-    icon: 'https://ik.imagekit.io/vv1coyjgq/ifuno%20favicon%20162.png?updatedAt=1751624873967',
+    icon: 'https://ik.imagekit.io/vv1coyjgq/ifuno%20favicon%20green.png?updatedAt=1751629200462',
   },
   openGraph: {
     title: 'IFUNO - Latest UK Music Releases | UK Rap, Drill, Grime, Underground [2024]',
