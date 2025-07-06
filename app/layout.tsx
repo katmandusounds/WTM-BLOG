@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     'Manchester music', 'streaming', 'download', 'new releases'
   ],
   icons: {
-    icon: 'https://ik.imagekit.io/vv1coyjgq/ifuno%20favicon%20green.png?updatedAt=1751629200462',
+    icon: 'https://ik.imagekit.io/vv1coyjgq/ifuno%20favicon%20162.png?updatedAt=1751624873967',
   },
   openGraph: {
     title: 'IFUNO - Latest UK Music Releases | UK Rap, Drill, Grime, Underground [2024]',
@@ -53,7 +53,7 @@ export default function RootLayout({
   return (
     <html lang="en-GB">
       <head>
-        <link rel="icon" href="https://ik.imagekit.io/vv1coyjgq/ifuno%20favicon%20green.png?updatedAt=1751629200462" />
+        <link rel="icon" href="https://ik.imagekit.io/vv1coyjgq/ifuno%20favicon%20162.png?updatedAt=1751624873967" />
         <link rel="canonical" href="https://your-domain.com" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#25f23f" />

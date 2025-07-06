@@ -171,7 +171,7 @@ export default function Home() {
   };
 
   const handleItemClick = (item: MusicItem) => {
-    // Show modal popup instead of navigating to individual page
+    // Show modal popup
     setSelectedItem(item);
     setIsModalOpen(true);
   };
@@ -500,10 +500,17 @@ export default function Home() {
             /* About Section */
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">
+                <div className={`transition-all duration-300 ${!isScrolled && !isMobileMenuOpen ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
+                  <img 
+                    src="https://ik.imagekit.io/vv1coyjgq/IFUKNO%20large%20gap%202025.png?updatedAt=1751549577754" 
+                    alt="IFUNO Logo" 
+                    className="h-20 w-auto object-contain mx-auto mb-6"
+                  />
+                </div>
                 <h1 className="text-4xl sm:text-5xl font-black text-white mb-6 title-stroke uppercase">
-                  About IFUNO - UK Music Database
+                  ABOUT
                 </h1>
-                <div className="w-24 h-1 bg-ifuno-green mx-auto"></div>
+                <div className="w-24 h-1 bg-ifuno-green mx-auto opacity-50"></div>
               </div>
               
               <div className="bg-black/50 backdrop-blur-sm rounded-2xl p-8 sm:p-12 border border-ifuno-pink">
@@ -552,10 +559,17 @@ export default function Home() {
             /* Shop Section */
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-12">
+                <div className={`transition-all duration-300 ${!isScrolled && !isMobileMenuOpen ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
+                  <img 
+                    src="https://ik.imagekit.io/vv1coyjgq/IFUKNO%20large%20gap%202025.png?updatedAt=1751549577754" 
+                    alt="IFUNO Logo" 
+                    className="h-20 w-auto object-contain mx-auto mb-6"
+                  />
+                </div>
                 <h1 className="text-4xl sm:text-5xl font-black text-white mb-6 title-stroke uppercase">
-                  IFUNO Shop - UK Music Merchandise
+                  SHOP
                 </h1>
-                <div className="w-24 h-1 bg-ifuno-green mx-auto"></div>
+                <div className="w-24 h-1 bg-ifuno-green mx-auto opacity-50"></div>
               </div>
               
               <div className="bg-black/50 backdrop-blur-sm rounded-2xl p-8 sm:p-12 border border-ifuno-pink">
@@ -614,10 +628,17 @@ export default function Home() {
             <div className="w-full">
               {/* Section Header - Centered */}
               <div className="text-center mb-8">
+                <div className={`transition-all duration-300 ${!isScrolled && !isMobileMenuOpen ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
+                  <img 
+                    src="https://ik.imagekit.io/vv1coyjgq/IFUKNO%20large%20gap%202025.png?updatedAt=1751549577754" 
+                    alt="IFUNO Logo" 
+                    className="h-20 w-auto object-contain mx-auto mb-6"
+                  />
+                </div>
                 <h1 className="text-3xl sm:text-4xl font-black text-white mb-4 title-stroke uppercase">
-                  {activeSection === 'home' ? 'Latest UK Music Releases [2024]' : 'Exclusive Leaked Content'}
+                  {activeSection === 'home' ? 'LATEST RELEASES' : 'LEAK'}
                 </h1>
-                <div className="w-24 h-1 bg-ifuno-green mx-auto"></div>
+                <div className="w-24 h-1 bg-ifuno-green mx-auto opacity-50"></div>
                 {activeSection === 'home' && (
                   <p className="text-gray-300 mt-4 max-w-2xl mx-auto">
                     Discover the newest UK rap, drill, grime, and underground music. Daily updates with official videos, 
@@ -683,24 +704,6 @@ export default function Home() {
                   </button>
                 </div>
               )}
-
-              {/* SEO Content Section - Hidden but crawlable */}
-              <div className="sr-only">
-                <h2>UK Music Database - Latest Releases 2024</h2>
-                <p>
-                  Discover more new UK rap, UK drill, grime, and underground songs released in 2024. 
-                  This page is part of the biggest UK urban music database. Updated daily with the latest tracks, 
-                  official videos, lyrics, instrumentals, clean versions, acapellas, and behind-the-scenes content.
-                </p>
-                
-                <h3>Featured Content</h3>
-                <p>
-                  Official music videos, lyric videos, visualizers, audio tracks, instrumentals, clean versions,
-                  acapellas, type beats, remixes, behind the scenes content, studio sessions, freestyles,
-                  UK rap 2024, UK drill 2024, grime 2024, underground music 2024, new music, latest releases,
-                  British hip hop, London music scene, Birmingham music, Manchester music, streaming, download
-                </p>
-              </div>
             </div>
           )}
         </div>
