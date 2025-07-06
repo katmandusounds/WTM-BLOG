@@ -53,7 +53,7 @@ export default function RootLayout({
   return (
     <html lang="en-GB">
       <head>
-        <link rel="icon" href="https://ik.imagekit.io/vv1coyjgq/IFUKNO%20large%20gap%202025.png?updatedAt=1751549577754" />
+        <link rel="icon" href="https://ik.imagekit.io/vv1coyjgq/ifuno.png?updatedAt=1751806550126" />
         <link rel="canonical" href="https://your-domain.com" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#25f23f" />
