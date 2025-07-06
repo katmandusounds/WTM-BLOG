@@ -710,50 +710,12 @@ export default function Home() {
           )}
         </div>
 
-        {/* Footer - Enhanced with SEO content */}
-        <footer className="border-t border-ifuno-pink bg-black/80 backdrop-blur-sm py-8 relative z-10">
+        {/* Minimal Footer */}
+        <footer className="border-t border-ifuno-pink bg-black/80 backdrop-blur-sm py-6 relative z-10">
           <div className="max-w-6xl mx-auto px-6">
-            <div className="grid md:grid-cols-3 gap-8 mb-6">
-              <div>
-                <h3 className="text-white font-bold mb-3">IFUNO</h3>
-                <p className="text-gray-400 text-sm">
-                  The UK's premier music discovery platform. Daily updates of UK rap, drill, grime, and underground releases.
-                </p>
-              </div>
-              
-              <div>
-                <h3 className="text-white font-bold mb-3">Music Categories</h3>
-                <ul className="text-gray-400 text-sm space-y-1">
-                  <li>UK Rap</li>
-                  <li>UK Drill</li>
-                  <li>Grime</li>
-                  <li>Underground Music</li>
-                  <li>New Releases 2024</li>
-                </ul>
-              </div>
-              
-              <div>
-                <h3 className="text-white font-bold mb-3">Content Types</h3>
-                <ul className="text-gray-400 text-sm space-y-1">
-                  <li>Official Videos</li>
-                  <li>Lyrics & Instrumentals</li>
-                  <li>Clean & Acapella</li>
-                  <li>Behind the Scenes</li>
-                  <li>Exclusive Content</li>
-                </ul>
-              </div>
-            </div>
-            
-            <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 pt-6 border-t border-ifuno-pink/30">
-              <div className="flex items-center space-x-2 text-ifuno-green">
-                <MapPin className="w-4 h-4" />
-                <span>United Kingdom</span>
-              </div>
-              <p className="text-ifuno-pink text-sm font-medium text-center uppercase">
+            <div className="text-center">
+              <p className="text-ifuno-pink text-sm font-medium uppercase">
                 IF YOU KNOW, YOU KNOW
-              </p>
-              <p className="text-gray-500 text-xs">
-                © 2024 IFUNO. All rights reserved.
               </p>
             </div>
           </div>
