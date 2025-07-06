@@ -639,12 +639,6 @@ export default function Home() {
                   {activeSection === 'home' ? 'LATEST RELEASES' : 'LEAK'}
                 </h1>
                 <div className="w-24 h-1 bg-ifuno-green mx-auto opacity-50"></div>
-                {activeSection === 'home' && (
-                  <p className="text-gray-300 mt-4 max-w-2xl mx-auto">
-                    Discover the newest UK rap, drill, grime, and underground music. Daily updates with official videos, 
-                    lyrics, instrumentals, and exclusive content from rising stars and established artists.
-                  </p>
-                )}
               </div>
 
               {Object.keys(currentPageData).length === 0 ? (
@@ -704,6 +698,14 @@ export default function Home() {
                   </button>
                 </div>
               )}
+
+              {/* Hidden SEO text at bottom - smallest font, black color */}
+              <div className="mt-16 text-center">
+                <p className="text-black text-xs opacity-10">
+                  Discover the newest UK rap, drill, grime, and underground music. Daily updates with official videos, 
+                  lyrics, instrumentals, and exclusive content from rising stars and established artists.
+                </p>
+              </div>
             </div>
           )}
         </div>
