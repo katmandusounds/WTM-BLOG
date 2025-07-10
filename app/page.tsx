@@ -312,7 +312,7 @@ export default function Home() {
                 </button>
                 
                 <button
-                  onClick={() => handleSectionChange('leak')}
+                  onClick={() => window.location.href = '/about'}
                   className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                     activeSection === 'leak'
                       ? 'bg-ifuno-green text-black'
@@ -399,7 +399,7 @@ export default function Home() {
               </button>
               
               <button
-                onClick={() => handleSectionChange('shop')}
+                onClick={() => window.location.href = '/shop'}
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                   activeSection === 'shop'
                     ? 'bg-ifuno-green text-black'
@@ -411,7 +411,7 @@ export default function Home() {
               </button>
               
               <button
-                onClick={() => handleSectionChange('about')}
+                onClick={() => window.location.href = '/about'}
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                   activeSection === 'about'
                     ? 'bg-ifuno-green text-black'
