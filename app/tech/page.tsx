@@ -150,11 +150,12 @@ Start building with your own custom models, today.`,
           <div className="grid grid-cols-3 items-center h-16">
             {/* Left Side - Back to Main */}
             <div className="flex items-center space-x-6 justify-start">
-              <Link
-              <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-ifuno-green text-black">
-                <Cpu className="w-4 h-4" />
-                <span className="text-sm font-medium uppercase">TECH</span>
-              </div>
+              <Link href="/">
+                <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-ifuno-green text-black">
+                  <Cpu className="w-4 h-4" />
+                  <span className="text-sm font-medium uppercase">TECH</span>
+                </div>
+              </Link>
               
               <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-ifuno-green text-black">
                 <Cpu className="w-4 h-4" />
