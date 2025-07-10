@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Calendar, Home as HomeIcon, Info, MoreHorizontal, MapPin, ShoppingBag, HelpCircle, Menu, X, Lock, ExternalLink } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar, Home as HomeIcon, Info, MoreHorizontal, MapPin, ShoppingBag, HelpCircle, Menu, X, Lock, ExternalLink, Cpu } from 'lucide-react';
 import MusicGrid from '@/components/MusicGrid';
 import VideoModal from '@/components/VideoModal';
 import Link from 'next/link';
@@ -713,10 +713,22 @@ export default function Home() {
         {/* Minimal Footer */}
         <footer className="border-t border-ifuno-pink bg-black/80 backdrop-blur-sm py-6 relative z-10">
           <div className="max-w-6xl mx-auto px-6">
-            <div className="text-center">
+            <div className="text-center space-y-4">
               <p className="text-ifuno-pink text-sm font-medium uppercase">
                 IF YOU KNOW, YOU KNOW
               </p>
+              
+              {/* Tech Blog Link */}
+              <div className="pt-4 border-t border-ifuno-pink/30">
+                <Link 
+                  href="/tech"
+                  className="inline-flex items-center space-x-2 px-4 py-2 bg-black/70 border border-ifuno-green rounded-lg text-ifuno-green hover:bg-ifuno-green hover:text-black transition-all duration-200 text-sm font-medium uppercase"
+                >
+                  <Cpu className="w-4 h-4" />
+                  <span>Tech Blog</span>
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
+              </div>
             </div>
           </div>
         </footer>
