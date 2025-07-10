@@ -150,11 +150,12 @@ Start building with your own custom models, today.`,
           <div className="grid grid-cols-3 items-center h-16">
             {/* Left Side - Back to Main */}
             <div className="flex items-center space-x-6 justify-start">
-              <Link href="/">
-                <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-ifuno-green text-black">
-                  <Cpu className="w-4 h-4" />
-                  <span className="text-sm font-medium uppercase">TECH</span>
-                </div>
+              <Link
+                href="/"
+                className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-ifuno-pink transition-all duration-200"
+              >
+                <HomeIcon className="w-4 h-4" />
+                <span className="text-sm font-medium uppercase hidden sm:inline">HOME</span>
               </Link>
               
               <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-ifuno-green text-black">
@@ -193,7 +194,7 @@ Start building with your own custom models, today.`,
               </Link>
               
               <a
-                href="https://3ns.link"
+                href="https://3ns.domains/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-ifuno-pink transition-all duration-200"
@@ -458,10 +459,22 @@ Start building with your own custom models, today.`,
         {/* Footer */}
         <footer className="border-t border-ifuno-pink bg-black/80 backdrop-blur-sm py-6 relative z-10">
           <div className="max-w-6xl mx-auto px-6">
-            <div className="text-center">
+            <div className="text-center space-y-4">
               <p className="text-ifuno-pink text-sm font-medium uppercase">
                 TECH • INNOVATION • FUTURE
               </p>
+              
+              {/* Tech Blog Link */}
+              <div className="pt-4 border-t border-ifuno-pink/30">
+                <Link 
+                  href="/tech"
+                  className="inline-flex items-center space-x-2 px-4 py-2 bg-black/70 border border-ifuno-green rounded-lg text-ifuno-green hover:bg-ifuno-green hover:text-black transition-all duration-200 text-sm font-medium uppercase"
+                >
+                  <Cpu className="w-4 h-4" />
+                  <span>Tech Blog</span>
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
+              </div>
             </div>
           </div>
         </footer>
