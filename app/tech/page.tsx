@@ -45,7 +45,7 @@ Running your own model gives you:
 
 ## Integrating OpenWebUI Models into 3NS Domains
 
-3NS (3ns.link) lets you host AI agents under your own Web3 domain. With a setup like yourname.3ns.link, you can:
+3NS (3ns.domain) lets you host AI agents under your own Web3 domain. With a setup like yourname.3ns.domain, you can:
 
 • Point your domain to your locally-hosted OpenWebUI agent
 • Use your favorite LLM under a clean, decentralized identity
@@ -56,7 +56,7 @@ You can even sell your custom OpenWebUI workflows as NFTs via your 3NS domain—
 
 ## Real-World Use Case
 
-Imagine you're a UK rap researcher or underground music curator. You could train or fine-tune an open-source model on your data, host it on OpenWebUI, and link it to ukrapresearch.3ns.link. Fans, journalists, or collaborators can interact with your AI agent to get answers, prompts, or recommendations—built from your brain, not just the internet.
+Imagine you're a UK rap researcher or underground music curator. You could train or fine-tune an open-source model on your data, host it on OpenWebUI, and link it to ifuno.3ns.domain . Fans, journalists, or collaborators can interact with your AI agent to get answers, prompts, or recommendations—built from your brain, not just the internet.
 
 ## Ready to Build Your Agent?
 
