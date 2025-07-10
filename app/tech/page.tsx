@@ -85,7 +85,7 @@ Start building with your own custom models, today.`,
 
   // Update page title
   useEffect(() => {
-    document.title = 'IFUNO Tech Blog - AI, Web3, and Emerging Technologies';
+    document.title = 'IFUNO - Tech Blog | AI, Web3, and Emerging Technologies';
   }, []);
 
   const handleLogoClick = () => {
@@ -151,12 +151,10 @@ Start building with your own custom models, today.`,
             {/* Left Side - Back to Main */}
             <div className="flex items-center space-x-6 justify-start">
               <Link
-                href="/"
-                className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-ifuno-pink transition-all duration-200"
-              >
-                <HomeIcon className="w-4 h-4" />
-                <span className="text-sm font-medium uppercase hidden sm:inline">MUSIC</span>
-              </Link>
+              <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-ifuno-green text-black">
+                <Cpu className="w-4 h-4" />
+                <span className="text-sm font-medium uppercase">TECH</span>
+              </div>
               
               <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-ifuno-green text-black">
                 <Cpu className="w-4 h-4" />
@@ -179,6 +177,20 @@ Start building with your own custom models, today.`,
             
             {/* Right Side - External Links */}
             <div className="flex items-center space-x-6 justify-end">
+              <Link
+                href="/about"
+                className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-ifuno-pink transition-all duration-200"
+              >
+                <span className="text-sm font-medium uppercase hidden sm:inline">ABOUT</span>
+              </Link>
+              
+              <Link
+                href="/shop"
+                className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-ifuno-pink transition-all duration-200"
+              >
+                <span className="text-sm font-medium uppercase hidden sm:inline">SHOP</span>
+              </Link>
+              
               <a
                 href="https://3ns.link"
                 target="_blank"
