@@ -1,0 +1,7 @@
+{
+  // Map video_url or embed_url to field overrides. Example:
+  // "https://www.youtube.com/watch?v=example": {
+  //   "title": "Fixed Title",
+  //   "artist": "Corrected Artist"
+  // }
+}

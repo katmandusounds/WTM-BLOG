@@ -98,13 +98,6 @@ export default function About() {
               >
                 <span className="text-sm font-medium uppercase hidden sm:inline">SHOP</span>
               </Link>
-              
-              <Link
-                href="/tech"
-                className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-ifuno-pink transition-all duration-200"
-              >
-                <span className="text-sm font-medium uppercase hidden sm:inline">TECH</span>
-              </Link>
             </div>
           </div>
         </div>

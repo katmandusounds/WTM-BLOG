@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import Link from 'next/link';
 import { X } from 'lucide-react';
 
 interface VideoModalProps {
@@ -10,6 +11,7 @@ interface VideoModalProps {
   title: string;
   embedUrl: string;
   thumbnailUrl: string;
+  detailUrl?: string;
 }
 
 export default function VideoModal({ 
@@ -18,7 +20,8 @@ export default function VideoModal({
   artist, 
   title, 
   embedUrl, 
-  thumbnailUrl 
+  thumbnailUrl,
+  detailUrl
 }: VideoModalProps) {
   const cleanTitle = (title: string) => {
     // Remove leading dash and trim whitespace
@@ -70,6 +73,16 @@ export default function VideoModal({
           <div>
             <h2 className="text-lg sm:text-xl font-semibold text-white">{artist}</h2>
             <p className="text-sm sm:text-base text-gray-300">{cleanTitle(title)}</p>
+            {detailUrl && (
+              <div className="mt-2">
+                <Link
+                  href={detailUrl}
+                  className="text-ifuno-green text-xs hover:text-ifuno-pink transition-colors duration-200 underline"
+                >
+                  Open detail page
+                </Link>
+              </div>
+            )}
           </div>
           <button
             onClick={onClose}

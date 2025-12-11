@@ -1,0 +1,313 @@
+{
+  "name": "My workflow 4",
+  "nodes": [
+    {
+      "parameters": {
+        "triggerTimes": {
+          "item": [
+            {
+              "mode": "everyHour",
+              "minute": 59
+            }
+          ]
+        }
+      },
+      "id": "3dda86ee-479c-409d-967f-12a43de49719",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [
+        -608,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "sheetId": "1yRL42nDT2U0i268t1ZuiAJGNDjIxexD57wMfM05corQ",
+        "range": "Sheet1!A:C",
+        "options": {}
+      },
+      "id": "b4b1e514-0949-4e68-88d1-810518fb6e5f",
+      "name": "Get Artists from Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [
+        -400,
+        112
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Xnmsb09JUFgsiiiE",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 138,
+        "options": {}
+      },
+      "id": "b5bfb996-0730-4dcf-bc97-688f5828df14",
+      "name": "For Each Artist",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 1,
+      "position": [
+        -208,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const regex = /(music video|official music video|official video|-|- freestyle|topic|video|mv)/i;\nconst sixMonthsAgo = new Date();\nsixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);\n\nreturn items\n  .filter(item => {\n    const title = item.json.title || '';\n    const published = new Date(item.json.isoDate); // RSS Feed Read uses `isoDate`\n    const videoUrl = item.json.link || item.json.video_url || '';\n    // **Filter out Shorts!**\n    if (videoUrl.includes('/shorts/')) return false;\n    return regex.test(title) && published >= sixMonthsAgo;\n  })\n  .map(item => {\n    const videoUrl = item.json.link || item.json.video_url || '';\n    let videoId = '';\n    if (videoUrl.includes('watch?v=')) {\n      videoId = videoUrl.split('watch?v=')[1].split('&')[0];\n    } else if (videoUrl.includes('youtu.be/')) {\n      videoId = videoUrl.split('youtu.be/')[1].split('?')[0];\n    }\n    return {\n      json: {\n        source: 'youtube',\n        title: item.json.title,\n        thumbnail_url: videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : \"\",\n        embed_url: videoId ? `https://www.youtube.com/embed/${videoId}` : \"\",\n        published_at: item.json.isoDate,\n        video_url: videoUrl,\n        track_title_clean: item.json.title.toLowerCase().replace(/ *\\([^)]*\\) */g, '').trim()\n      }\n    }\n  });"
+      },
+      "id": "2bc3eebb-ff25-45ca-a9b9-993eb16ca0e7",
+      "name": "Filter Music Videos",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const priority = [\"music video\", \"visualiser\", \"visualizer\", \"lyric video\", \"topic\"];\n\nfunction getPriority(title) {\n  const lower = title.toLowerCase();\n  for (let i = 0; i < priority.length; i++) {\n    if (lower.includes(priority[i])) {\n      return i;\n    }\n  }\n  return priority.length; // lowest priority\n}\n\nconst seen = new Map();\n\nfor (const item of items) {\n  const base = item.json.title.toLowerCase().split('(')[0].trim();\n\n  const existing = seen.get(base);\n  if (!existing || getPriority(item.json.title) < getPriority(existing.json.title)) {\n    seen.set(base, item);\n  }\n}\n\nreturn Array.from(seen.values());"
+      },
+      "id": "33a09dee-2573-488a-92a4-f68065b4c8fe",
+      "name": "Filter by Video Priority",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        400,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const priorityMap = [\n  { keyword: /official (music )?video/i, priority: 1 },\n  { keyword: /visuali[sz]er/i, priority: 2 },\n  { keyword: /lyric(s)?/i, priority: 3 },\n  { keyword: /topic|audio/i, priority: 4 },\n];\n\nfunction getPriority(title) {\n  for (const rule of priorityMap) {\n    if (rule.keyword.test(title)) return rule.priority;\n  }\n  return 5; // lowest priority\n}\n\nconst grouped = {};\n\nfor (const item of items) {\n  const rawTitle = item.json.title || '';\n  const cleanedTitle = rawTitle\n    .replace(/ *\\[.*?\\] */g, '') // remove [brackets]\n    .replace(/ *\\(.*?\\) */g, '') // remove (parentheses)\n    .replace(/[^a-z0-9]/gi, ' ') // remove special characters\n    .toLowerCase()\n    .trim();\n\n  const priority = getPriority(rawTitle);\n  \n  if (!grouped[cleanedTitle] || grouped[cleanedTitle].priority > priority) {\n    grouped[cleanedTitle] = { item, priority };\n  }\n}\n\nreturn Object.values(grouped).map(({ item }) => item);\n"
+      },
+      "id": "83c332a0-d5ce-4b2e-8977-f999ba239941",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        608,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Merge all music video items (YouTube)\nconst videos = $items(\"Filter Music Videos\").map(x => x.json);\n\n// Sort all videos by published_at date (descending)\nvideos.sort((a, b) => new Date(b.published_at) - new Date(a.published_at));\n\n// Group by publish date (YYYY-MM-DD)\nconst byDate = {};\nfor (const v of videos) {\n  const dateKey = v.published_at.slice(0, 10); // YYYY-MM-DD\n  if (!byDate[dateKey]) byDate[dateKey] = [];\n  byDate[dateKey].push(v);\n}\n\nreturn [{ json: byDate }];"
+      },
+      "id": "c6310956-1f2a-43f3-9d4a-e416ca4b1d2b",
+      "name": "Build Monthly JSON",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        800,
+        0
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "afa1d35c-bd08-43ce-ab0f-c86fa58fe8af",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1,
+      "position": [
+        1008,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+      },
+      "id": "772aa6af-978e-4408-96ce-2e82a0fb4787",
+      "name": "Prepare Both Files Array",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "file",
+        "operation": "edit",
+        "owner": {
+          "__rl": true,
+          "value": "katmandusounds",
+          "mode": "list",
+          "cachedResultName": "katmandusounds",
+          "cachedResultUrl": "https://github.com/katmandusounds"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "WTM-BLOG",
+          "mode": "list",
+          "cachedResultName": "WTM-BLOG",
+          "cachedResultUrl": "https://github.com/katmandusounds/WTM-BLOG"
+        },
+        "filePath": "public/data.json",
+        "fileContent": "={{ JSON.stringify($node[\"Build Monthly JSON\"].json) }}",
+        "commitMessage": "Update music-videos.json with latest data"
+      },
+      "id": "de7a9db0-4647-4580-a837-62a35f00ccaf",
+      "name": "Push to GitHub",
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [
+        1408,
+        112
+      ],
+      "webhookId": "e42bd903-b945-4a3a-8f74-4cb4c13f5a03",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "cuMqHxACey5TZ4HI",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://www.youtube.com/feeds/videos.xml?channel_id={{ $json[\"Youtube Account\"] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "cde4f786-b6b4-423c-a06d-da9e016a14fd",
+      "name": "RSS Read"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Artists from Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Artists from Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "For Each Artist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "For Each Artist": {
+      "main": [
+        [
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Music Videos": {
+      "main": [
+        [
+          {
+            "node": "Filter by Video Priority",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter by Video Priority": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Build Monthly JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Monthly JSON": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Prepare Both Files Array",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Both Files Array": {
+      "main": [
+        [
+          {
+            "node": "Push to GitHub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Read": {
+      "main": [
+        [
+          {
+            "node": "Filter Music Videos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "887ff6f2-4fb0-428c-bc35-1031c3a9ca9b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b3417b989d5bcd702c66cb790a2f4e4e11d328ddd2ca0839dd6f641518b422ca"
+  },
+  "id": "qYGWdNVOB8hMn6vP",
+  "tags": []
+}

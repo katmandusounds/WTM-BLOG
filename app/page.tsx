@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Calendar, Home as HomeIcon, Info, MoreHorizontal, MapPin, ShoppingBag, HelpCircle, Menu, X, Lock, ExternalLink, Cpu } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar, Home as HomeIcon, Info, ShoppingBag, Menu, X, Lock } from 'lucide-react';
 import MusicGrid from '@/components/MusicGrid';
 import VideoModal from '@/components/VideoModal';
+import { slugForItem } from '@/lib/slug';
 import Link from 'next/link';
 
 interface MusicItem {
@@ -14,11 +15,15 @@ interface MusicItem {
   embed_url: string;
   view_count?: string;
   published_at?: string;
+  video_url?: string;
+  track_title_clean?: string;
 }
 
 interface MusicData {
   [date: string]: MusicItem[];
 }
+
+type OverridesMap = Record<string, Partial<MusicItem>>;
 
 type Section = 'home' | 'leak' | 'about' | 'shop';
 
@@ -28,6 +33,8 @@ export default function Home() {
   const [selectedItem, setSelectedItem] = useState<MusicItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState<Section>('home');
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -38,15 +45,98 @@ export default function Home() {
 
   const ITEMS_PER_PAGE = 5; // Show 5 dates per page
   const LEAK_PASSWORD = '123456';
+  const dataUrl = process.env.NEXT_PUBLIC_DATA_URL || '/data.json';
+
+  const getBaseOrigin = () => {
+    try {
+      if (dataUrl.startsWith('http')) {
+        const u = new URL(dataUrl);
+        return `${u.protocol}//${u.host}`;
+      }
+      if (dataUrl.startsWith('/')) {
+        return '';
+      }
+    } catch {
+      return '';
+    }
+    return '';
+  };
+  const baseOrigin = getBaseOrigin();
+
+  const getItemKey = (item: MusicItem) => {
+    return (item as any).video_url || item.embed_url || `${item.artist}-${item.title}`;
+  };
+
+  const applyOverridesAndBlacklist = (
+    data: MusicData,
+    blacklist: Set<string>,
+    overrides: OverridesMap
+  ): MusicData => {
+    const result: MusicData = {};
+    Object.entries(data || {}).forEach(([date, items]) => {
+      const filtered = (items || [])
+        .filter((item) => !blacklist.has(getItemKey(item)))
+        .map((item) => {
+          const key = getItemKey(item);
+          if (overrides[key]) {
+            return { ...item, ...overrides[key] };
+          }
+          return item;
+        });
+      if (filtered.length) {
+        result[date] = filtered;
+      }
+    });
+    return result;
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/data.json');
-        const data = await response.json();
-        setMusicData(data);
+        const fetchOptionalJson = async (url: string) => {
+          try {
+            const target = baseOrigin ? `${baseOrigin}${url}` : url;
+            const res = await fetch(target);
+            if (!res.ok) return null;
+            return await res.json();
+          } catch {
+            return null;
+          }
+        };
+
+        const [dataResponse, blacklistResponse, overridesResponse, metaResponse] = await Promise.all([
+          fetch(dataUrl),
+          fetchOptionalJson('/blacklist.json'),
+          fetchOptionalJson('/overrides.json'),
+          fetchOptionalJson('/meta.json'),
+        ]);
+
+        const data = await dataResponse.json();
+        const blacklist = new Set<string>(
+          Array.isArray(blacklistResponse) ? blacklistResponse : []
+        );
+        const overrides: OverridesMap =
+          overridesResponse && typeof overridesResponse === 'object' ? overridesResponse : {};
+
+        const cleaned = applyOverridesAndBlacklist(data, blacklist, overrides);
+
+        setMusicData(cleaned);
+        const dates = Object.keys(cleaned || {});
+        let derivedLastUpdated: string | null = null;
+
+        if (metaResponse && typeof metaResponse.lastUpdated === 'string' && metaResponse.lastUpdated) {
+          derivedLastUpdated = metaResponse.lastUpdated;
+        } else if (dates.length) {
+          const latest = dates.reduce((latestDate, current) => {
+            return new Date(current) > new Date(latestDate) ? current : latestDate;
+          }, dates[0]);
+          derivedLastUpdated = latest;
+        }
+
+        setLastUpdated(derivedLastUpdated);
       } catch (error) {
         console.error('Error fetching music data:', error);
+        setFetchError(true);
       } finally {
         setLoading(false);
       }
@@ -236,6 +326,25 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  if (fetchError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-black text-white">
+        <div className="text-center space-y-4">
+          <p className="text-xl font-semibold">Data temporarily unavailable</p>
+          <p className="text-gray-400 text-sm max-w-md">
+            We couldn&apos;t load the latest releases right now. Please refresh or check back in a few minutes.
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-6 py-3 bg-ifuno-green text-black font-medium rounded-lg hover:bg-ifuno-pink hover:text-white transition-colors duration-200 uppercase"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center overflow-hidden bg-black">
@@ -312,7 +421,7 @@ export default function Home() {
                 </button>
                 
                 <button
-                  onClick={() => window.location.href = '/about'}
+                  onClick={() => handleSectionChange('leak')}
                   className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                     activeSection === 'leak'
                       ? 'bg-ifuno-green text-black'
@@ -639,6 +748,16 @@ export default function Home() {
                   {activeSection === 'home' ? 'LATEST RELEASES' : 'LEAK'}
                 </h1>
                 <div className="w-24 h-1 bg-ifuno-green mx-auto opacity-50"></div>
+                {lastUpdated && (
+                  <div className="mt-3 text-xs text-gray-400">
+                    Last updated: {new Date(lastUpdated).toLocaleDateString('en-GB', {
+                      weekday: 'short',
+                      day: 'numeric',
+                      month: 'short',
+                      year: 'numeric',
+                    })}
+                  </div>
+                )}
               </div>
 
               {Object.keys(currentPageData).length === 0 ? (
@@ -717,18 +836,6 @@ export default function Home() {
               <p className="text-ifuno-pink text-sm font-medium uppercase">
                 IF YOU KNOW, YOU KNOW
               </p>
-              
-              {/* Tech Blog Link */}
-              <div className="pt-4 border-t border-ifuno-pink/30">
-                <Link 
-                  href="/tech"
-                  className="inline-flex items-center space-x-2 px-4 py-2 bg-black/70 border border-ifuno-green rounded-lg text-ifuno-green hover:bg-ifuno-green hover:text-black transition-all duration-200 text-sm font-medium uppercase"
-                >
-                  <Cpu className="w-4 h-4" />
-                  <span>Tech Blog</span>
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
-              </div>
             </div>
           </div>
         </footer>
@@ -743,6 +850,7 @@ export default function Home() {
           title={selectedItem.title}
           embedUrl={selectedItem.embed_url}
           thumbnailUrl={selectedItem.thumbnail_url}
+          detailUrl={`/video/${slugForItem(selectedItem)}`}
         />
       )}
     </div>
